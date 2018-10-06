@@ -1,11 +1,13 @@
 'use strict';
 
 const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
 
 const config = require('./config');
 const apiRouter = require('./apis');
 
 const app = new Koa();
+app.use(bodyParser());
 app.use(apiRouter.routes()).use(apiRouter.allowedMethods());
 
 app.listen(config.port);

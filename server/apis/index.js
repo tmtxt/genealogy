@@ -7,7 +7,9 @@ const router = new Router({
 });
 
 router.get('/person/:personId', (ctx, next) => {
-  ctx.body = ctx.params.personId;
+  ctx.body = {
+    hello: 'abc'
+  };
 });
 
 module.exports = router;
