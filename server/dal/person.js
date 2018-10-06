@@ -41,7 +41,30 @@ const insertRootPerson = async (person, logTrail) => {
   logTrail.push('info', 'insertRootPerson', 'DONE');
 };
 
+/**
+ * Get the root person from database
+ *
+ * @param {LogTrail} logTrail
+ *
+ * @returns {Person}
+ */
+const getRootPerson = async (logTrail) => {
+  const session = driver.session();
+  const query = 'MATCH (person:Person {isRoot: true}) RETURN person';
+  const res = await session.run(query);
+
+  const record = res.records[0];
+  if (!record) {
+    logTrail.push('error', 'getRootPerson', 'Root person not found');
+    return null;
+  }
+
+  const root = record.get(0);
+  return root.properties;
+};
+
 module.exports = {
   countPerson,
-  insertRootPerson
+  insertRootPerson,
+  getRootPerson
 };
