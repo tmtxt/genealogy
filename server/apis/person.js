@@ -1,6 +1,7 @@
 'use strict';
 
 const dal = require('../dal');
+const models = require('../models');
 
 const personDal = dal.person;
 
@@ -35,9 +36,14 @@ const getPersonById = async ctx => {
 const updatePersonById = async ctx => {
   const logTrail = ctx.logTrail;
   const personId = ctx.params.personId;
-  const updatingProps = ctx.requestBody;
+  const updatingProps = ctx.validateRequestBody(models.PersonUpdate);
+
   const updatedPerson = await personDal.updatePersonById(personId, updatingProps, logTrail);
-  ctx.body = 'hello';
+  if (!updatedPerson) {
+    ctx.responseError(404, 'Person not found');
+  }
+
+  ctx.body = updatedPerson;
 };
 
 module.exports = {

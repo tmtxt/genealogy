@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 const driver = require('./db').driver;
 
-const models = require('./models');
+const models = require('../models');
 
 /**
  * Transform a person record returned from the query.
@@ -112,13 +112,27 @@ const getPersonById = async (personId, logTrail) => {
   return transformSingleResult(res);
 };
 
+/**
+ * Update one person props by id
+ *
+ * @param {int} personId
+ *
+ * @param {PersonUpdate} updatingProps
+ *
+ * @param {LogTrail} logTrail
+ *
+ * @returns {Person} the updated person
+ */
 const updatePersonById = async (personId, updatingProps, logTrail) => {
   const session = driver.session();
   const query = `MATCH (person:Person)
                 WHERE id(person) = toInteger($personId)
                 SET person += $updatingProps
                 RETURN id(person) AS id, person AS data`;
-  const res = await session.run(query, { personId, updatingProps });
+  const res = await session.run(query, {
+    personId,
+    updatingProps: new models.PersonUpdate(updatingProps)
+  });
 
   return transformSingleResult(res);
 };

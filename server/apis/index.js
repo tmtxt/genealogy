@@ -10,6 +10,7 @@ const person = require('./person');
 const router = new Router({ prefix: '/api' });
 router.use(middlewares.logTrailMiddleware);
 router.use(middlewares.errorHandler);
+router.use(middlewares.schemaValidation);
 
 router.get('/root-person', person.getRootPerson);
 router.get('/person/:personId', person.getPersonById);

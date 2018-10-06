@@ -7,8 +7,12 @@ class Person extends ModelBase {
     return {
       type: 'object',
       properties: {
-        isRoot: { type: 'boolean' },
-        name: { type: 'string' },
+        isRoot: {
+          type: 'boolean'
+        },
+        name: {
+          type: 'string'
+        },
         gender: {
           type: 'string',
           enum: ['male', 'female']

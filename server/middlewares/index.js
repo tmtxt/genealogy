@@ -2,5 +2,6 @@
 
 module.exports = {
   logTrailMiddleware: require('./log-trail'),
-  errorHandler: require('./error-handler')
+  errorHandler: require('./error-handler'),
+  schemaValidation: require('./schema-validation')
 };

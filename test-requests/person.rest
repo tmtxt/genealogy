@@ -1,7 +1,7 @@
 :host = localhost
 
 # get person by id
-GET http://:host:30001/api/person/0
+GET http://:host:30001/api/person/1
 
 # get root person
 GET http://:host:30001/api/root-person
@@ -11,5 +11,5 @@ PATCH http://:host:30001/api/person/1
 Content-Type: application/json
 
 {
-  "hello": "abc"
+  "name": "HAHAH"
 }
