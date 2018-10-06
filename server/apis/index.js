@@ -2,9 +2,10 @@
 
 const Router = require('koa-router');
 
-const router = new Router({
-  prefix: '/api'
-});
+const middlewares = require('../middlewares');
+
+const router = new Router({ prefix: '/api' });
+router.use(middlewares.logTrailMiddleware);
 
 router.get('/person/:personId', (ctx, next) => {
   ctx.body = {

@@ -64,6 +64,10 @@ class LogTrailBase {
 
     return messageStr;
   }
+
+  extendMetaData(props) {
+    _.assign(this.metaData, props);
+  }
 }
 
 module.exports = LogTrailBase;
