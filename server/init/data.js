@@ -4,13 +4,18 @@
 const AppLogTrail = require('../logger').AppLogTrail;
 
 const config = require('../config');
+const dal = require('../dal');
+
 const ensureDataEnabled = config.ensureDataEnabled;
+const personDal = dal.person;
 
 const ensurePersonData = async (logTrail) => {
-  logTrail.push('info', 'hello', 'content1');
-  logTrail.push('verbose', 'def', 'hello');
-  logTrail.push('error', 'nv', 'content2');
-  logTrail.flush();
+  // count number of person first
+  const personCount = await personDal.countPerson();
+  logTrail.push('info', 'personCount', `${personCount}`);
+
+  // no need to insert
+  if (personCount) return;
 };
 
 const ensureData = async () => {
@@ -18,6 +23,7 @@ const ensureData = async () => {
 
   const logTrail = new AppLogTrail();
   await ensurePersonData(logTrail);
+  logTrail.flush();
 };
 
 module.exports = ensureData;

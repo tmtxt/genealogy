@@ -42,15 +42,25 @@ class LogTrailBase {
   }
 
   detectLogLevel() {
-    return _.chain(this.messages).maxBy('levelValue').get('level', 'info').value();
+    return _.chain(this.messages)
+      .maxBy('levelValue')
+      .get('level', 'info')
+      .value();
   }
 
   formatMessages() {
     const messages = this.messages;
     const formatEntry = (logEntry, idx) => {
-      return `[${idx + 1}] ${logEntry.level.toUpperCase()} ${logEntry.title} : ${logEntry.message}`;
+      return `[${idx + 1}] ${logEntry.level.toUpperCase()} ${logEntry.title} : ${JSON.stringify(
+        logEntry.message,
+        null,
+        2
+      )}`;
     };
-    const messageStr = _.chain(messages).map(formatEntry).join('\n').value();
+    const messageStr = _.chain(messages)
+      .map(formatEntry)
+      .join('\n')
+      .value();
 
     return messageStr;
   }
