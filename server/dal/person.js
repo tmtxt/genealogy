@@ -9,17 +9,39 @@ const models = require('./models');
 /**
  * Transform a person record returned from the query.
  * The record should have 2 fields, id and data
+ * The query returns this record should return like this
+ * RETURN id(person) AS id, person AS data
  *
  * @param {neo4j.v2.Record} record
  *
  * @return {Person}
  *
  */
-const transformPersonRecord = record => {
+const transformRecord = record => {
   const person = record.get('data').properties;
   const id = record.get('id').toInt();
 
   return _.assign({}, person, { id });
+};
+
+/**
+ * Transform a result which has only maximum 1 row returned
+ * The row should have 2 fields, id and data
+ * The query returns this row should return like this
+ * RETURN id(person) AS id, person AS data
+ *
+ * @param {neo4j.v2.Result} record
+ *
+ * @return {Person}                 Return null when no record
+ *
+ */
+const transformSingleResult = result => {
+  const record = result.records[0];
+  if (!record) {
+    return null;
+  }
+
+  return transformRecord(record);
 };
 
 /**
@@ -62,20 +84,14 @@ const insertRootPerson = async (person, logTrail) => {
  *
  * @param {LogTrail} logTrail
  *
- * @returns {Person}
+ * @returns {Person}            Returns null if no root person
  */
 const getRootPerson = async logTrail => {
   const session = driver.session();
   const query = 'MATCH (person:Person {isRoot: true}) RETURN id(person) AS id, person AS data';
   const res = await session.run(query);
 
-  const record = res.records[0];
-  if (!record) {
-    logTrail.push('error', 'getRootPerson', 'Root person not found');
-    return null;
-  }
-
-  return transformPersonRecord(record);
+  return transformSingleResult(res);
 };
 
 /**
@@ -93,18 +109,24 @@ const getPersonById = async (personId, logTrail) => {
     'MATCH (person:Person) WHERE id(person) = toInteger($personId) RETURN id(person) AS id, person AS data';
   const res = await session.run(query, { personId: parseInt(personId) });
 
-  const record = res.records[0];
-  if (!record) {
-    logTrail.push('warn', `getPersonById - ${personId}`, 'NOT FOUND');
-    return null;
-  }
+  return transformSingleResult(res);
+};
 
-  return transformPersonRecord(record);
+const updatePersonById = async (personId, updatingProps, logTrail) => {
+  const session = driver.session();
+  const query = `MATCH (person:Person)
+                WHERE id(person) = toInteger($personId)
+                SET person += $updatingProps
+                RETURN id(person) AS id, person AS data`;
+  const res = await session.run(query, { personId, updatingProps });
+
+  return transformSingleResult(res);
 };
 
 module.exports = {
   countPerson,
   insertRootPerson,
   getRootPerson,
-  getPersonById
+  getPersonById,
+  updatePersonById
 };
