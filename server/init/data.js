@@ -9,15 +9,19 @@ const dal = require('../dal');
 const ensureDataEnabled = config.ensureDataEnabled;
 const personDal = dal.person;
 
+// ensure person data
 const ensurePersonData = async (logTrail) => {
   // count number of person first
-  const personCount = await personDal.countPerson();
-  logTrail.push('info', 'personCount', `${personCount}`);
+  const personCount = await personDal.countPerson(logTrail);
 
   // no need to insert
   if (personCount) return;
+
+  const root = { name: 'Root' };
+  await personDal.insertRootPerson(root, logTrail);
 };
 
+// create data if necessary
 const ensureData = async () => {
   if (!ensureDataEnabled) return;
 
