@@ -1,0 +1,15 @@
+:host = localhost
+
+# get person by id
+GET http://:host:30001/api/person/0
+
+# get root person
+GET http://:host:30001/api/root-person
+
+# update person by id
+PATCH http://:host:30001/api/person/1
+Content-Type: application/json
+
+{
+  "hello": "abc"
+}

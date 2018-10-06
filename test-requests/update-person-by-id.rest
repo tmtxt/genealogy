@@ -1,7 +1,0 @@
-#
-PATCH http://localhost:30001/api/person/1
-Content-Type: application/json
-
-{
-  "hello": "abc"
-}
