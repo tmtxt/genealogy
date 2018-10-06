@@ -11,5 +11,6 @@ const router = new Router({ prefix: '/api' });
 router.use(middlewares.logTrailMiddleware);
 
 router.get('/root-person', person.getRootPerson);
+router.get('/person/:personId', person.getPersonById);
 
 module.exports = router;
