@@ -42,7 +42,9 @@ const MainLayout = props => (
 
     <Navbar {...props} />
 
-    {props.children}
+    <main className="site-content">
+      <div className="container site-container">{props.children}</div>
+    </main>
   </div>
 );
 

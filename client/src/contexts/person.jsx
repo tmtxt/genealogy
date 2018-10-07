@@ -4,13 +4,18 @@ import { Map } from 'immutable';
 const { Provider, Consumer } = React.createContext();
 
 class PersonProviderWrapper extends Component {
-  state = {
-    // data
-    personMap: Map({ 1: 'a', 2: 'b' }),
+  constructor(props) {
+    super(props);
 
-    // actions
-    setPersonData: this.setPersonData
-  };
+    this.state = {
+      // data
+      personMap: Map(),
+
+      // actions
+      setPersonData: this.setPersonData,
+      selectPersonById: this.selectPersonById
+    };
+  }
 
   /**
    * Set person data to the personMap
@@ -23,6 +28,11 @@ class PersonProviderWrapper extends Component {
   setPersonData = (personId, personData) => {
     const { personMap } = this.state;
     this.setState({ personMap: personMap.set(personId, personData) });
+  };
+
+  selectPersonById = personId => {
+    const { personMap } = this.state;
+    return personMap.get(personId);
   };
 
   render() {

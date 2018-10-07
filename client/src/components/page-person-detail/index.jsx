@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { wrapMainLayout } from 'components/layouts';
+import PersonDetailPage from './person-detail-page';
 
-class PersonDetailPage extends Component {
-  render() {
-    return <div>Hello</div>;
-  }
-}
+const PersonDetailPageWrapper = props => {
+  const {
+    match: {
+      params: { personId }
+    }
+  } = props;
 
-export default wrapMainLayout(PersonDetailPage);
+  return <PersonDetailPage {...{ personId }} />;
+};
+
+export default PersonDetailPageWrapper;
