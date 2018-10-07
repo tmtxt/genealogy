@@ -18,5 +18,6 @@ router.patch('/persons/:personId', person.updatePersonById);
 router.post('/persons/add-child/father/:fatherPersonId/mother/:motherPersonId', person.addChild);
 router.post('/persons/:personId/add-husband', person.addHusband);
 router.post('/persons/:personId/add-wife', person.addWife);
+router.all('/*', async ctx => ctx.responseError(404, 'API not found'));
 
 module.exports = router;
