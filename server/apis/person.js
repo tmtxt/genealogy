@@ -74,10 +74,25 @@ const addHusband = async ctx => {
   ctx.body = await personDal.addHusband(wifeId, husbandOrder, wifeOrder, logTrail);
 };
 
+// POST /persons/:personId/add-wife
+// Request body
+// {
+//   husbandOrder: <int>,
+//   wifeOrder: <int>
+// }
+const addWife = async ctx => {
+  const logTrail = ctx.logTrail;
+  const { personId: husbandId } = ctx.params;
+  const { husbandOrder, wifeOrder } = ctx.request.body;
+
+  ctx.body = await personDal.addWife(husbandId, husbandOrder, wifeOrder, logTrail);
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
   updatePersonById,
   addChild,
-  addHusband
+  addHusband,
+  addWife
 };

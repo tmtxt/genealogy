@@ -201,6 +201,37 @@ const addHusband = async (wifeId, husbandOrder, wifeOrder, logTrail) => {
   return husband;
 };
 
+/**
+ * Add a new wife for this person
+ *
+ * @param {int} husbandId
+ *
+ * @param {int} wifeOrder default to 1
+ *
+ * @param {int} husbandOrder default to 1
+ *
+ * @param {LogTrail} logTrail
+ *
+ * @returns {Person} the wife person object
+ */
+const addWife = async (husbandId, wifeOrder, husbandOrder, logTrail) => {
+  const session = driver.session();
+  husbandOrder = husbandOrder || 1;
+  wifeOrder = wifeOrder || 1;
+  const query = `MATCH (husband:Person) WHERE id(husband) = toInteger($husbandId)
+        CREATE (husband)-[:Husband_wife {order: toInteger($wifeOrder)}]->(wife:Person)-[:Wife_husband {order: toInteger($husbandOrder)}]->(husband)
+        RETURN id(wife) AS id, wife AS data`;
+
+  const res = await session.run(query, { husbandId, husbandOrder, wifeOrder });
+  const wife = transformSingleResult(res);
+
+  if (!wife) {
+    throw new Error('Cannot insert wife');
+  }
+
+  return wife;
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
@@ -209,5 +240,6 @@ module.exports = {
   updatePersonById,
 
   addChild,
-  addHusband
+  addHusband,
+  addWife
 };

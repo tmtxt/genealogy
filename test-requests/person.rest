@@ -32,3 +32,12 @@ Content-Type: application/json
 {
   "order": 2
 }
+
+# add wife
+:personId = 0
+POST http://:host:30001/api/persons/:personId/add-wife
+Content-Type: application/json
+
+{
+  "order": 2
+}
