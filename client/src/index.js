@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
+
 import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/scss/font-awesome.scss';
+import 'lato-font/scss/lato-font.scss';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
