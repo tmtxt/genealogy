@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { wrapContextProviders } from './contexts';
 
-import HomePage from 'components/home-page';
-import PersonDetailPage from 'components/person-detail-page';
+import HomePage from 'components/page-home';
+import PersonDetailPage from 'components/page-person-detail';
 
 const App = () => (
   <Router>
