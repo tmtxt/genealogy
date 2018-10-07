@@ -8,6 +8,7 @@
     "lato-font": "^3.0.0",
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
+    "react-data-fetching": "^0.2.4",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.3",
