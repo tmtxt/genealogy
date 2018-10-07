@@ -1,0 +1,41 @@
+@import "../../../styles/variables.scss";
+
+:local(.navBarWrapper) {
+  background-color: $yellow;
+  border-top: 2px solid $brownred;
+  border-bottom: 2px solid $brownred;
+}
+
+:local(.innerWrapper) {
+  height: 48px;
+}
+
+:local(.collapseWrapper) {
+  padding-right: 0;
+  padding-left: 0;
+  height: 52px;
+}
+
+:local(.listWrapper li) {
+  padding-top: 10px;
+  padding-left: 0;
+  padding-bottom: 13px;
+  padding-right: 25px;
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+:local(.listWrapper li a) {
+  padding: 0;
+  color: $brown !important;
+}
+
+:local(.usernameLink) {
+  color: $brown !important;
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+:local(.usernameLink:focus) {
+  background-color: transparent !important;
+}

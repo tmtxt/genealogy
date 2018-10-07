@@ -1,0 +1,25 @@
+@import "../../../styles/variables.scss";
+
+$bannerHeight: 250px
+
+:local(.headerBanner) {
+    height: $bannerHeight;
+    background-image: url('./banner.png');
+}
+
+:local(.headerBanner .siteName) {
+    font-size: 60px;
+    color: $brownred;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+:local(.headerBanner .headline) {
+    color: $brownred;
+    font-size: 24px;
+}
+
+:local(.headerContainer) {
+  composes: columnCenter from "../../../styles/common.scss";
+  height: $bannerHeight;
+}
