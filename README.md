@@ -55,4 +55,4 @@ Run docker image `tmtxt/genealogy:latest` with these env
 - `NEO4J_SERVER`: neo4j server address
 - `NEO4J_PORT`: neo4j bolt port
 - `NEO4J_USER`: default to `neo4j`
-- `NEO4J_USER`: empty for no authentication
+- `NEO4J_PASSWORD`: empty for no authentication
