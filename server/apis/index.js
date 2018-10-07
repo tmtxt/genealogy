@@ -13,7 +13,8 @@ router.use(middlewares.errorHandler);
 router.use(middlewares.schemaValidation);
 
 router.get('/root-person', person.getRootPerson);
-router.get('/person/:personId', person.getPersonById);
-router.patch('/person/:personId', person.updatePersonById);
+router.get('/persons/:personId', person.getPersonById);
+router.patch('/persons/:personId', person.updatePersonById);
+router.post('/persons/add-child/father/:fatherPersonId/mother/:motherPersonId', person.addChild);
 
 module.exports = router;

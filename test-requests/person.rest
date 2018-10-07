@@ -13,3 +13,13 @@ Content-Type: application/json
 {
   "name": "HAHAH"
 }
+
+# add child
+:fatherPersonId = 0
+:motherPersonId = 1
+POST http://:host:30001/api/persons/add-child/father/:fatherPersonId/mother/:motherPersonId
+Content-Type: application/json
+
+{
+  "order": 2
+}

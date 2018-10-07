@@ -137,10 +137,44 @@ const updatePersonById = async (personId, updatingProps, logTrail) => {
   return transformSingleResult(res);
 };
 
+/**
+ * Function description.
+ *
+ * @param {int} fatherPersonId
+ *
+ * @param {int} motherPersonId
+ *
+ * @param {int} childOrder the order of the child, default to 1
+ *
+ * @param {LogTrail} logTrail
+ *
+ * @returns {Person} the child person object
+
+ * @throws {Exception Type}
+ */
+const addChild = async (fatherPersonId, motherPersonId, childOrder, logTrail) => {
+  childOrder = childOrder || 1;
+  const session = driver.session();
+  const query = `MATCH (father:Person) WHERE id(father) = toInteger($fatherPersonId)
+                 MATCH (mother:Person) WHERE id(mother) = toInteger($motherPersonId)
+          CREATE (father)-[:Father_child {order: toInteger($childOrder)}]->(child:Person)<-[:Mother_child {order: toInteger($childOrder)}]-(mother)
+          RETURN id(child) AS id, child AS data`;
+
+  const res = await session.run(query, { fatherPersonId, motherPersonId, childOrder });
+  const child = transformSingleResult(res);
+
+  if (!child) {
+    throw new Error('Cannot insert child');
+  }
+
+  return child;
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
   getRootPerson,
   getPersonById,
-  updatePersonById
+  updatePersonById,
+  addChild
 };

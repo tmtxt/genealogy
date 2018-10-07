@@ -19,7 +19,7 @@ const getRootPerson = async ctx => {
   ctx.body = root;
 };
 
-// GET /person/:personId
+// GET /persons/:personId
 const getPersonById = async ctx => {
   const logTrail = ctx.logTrail;
   const personId = ctx.params.personId;
@@ -32,7 +32,7 @@ const getPersonById = async ctx => {
   ctx.body = person;
 };
 
-// PATH /person/:personId
+// PATH /persons/:personId
 const updatePersonById = async ctx => {
   const logTrail = ctx.logTrail;
   const personId = ctx.params.personId;
@@ -46,8 +46,23 @@ const updatePersonById = async ctx => {
   ctx.body = updatedPerson;
 };
 
+// POST /persons/add-child/father/:fatherPersonId/mother/:motherPersonId
+// Request body
+// {
+//   order: <int> child order
+// }
+// Response: <Person> the new child person object
+const addChild = async ctx => {
+  const logTrail = ctx.logTrail;
+  const { fatherPersonId, motherPersonId } = ctx.params;
+  const { order: childOrder } = ctx.request.body;
+
+  ctx.body = await personDal.addChild(fatherPersonId, motherPersonId, childOrder, logTrail);
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
-  updatePersonById
+  updatePersonById,
+  addChild
 };
