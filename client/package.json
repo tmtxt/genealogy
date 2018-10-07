@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "4",
     "font-awesome": "^4.7.0",
+    "immutable": "^3.8.2",
     "lato-font": "^3.0.0",
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
