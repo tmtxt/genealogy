@@ -16,5 +16,6 @@ router.get('/root-person', person.getRootPerson);
 router.get('/persons/:personId', person.getPersonById);
 router.patch('/persons/:personId', person.updatePersonById);
 router.post('/persons/add-child/father/:fatherPersonId/mother/:motherPersonId', person.addChild);
+router.post('/persons/:personId/add-husband', person.addHusband);
 
 module.exports = router;

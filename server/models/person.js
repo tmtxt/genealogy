@@ -15,7 +15,8 @@ class Person extends ModelBase {
         },
         gender: {
           type: 'string',
-          enum: ['male', 'female']
+          enum: ['male', 'female'],
+          default: 'male'
         }
       }
     };
