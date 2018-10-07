@@ -73,10 +73,16 @@ const insertRootPerson = async (person, logTrail) => {
   person = new models.Person(props);
 
   const session = driver.session();
-  const query = 'CREATE (person:Person {isRoot: $isRoot, name: $name})';
-  await session.run(query, person);
+  const query = 'CREATE (person:Person $personData) RETURN id(person) AS id, person AS data';
+  const res = await session.run(query, { personData: person });
 
-  logTrail.push('info', 'insertRootPerson', 'DONE');
+  const rootPerson = transformSingleResult(res);
+  if (!rootPerson) {
+    throw new Error('Cannot insert root person');
+  }
+
+  logTrail.push('info', 'insertRootPerson', `Root person id: ${rootPerson.id}`);
+  return rootPerson;
 };
 
 /**
@@ -138,7 +144,7 @@ const updatePersonById = async (personId, updatingProps, logTrail) => {
 };
 
 /**
- * Function description.
+ * Add a new child
  *
  * @param {int} fatherPersonId
  *
@@ -146,27 +152,36 @@ const updatePersonById = async (personId, updatingProps, logTrail) => {
  *
  * @param {int} childOrder the order of the child, default to 1
  *
+ * @param {Person} childProps initial child props
+ *
  * @param {LogTrail} logTrail
  *
  * @returns {Person} the child person object
 
  * @throws {Exception Type}
  */
-const addChild = async (fatherPersonId, motherPersonId, childOrder, logTrail) => {
+const addChild = async (fatherPersonId, motherPersonId, childOrder, childProps, logTrail) => {
   childOrder = childOrder || 1;
+  childProps = new models.Person(childProps || {});
+
   const session = driver.session();
   const query = `MATCH (father:Person) WHERE id(father) = toInteger($fatherPersonId)
                  MATCH (mother:Person) WHERE id(mother) = toInteger($motherPersonId)
-          CREATE (father)-[:Father_child {order: toInteger($childOrder)}]->(child:Person)<-[:Mother_child {order: toInteger($childOrder)}]-(mother)
+          CREATE (father)-[:Father_child {order: toInteger($childOrder)}]->(child:Person $childProps)<-[:Mother_child {order: toInteger($childOrder)}]-(mother)
           RETURN id(child) AS id, child AS data`;
 
-  const res = await session.run(query, { fatherPersonId, motherPersonId, childOrder });
+  const res = await session.run(query, { fatherPersonId, motherPersonId, childOrder, childProps });
   const child = transformSingleResult(res);
 
   if (!child) {
     throw new Error('Cannot insert child');
   }
 
+  logTrail.push(
+    'info',
+    'addChild',
+    `Added child for ${fatherPersonId} and ${motherPersonId} - id: ${child.id}`
+  );
   return child;
 };
 
@@ -179,25 +194,30 @@ const addChild = async (fatherPersonId, motherPersonId, childOrder, logTrail) =>
  *
  * @param {int} wifeOrder default to 1
  *
+ * @param {Person} husbandProps initial husband person props
+ *
  * @param {LogTrail} logTrail
  *
  * @returns {Person} the husband person object
  */
-const addHusband = async (wifeId, husbandOrder, wifeOrder, logTrail) => {
-  const session = driver.session();
+const addHusband = async (wifeId, husbandOrder, wifeOrder, husbandProps, logTrail) => {
   husbandOrder = husbandOrder || 1;
   wifeOrder = wifeOrder || 1;
+  husbandProps = new models.Person(husbandProps || {});
+
+  const session = driver.session();
   const query = `MATCH (wife:Person) WHERE id(wife) = toInteger($wifeId)
-        CREATE (wife)-[:Wife_husband {order: toInteger($husbandOrder)}]->(husband:Person)-[:Husband_wife {order: toInteger($wifeOrder)}]->(wife)
+        CREATE (wife)-[:Wife_husband {order: toInteger($husbandOrder)}]->(husband:Person $husbandProps)-[:Husband_wife {order: toInteger($wifeOrder)}]->(wife)
         RETURN id(husband) AS id, husband AS data`;
 
-  const res = await session.run(query, { wifeId, husbandOrder, wifeOrder });
+  const res = await session.run(query, { wifeId, husbandOrder, wifeOrder, husbandProps });
   const husband = transformSingleResult(res);
 
   if (!husband) {
     throw new Error('Cannot insert husband');
   }
 
+  logTrail.push('info', 'addHusband', `Added husband for ${wifeId} - id: ${husband.id}`);
   return husband;
 };
 
@@ -210,25 +230,30 @@ const addHusband = async (wifeId, husbandOrder, wifeOrder, logTrail) => {
  *
  * @param {int} husbandOrder default to 1
  *
+ * @param {Person} wifeProps initial wife person props
+ *
  * @param {LogTrail} logTrail
  *
  * @returns {Person} the wife person object
  */
-const addWife = async (husbandId, wifeOrder, husbandOrder, logTrail) => {
-  const session = driver.session();
+const addWife = async (husbandId, wifeOrder, husbandOrder, wifeProps, logTrail) => {
   husbandOrder = husbandOrder || 1;
   wifeOrder = wifeOrder || 1;
+  wifeProps = new models.Person(wifeProps);
+
+  const session = driver.session();
   const query = `MATCH (husband:Person) WHERE id(husband) = toInteger($husbandId)
-        CREATE (husband)-[:Husband_wife {order: toInteger($wifeOrder)}]->(wife:Person)-[:Wife_husband {order: toInteger($husbandOrder)}]->(husband)
+        CREATE (husband)-[:Husband_wife {order: toInteger($wifeOrder)}]->(wife:Person $wifeProps)-[:Wife_husband {order: toInteger($husbandOrder)}]->(husband)
         RETURN id(wife) AS id, wife AS data`;
 
-  const res = await session.run(query, { husbandId, husbandOrder, wifeOrder });
+  const res = await session.run(query, { husbandId, husbandOrder, wifeOrder, wifeProps });
   const wife = transformSingleResult(res);
 
   if (!wife) {
     throw new Error('Cannot insert wife');
   }
 
+  logTrail.push('info', 'addWife', `Added wife for ${husbandId} - id: ${wife.id}`);
   return wife;
 };
 

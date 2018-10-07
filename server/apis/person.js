@@ -57,7 +57,7 @@ const addChild = async ctx => {
   const { fatherPersonId, motherPersonId } = ctx.params;
   const { order: childOrder } = ctx.request.body;
 
-  ctx.body = await personDal.addChild(fatherPersonId, motherPersonId, childOrder, logTrail);
+  ctx.body = await personDal.addChild(fatherPersonId, motherPersonId, childOrder, {}, logTrail);
 };
 
 // POST /persons/:personId/add-husband
@@ -71,7 +71,7 @@ const addHusband = async ctx => {
   const { personId: wifeId } = ctx.params;
   const { husbandOrder, wifeOrder } = ctx.request.body;
 
-  ctx.body = await personDal.addHusband(wifeId, husbandOrder, wifeOrder, logTrail);
+  ctx.body = await personDal.addHusband(wifeId, husbandOrder, wifeOrder, {}, logTrail);
 };
 
 // POST /persons/:personId/add-wife
@@ -85,7 +85,7 @@ const addWife = async ctx => {
   const { personId: husbandId } = ctx.params;
   const { husbandOrder, wifeOrder } = ctx.request.body;
 
-  ctx.body = await personDal.addWife(husbandId, husbandOrder, wifeOrder, logTrail);
+  ctx.body = await personDal.addWife(husbandId, husbandOrder, wifeOrder, {}, logTrail);
 };
 
 module.exports = {
