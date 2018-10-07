@@ -1,0 +1,24 @@
+:local(.row) {
+  display: flex;
+  flex-flow: row;
+}
+
+:local(.column) {
+  display: flex;
+  flex-flow: column;
+}
+
+:local(.flexCenter) {
+  align-items: center;
+  justify-content: center;
+}
+
+:local(.rowCenter) {
+  composes: row;
+  composes: flexCenter;
+}
+
+:local(.columnCenter) {
+  composes: column;
+  composes: flexCenter;
+}

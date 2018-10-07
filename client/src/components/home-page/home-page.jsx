@@ -1,9 +1,13 @@
-import React from "react";
+import React from 'react';
+
+import MainLayout from '../layouts/main';
 
 const HomePage = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
+  <MainLayout>
+    <div>
+      Hello
+    </div>
+  </MainLayout>
 );
 
 export default HomePage;
