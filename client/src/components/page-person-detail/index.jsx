@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import { wrapPersonConsumer } from 'contexts';
 
 import PersonDetailPage from './person-detail-page';
 
-const PersonDetailPageWrapper = props => {
-  const {
-    match: {
-      params: { personId }
-    }
-  } = props;
+class PersonDetailPageWrapper extends Component {
+  componentDidMount() {
+    const {
+      match: {
+        params: { personId }
+      }
+    } = this.props;
+    this.props.personActions.fetchPersonData(personId);
+  }
 
-  return <PersonDetailPage {...{ personId }} />;
-};
+  render() {
+    const {
+      match: {
+        params: { personId }
+      },
+      personActions: { selectPersonById }
+    } = this.props;
 
-export default PersonDetailPageWrapper;
+    const person = selectPersonById(personId);
+
+    return <PersonDetailPage {...{ personId, person }} />;
+  }
+}
+
+export default wrapPersonConsumer(PersonDetailPageWrapper);
