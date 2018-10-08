@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 import { requestToApi } from 'react-data-fetching';
+import UrlPattern from 'url-pattern';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -52,7 +53,8 @@ class PersonProviderWrapper extends Component {
     const person = this.selectPersonById(personId);
     if (person) return;
 
-    const res = await requestToApi({ url: '/api/persons/73', method: 'GET' });
+    const pattern = new UrlPattern('/api/persons/:personId');
+    const res = await requestToApi({ url: pattern.stringify({ personId }), method: 'GET' });
     if (!res.isOK) return;
 
     this.setPersonData(personId, fromJS(res.data));

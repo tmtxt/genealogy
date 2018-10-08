@@ -15,7 +15,22 @@ class PersonDetailPage extends Component {
       );
     }
 
-    return <div>Hello</div>;
+    return (
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-3">
+            <img className="img-responsive img-rounded" alt="" src={person.get('picture')} />
+          </div>
+          <div className="col-md-6">
+            <h1>{person.get('name')}</h1>
+            Hello
+          </div>
+          <div className="col-md-3">
+            Hello
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
