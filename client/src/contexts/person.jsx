@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -8,12 +8,15 @@ class PersonProviderWrapper extends Component {
     super(props);
 
     this.state = {
-      // data
-      personMap: Map(),
+      personStore: fromJS({
+        personMap: {}
+      }),
 
       // actions
-      setPersonData: this.setPersonData,
-      selectPersonById: this.selectPersonById
+      personActions: {
+        setPersonData: this.setPersonData,
+        selectPersonById: this.selectPersonById
+      }
     };
   }
 
@@ -26,13 +29,13 @@ class PersonProviderWrapper extends Component {
    *
    */
   setPersonData = (personId, personData) => {
-    const { personMap } = this.state;
-    this.setState({ personMap: personMap.set(personId, personData) });
+    const { personStore } = this.state;
+    this.setState({ personStore: personStore.setIn(['personMap', personId], personData) });
   };
 
   selectPersonById = personId => {
-    const { personMap } = this.state;
-    return personMap.get(personId);
+    const { personStore } = this.state;
+    return personStore.getIn(['personMap', personId]);
   };
 
   render() {

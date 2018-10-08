@@ -8,3 +8,12 @@ services:
       - "30003:7687"
     environment:
       NEO4J_AUTH: "none"
+
+  # web:
+  #   image: tmtxt/genealogy:latest
+  #   ports:
+  #     - "30007:80"
+  #   environment:
+  #     NEO4J_SERVER: neo4j
+  #     NEO4J_PORT: 7687
+  #     NEO4J_USER: neo4j
