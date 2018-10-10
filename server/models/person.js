@@ -16,6 +16,20 @@ class Person extends ModelBase {
         gender: {
           type: 'string',
           enum: ['male', 'female']
+        },
+        birthDate: {
+          // date string YYYY-MM-DD
+          type: 'string'
+        },
+        deathDate: {
+          // date string YYYY-MM-DD
+          type: 'string'
+        },
+        job: {
+          type: 'string'
+        },
+        summary: {
+          type: 'string'
         }
       }
     };
