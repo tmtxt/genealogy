@@ -6,6 +6,7 @@ const middlewares = require('../middlewares');
 
 // route handlers
 const person = require('./person');
+const tree = require('./tree');
 
 const router = new Router({ prefix: '/api' });
 router.use(middlewares.logTrailMiddleware);
@@ -18,6 +19,9 @@ router.patch('/persons/:personId', person.updatePersonById);
 router.post('/persons/add-child/father/:fatherPersonId/mother/:motherPersonId', person.addChild);
 router.post('/persons/:personId/add-husband', person.addHusband);
 router.post('/persons/:personId/add-wife', person.addWife);
+
+router.get('/root-person/tree', tree.getTreeFromRoot);
+
 router.all('/*', async ctx => ctx.responseError(404, 'API not found'));
 
 module.exports = router;

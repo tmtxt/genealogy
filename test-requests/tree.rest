@@ -1,0 +1,4 @@
+:host = localhost
+
+# get person by id
+GET http://:host:30001/api/root-person/tree
