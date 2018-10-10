@@ -7,6 +7,7 @@
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
     "lato-font": "^3.0.0",
+    "moment": "^2.22.2",
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
     "react-data-fetching": "^0.2.4",

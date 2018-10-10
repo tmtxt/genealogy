@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { wrapMainLayout } from 'components/layouts';
 import { Loader } from 'components/shared';
 
+import PersonInfoTable from './person-info-table';
+
 class PersonDetailPage extends Component {
   render() {
     const { person } = this.props;
@@ -23,11 +25,9 @@ class PersonDetailPage extends Component {
           </div>
           <div className="col-md-6">
             <h1>{person.get('name')}</h1>
-            Hello
+            <PersonInfoTable {...{ person }} />
           </div>
-          <div className="col-md-3">
-            Hello
-          </div>
+          <div className="col-md-3">Hello</div>
         </div>
       </div>
     );

@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import 'libs/moment';
+
 import { wrapContextProviders } from './contexts';
 
 import HomePage from 'components/page-home';

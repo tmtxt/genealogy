@@ -3,7 +3,24 @@ import { fromJS } from 'immutable';
 import { requestToApi } from 'react-data-fetching';
 import UrlPattern from 'url-pattern';
 
+const defaultMalePicture = require('images/male-default.svg');
+const defaultFemalePicture = require('images/female-default.svg');
+
 const { Provider, Consumer } = React.createContext();
+
+const transformGetPersonRes = responseBody => {
+  let person = fromJS(responseBody);
+
+  const gender = person.get('gender', 'male');
+  const picture = person.get('picture');
+
+  if (!picture) {
+    const picture = gender === 'male' ? defaultMalePicture : defaultFemalePicture;
+    person = person.set('picture', picture);
+  }
+
+  return person;
+};
 
 class PersonProviderWrapper extends Component {
   constructor(props) {
@@ -57,7 +74,7 @@ class PersonProviderWrapper extends Component {
     const res = await requestToApi({ url: pattern.stringify({ personId }), method: 'GET' });
     if (!res.isOK) return;
 
-    this.setPersonData(personId, fromJS(res.data));
+    this.setPersonData(personId, transformGetPersonRes(res.data));
   };
 
   render() {
