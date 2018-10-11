@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-  person: require('./person')
+  person: require('./person'),
+  tree: require('./tree')
 };
