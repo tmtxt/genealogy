@@ -1,6 +1,8 @@
 // @flow
 import { isEmpty } from 'lodash';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { navigateToPersonDetailPage } from 'libs/navigation';
 
 const defaultMalePicture = require('images/male-default.svg');
 const defaultFemalePicture = require('images/female-default.svg');
@@ -31,7 +33,7 @@ const styles = {
   }
 };
 
-export const PersonNode = ({ personNode }) => {
+export const PersonNode = ({ personNode, history }) => {
   const circleStyle =
     personNode.children || isEmpty(personNode._children) ? styles.circleEmpty : styles.circleFill;
 
@@ -42,6 +44,7 @@ export const PersonNode = ({ personNode }) => {
         {personNode.info.name}
       </text>
       <image
+        onClick={() => navigateToPersonDetailPage(history, personNode.id)}
         style={styles.personPicture}
         href={personNode.info.picture || getDefaultPicture(personNode.info.gender)}
         x="-20"
@@ -53,4 +56,4 @@ export const PersonNode = ({ personNode }) => {
   );
 };
 
-export default PersonNode;
+export default withRouter(PersonNode);
