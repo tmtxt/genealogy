@@ -2,7 +2,9 @@ import _ from 'lodash';
 
 // provider
 import { wrapPersonProvider } from './person';
-export const wrapContextProviders = _.flowRight([wrapPersonProvider]);
+import { wrapTreeProvider } from './tree';
+export const wrapContextProviders = _.flowRight([wrapPersonProvider, wrapTreeProvider]);
 
 // consumer
 export { wrapPersonConsumer } from './person';
+export { wrapTreeConsumer } from './tree';
