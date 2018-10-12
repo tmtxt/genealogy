@@ -33,13 +33,17 @@ const styles = {
   }
 };
 
-export const PersonNode = ({ personNode, history, toggleChildren }) => {
+export const PersonNode = ({ personNode, history, toggleChildren, rootPersonId }) => {
   const circleStyle =
     personNode.children || isEmpty(personNode._children) ? styles.circleEmpty : styles.circleFill;
 
   return (
     <g transform={`translate(${personNode.x}, ${personNode.y})`}>
-      <circle r="10" style={circleStyle} onClick={() => toggleChildren('root', personNode.path)} />
+      <circle
+        r="10"
+        style={circleStyle}
+        onClick={() => toggleChildren(rootPersonId, personNode.path)}
+      />
       <text y="-19" dy=".35em" textAnchor="middle" style={styles.name}>
         {personNode.info.name}
       </text>

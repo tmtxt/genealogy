@@ -7,6 +7,12 @@ import _ from 'lodash';
 const { Provider, Consumer } = React.createContext();
 
 const getTreeFromRootUrl = new UrlPattern('/api/root-person/tree');
+const getTreeId = rootPersonId =>
+  _.isNumber(rootPersonId)
+    ? rootPersonId.toString()
+    : _.isString(rootPersonId)
+      ? rootPersonId
+      : 'root';
 
 class TreeProviderWrapper extends Component {
   constructor(props) {
@@ -21,19 +27,20 @@ class TreeProviderWrapper extends Component {
 
       // actions
       treeActions: {
-        getTreeFromRoot: this.getTreeFromRoot,
+        fetchTreeData: this.fetchTreeData,
         toggleChildren: this.toggleChildren
       },
 
       // selectors
       treeSelectors: {
-        selectRootTreeData: this.selectRootTreeData
+        selectTreeDataById: this.selectTreeDataById
       }
     };
   }
 
-  selectRootTreeData = () => {
-    return this.state.treeStore.getIn(['treeMap', 'root']);
+  selectTreeDataById = rootPersonId => {
+    const treeId = getTreeId(rootPersonId);
+    return this.state.treeStore.getIn(['treeMap', treeId]);
   };
 
   toggleChildren = (rootPersonId, path) => {
@@ -47,16 +54,15 @@ class TreeProviderWrapper extends Component {
 
       // recursive case
       const childId = _.head(path);
-      console.log(childId);
       const children = node.get('children').map(childNode => {
         return childNode.get('id') === childId ? updateNode(childNode, _.tail(path)) : childNode;
       });
       return node.set('children', children);
     };
 
-    let treeData = this.selectRootTreeData();
+    let treeData = this.selectTreeDataById(rootPersonId);
     treeData = updateNode(treeData, path);
-    this.setTreeByRootId('root', treeData);
+    this.setTreeDataById(rootPersonId, treeData);
   };
 
   /**
@@ -67,17 +73,31 @@ class TreeProviderWrapper extends Component {
    * @param {Map} treeData
    *
    */
-  setTreeByRootId = (rootPersonId, treeData) => {
+  setTreeDataById = (rootPersonId, treeData) => {
+    const treeId = getTreeId(rootPersonId);
     let { treeStore } = this.state;
-    treeStore = treeStore.setIn(['treeMap', rootPersonId], treeData);
+    treeStore = treeStore.setIn(['treeMap', treeId], treeData);
     this.setState({ treeStore });
   };
 
-  // trigger api call to get the tree data from root person
-  getTreeFromRoot = async () => {
-    const res = await requestToApi({ url: getTreeFromRootUrl.stringify(), method: 'GET' });
+  /**
+   * Trigger api call to get the tree data and set to the store
+   *
+   * @param {int} rootPersonId optionally, omit to from root
+   *
+   */
+  fetchTreeData = async rootPersonId => {
+    const treeId = getTreeId(rootPersonId);
+
+    let res;
+    if (!rootPersonId) {
+      res = await requestToApi({ url: getTreeFromRootUrl.stringify(), method: 'GET' });
+    } else {
+      // TODO call api to get from a specific person id
+    }
+
     if (!res.isOK) return;
-    this.setTreeByRootId('root', fromJS(res.data));
+    this.setTreeDataById(treeId, fromJS(res.data));
   };
 
   render() {

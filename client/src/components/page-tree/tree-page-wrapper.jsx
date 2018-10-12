@@ -8,14 +8,16 @@ export class TreePageWrapper extends Component {
   static displayName = 'TreePageWrapper';
 
   componentDidMount() {
-    this.props.treeActions.getTreeFromRoot();
+    const rootPersonId = null;
+    this.props.treeActions.fetchTreeData(rootPersonId);
   }
 
   render() {
-    const treeData = this.props.treeSelectors.selectRootTreeData();
+    const rootPersonId = null;
+    const treeData = this.props.treeSelectors.selectTreeDataById(rootPersonId);
     const { toggleChildren } = this.props.treeActions;
 
-    return <TreePage {...{ treeData, toggleChildren }} />;
+    return <TreePage {...{ treeData, toggleChildren, rootPersonId }} />;
   }
 }
 

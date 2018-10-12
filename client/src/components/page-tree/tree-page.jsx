@@ -27,7 +27,7 @@ export class TreePage extends Component {
   }
 
   render() {
-    const { treeData, containerWidth, toggleChildren } = this.props;
+    const { treeData, containerWidth, toggleChildren, rootPersonId } = this.props;
 
     if (!treeData) {
       return <Loader />;
@@ -46,7 +46,7 @@ export class TreePage extends Component {
             </g>
             <g transform="translate(0,0)">
               {map(nodeList, (personNode, key) => (
-                <PersonNode {...{ key, personNode, toggleChildren }} />
+                <PersonNode {...{ key, personNode, toggleChildren, rootPersonId }} />
               ))}
             </g>
           </g>
