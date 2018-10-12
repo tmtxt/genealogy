@@ -35,7 +35,13 @@ const ensurePersonData = async logTrail => {
     { name: 'F1 Male', gender: 'male' },
     logTrail
   );
-  await personDal.addWife(f1MalePerson.id, 1, 1, { name: "F1 Male's wife" }, logTrail);
+  const f1MaleWifePerson = await personDal.addWife(
+    f1MalePerson.id,
+    1,
+    1,
+    { name: "F1 Male's wife" },
+    logTrail
+  );
 
   // f1, 2nd child, female, no husband
   await personDal.addChild(
@@ -43,6 +49,25 @@ const ensurePersonData = async logTrail => {
     rootWifePerson.id,
     2,
     { name: 'F1 Female', gender: 'female' },
+    logTrail
+  );
+
+  // f2, 1st child, male with 1 wife
+  const f2MalePerson = await personDal.addChild(
+    f1MalePerson.id,
+    f1MaleWifePerson.id,
+    1,
+    { name: 'F2 Male', gender: 'male' },
+    logTrail
+  );
+  await personDal.addWife(f2MalePerson.id, 1, 1, { name: "F2 Male's wife" }, logTrail);
+
+  // f2, 2nd child, female with no marriage
+  await personDal.addChild(
+    f1MalePerson.id,
+    f1MaleWifePerson.id,
+    2,
+    { name: 'F2 Female', gender: 'female' },
     logTrail
   );
 };

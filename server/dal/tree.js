@@ -21,7 +21,7 @@ const int = neo4j.int;
  *   marriages: Array<Person>     list of other person nodes getting marriage to this person
  *   info:      <Person>          the person node properties
  *   children:  Array<TreeNode>   recursive structure
- *   idPath:    Array<int>        the id path to this node
+ *   path:      Array<int>        the id path to this node
  * }
  *
  * @throws {Error}
@@ -80,13 +80,13 @@ const getTreeByPersonId = async (rootNodeId, logTrail) => {
       path.concat(['marriages']),
       record.get('marriages').map(marriage => marriage.properties)
     );
-    _.set(tree, path.concat(['idPath']), idPath);
+    _.set(tree, path.concat(['path']), idPath);
   }
 
   // transform the children prop from object to an array
   const transformChildren = node => {
     if (node.children) {
-      _.each(tree.children, transformChildren);
+      _.each(node.children, transformChildren);
       node.children = _.chain(node.children)
         .values()
         .sortBy(['order'])
@@ -95,7 +95,6 @@ const getTreeByPersonId = async (rootNodeId, logTrail) => {
   };
   transformChildren(tree);
 
-  // logTrail.push('info', 'tree', tree);
   return tree;
 };
 
