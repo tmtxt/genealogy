@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 import { requestToApi } from 'react-data-fetching';
 import UrlPattern from 'url-pattern';
+import _ from 'lodash';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -20,7 +21,8 @@ class TreeProviderWrapper extends Component {
 
       // actions
       treeActions: {
-        getTreeFromRoot: this.getTreeFromRoot
+        getTreeFromRoot: this.getTreeFromRoot,
+        toggleChildren: this.toggleChildren
       },
 
       // selectors
@@ -32,6 +34,29 @@ class TreeProviderWrapper extends Component {
 
   selectRootTreeData = () => {
     return this.state.treeStore.getIn(['treeMap', 'root']);
+  };
+
+  toggleChildren = (rootPersonId, path) => {
+    const updateNode = (node, path) => {
+      // base case
+      if (!path.length) {
+        const children = node.get('children');
+        const _children = node.get('_children');
+        return node.set('children', _children).set('_children', children);
+      }
+
+      // recursive case
+      const childId = _.head(path);
+      console.log(childId);
+      const children = node.get('children').map(childNode => {
+        return childNode.get('id') === childId ? updateNode(childNode, _.tail(path)) : childNode;
+      });
+      return node.set('children', children);
+    };
+
+    let treeData = this.selectRootTreeData();
+    treeData = updateNode(treeData, path);
+    this.setTreeByRootId('root', treeData);
   };
 
   /**

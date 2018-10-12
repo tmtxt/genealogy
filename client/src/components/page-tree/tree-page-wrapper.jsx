@@ -13,8 +13,9 @@ export class TreePageWrapper extends Component {
 
   render() {
     const treeData = this.props.treeSelectors.selectRootTreeData();
+    const { toggleChildren } = this.props.treeActions;
 
-    return <TreePage {...{ treeData }} />;
+    return <TreePage {...{ treeData, toggleChildren }} />;
   }
 }
 
