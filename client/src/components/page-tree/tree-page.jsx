@@ -7,6 +7,7 @@ import { Loader } from 'components/shared';
 import { wrapMainLayout } from 'components/layouts';
 
 import PersonNode from './person-node';
+import PersonLink from './person-link';
 
 export class TreePage extends Component {
   static displayName = 'TreePage';
@@ -15,14 +16,14 @@ export class TreePage extends Component {
     treeData = treeData.toJS();
 
     const treeLayout = d3.layout.tree().size([containerWidth, 0]);
-    const nodesList = treeLayout.nodes(treeData).reverse();
-    nodesList.forEach(d => {
+    const nodeList = treeLayout.nodes(treeData).reverse();
+    nodeList.forEach(d => {
       d.y = d.depth * 200; // 200px is the gap space between each level
       d.y += 80; // translate 80px down for drawing the person image
     });
-    const linksList = treeLayout.links(nodesList);
+    const linkList = treeLayout.links(nodeList);
 
-    return { nodesList, linksList };
+    return { nodeList, linkList };
   }
 
   render() {
@@ -32,14 +33,19 @@ export class TreePage extends Component {
       return <Loader />;
     }
 
-    const { nodesList, linksList } = this.computeTreeData(treeData, containerWidth);
+    const { nodeList, linkList } = this.computeTreeData(treeData, containerWidth);
 
     return (
       <div>
         <svg height="1000" width={containerWidth}>
           <g>
             <g transform="translate(0,0)">
-              {map(nodesList, (personNode, key) => (
+              {map(linkList, (personLink, key) => (
+                <PersonLink {...{ key, personLink }} />
+              ))}
+            </g>
+            <g transform="translate(0,0)">
+              {map(nodeList, (personNode, key) => (
                 <PersonNode {...{ key, personNode }} />
               ))}
             </g>
