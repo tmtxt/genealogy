@@ -19,7 +19,7 @@ class PersonDetailPageWrapper extends Component {
       match: {
         params: { personId }
       },
-      personActions: { selectPersonById }
+      personSelectors: { selectPersonById }
     } = this.props;
 
     const person = selectPersonById(personId);

@@ -32,7 +32,7 @@ const getPersonById = async ctx => {
   ctx.body = person;
 };
 
-// PATH /persons/:personId
+// PATCH /persons/:personId
 const updatePersonById = async ctx => {
   const logTrail = ctx.logTrail;
   const personId = ctx.params.personId;

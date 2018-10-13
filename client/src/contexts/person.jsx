@@ -30,13 +30,20 @@ class PersonProviderWrapper extends Component {
       // data
       personStore: fromJS({
         // store person by id
-        personMap: {}
+        personMap: {},
+
+        // store person meta data by person id
+        personMeta: {}
       }),
 
       // actions
       personActions: {
-        selectPersonById: this.selectPersonById,
         fetchPersonData: this.fetchPersonData
+      },
+
+      // selectors
+      personSelectors: {
+        selectPersonById: this.selectPersonById,
       }
     };
   }
@@ -52,6 +59,16 @@ class PersonProviderWrapper extends Component {
   };
 
   /**
+   * Set person meta data to the store
+   * @param {int} personId
+   * @param {Map} metaData
+   */
+  setPersonMeta = (personId, metaData) => {
+    const { personStore } = this.state;
+    this.setState({ personStore: personStore.setIn(['personMeta', personId], metaData) });
+  };
+
+  /**
    * Select the person data by id
    * @param {int} personId
    * @return {Map} personData
@@ -59,6 +76,16 @@ class PersonProviderWrapper extends Component {
   selectPersonById = personId => {
     const { personStore } = this.state;
     return personStore.getIn(['personMap', personId]);
+  };
+
+  /**
+   * Select the person meta data data by person id
+   * @param {int} personId
+   * @return {Map} {isUpdating: boolean}
+   */
+  selectPersonMetaById = personId => {
+    const { personStore } = this.state;
+    return personStore.getIn(['personMeta', personId], Map());
   };
 
   /**
@@ -75,6 +102,11 @@ class PersonProviderWrapper extends Component {
     if (!res.isOK) return;
 
     this.setPersonData(personId, transformGetPersonRes(res.data));
+  };
+
+  updatePersonViaApi = async (personId, personData) => {
+    const person = this.selectPersonById(personId);
+    this.setPersonData({ person: person.set('isUpdating', true) });
   };
 
   render() {
