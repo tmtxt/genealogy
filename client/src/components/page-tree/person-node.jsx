@@ -1,5 +1,5 @@
 // @flow
-import { isEmpty } from 'lodash';
+import { isEmpty, map } from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { navigateToPersonDetailPage } from 'libs/navigation';
@@ -33,7 +33,27 @@ const styles = {
   }
 };
 
-export const PersonNode = ({ personNode, history, toggleChildren, rootPersonId }) => {
+const MarriageNode = ({ history, person, order }) => {
+  const x = (order + 1) * 21;
+  const translate = `translate(${x}, 0)`;
+  const picture = getDefaultPicture(person.gender);
+
+  return (
+    <g transform={translate}>
+      <image
+        onClick={() => navigateToPersonDetailPage(history, person.id)}
+        href={picture}
+        style={styles.personPicture}
+        x="0"
+        y="-68"
+        width="40px"
+        height="40px"
+      />
+    </g>
+  );
+};
+
+const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriagesEnabled }) => {
   const circleStyle =
     personNode.children || isEmpty(personNode._children) ? styles.circleEmpty : styles.circleFill;
 
@@ -56,6 +76,10 @@ export const PersonNode = ({ personNode, history, toggleChildren, rootPersonId }
         width="40px"
         height="40px"
       />
+      {marriagesEnabled &&
+        map(personNode.marriages, (person, order) => (
+          <MarriageNode key={order} {...{ history, person, order }} />
+        ))}
     </g>
   );
 };

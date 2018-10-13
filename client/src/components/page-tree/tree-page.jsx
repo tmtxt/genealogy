@@ -61,7 +61,7 @@ export class TreePage extends Component {
             </g>
             <g transform="translate(0,0)">
               {map(nodeList, (personNode, key) => (
-                <PersonNode {...{ key, personNode, toggleChildren, rootPersonId }} />
+                <PersonNode {...{ key, personNode, toggleChildren, rootPersonId, marriagesEnabled }} />
               ))}
             </g>
           </g>
