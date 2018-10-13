@@ -7,11 +7,12 @@ GET http://:host:30001/api/person/1
 GET http://:host:30001/api/root-person
 
 # update person by id
-PATCH http://:host:30001/api/person/1
+PATCH http://:host:30001/api/persons/1
 Content-Type: application/json
 
 {
-  "name": "HAHAH"
+  "name": "HAHAH",
+  "isRoot": "abc"
 }
 
 # add child
