@@ -8,6 +8,9 @@ const defaultFemalePicture = require('images/female-default.svg');
 
 const { Provider, Consumer } = React.createContext();
 
+// generic url pattern for interacting with 1 person
+const personUrl = new UrlPattern('/api/persons/:personId');
+
 const transformGetPersonRes = responseBody => {
   let person = fromJS(responseBody);
 
@@ -38,12 +41,14 @@ class PersonProviderWrapper extends Component {
 
       // actions
       personActions: {
-        fetchPersonData: this.fetchPersonData
+        fetchPersonData: this.fetchPersonData,
+        updatePersonViaApi: this.updatePersonViaApi
       },
 
       // selectors
       personSelectors: {
         selectPersonById: this.selectPersonById,
+        selectPersonMetaById: this.selectPersonMetaById
       }
     };
   }
@@ -85,7 +90,7 @@ class PersonProviderWrapper extends Component {
    */
   selectPersonMetaById = personId => {
     const { personStore } = this.state;
-    return personStore.getIn(['personMeta', personId], Map());
+    return personStore.getIn(['personMeta', personId], new Map());
   };
 
   /**
@@ -97,16 +102,26 @@ class PersonProviderWrapper extends Component {
     const person = this.selectPersonById(personId);
     if (person) return;
 
-    const pattern = new UrlPattern('/api/persons/:personId');
-    const res = await requestToApi({ url: pattern.stringify({ personId }), method: 'GET' });
+    const res = await requestToApi({ url: personUrl.stringify({ personId }), method: 'GET' });
     if (!res.isOK) return;
 
     this.setPersonData(personId, transformGetPersonRes(res.data));
   };
 
   updatePersonViaApi = async (personId, personData) => {
-    const person = this.selectPersonById(personId);
-    this.setPersonData({ person: person.set('isUpdating', true) });
+    let personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(personId, personMeta.set('isUpdating', true));
+
+    const res = await requestToApi({
+      url: personUrl.stringify({ personId }),
+      method: 'PATCH',
+      body: personData.toJS()
+    });
+    if (!res.isOK) return;
+
+    personMeta = this.selectPersonMetaById(personId);
+    this.setPersonData(personId, transformGetPersonRes(res.data));
+    this.setPersonMeta(personId, personMeta.set('isUpdating', false));
   };
 
   render() {

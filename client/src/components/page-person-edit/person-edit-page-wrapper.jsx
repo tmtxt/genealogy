@@ -68,7 +68,18 @@ class PersonEditPageWrapper extends Component {
   render() {
     const { person } = this.state;
 
-    return <PersonEditPage {...{ person }} />;
+    const {
+      match: {
+        params: { personId }
+      },
+      personSelectors: { selectPersonMetaById },
+      personActions: { updatePersonViaApi }
+    } = this.props;
+
+    const personMeta = selectPersonMetaById(personId);
+    const isUpdating = personMeta.get('isUpdating');
+
+    return <PersonEditPage {...{ personId, person, updatePersonViaApi, isUpdating }} />;
   }
 }
 

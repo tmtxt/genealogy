@@ -5,7 +5,7 @@ import { Form, Label, Input, FormGroup, Button } from 'reactstrap';
 import { wrapMainLayout } from 'components/layouts';
 import { Loader } from 'components/shared';
 
-export const PersonEditPage = ({ person }) => {
+export const PersonEditPage = ({ personId, person, updatePersonViaApi, isUpdating }) => {
   if (!person) {
     return (
       <div className="center-block">
@@ -21,17 +21,30 @@ export const PersonEditPage = ({ person }) => {
           <Form>
             <FormGroup>
               <Label for="name">Tên</Label>
-              <Input type="text" placeholder="Họ và Tên" value={person.get('name')} />
+              <Input
+                type="text"
+                placeholder="Họ và Tên"
+                value={person.get('name')}
+                disabled={isUpdating}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="name">Nghề nghiệp</Label>
-              <Input type="text" placeholder="Nghề nghiệp chính" value={person.get('job')} />
+              <Input
+                type="text"
+                placeholder="Nghề nghiệp chính"
+                value={person.get('job')}
+                disabled={isUpdating}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="name">Thông tin thêm</Label>
-              <Input type="textarea" plaintext={person.get('summary')} />
+              <Input type="textarea" plaintext={person.get('summary')} disabled={isUpdating} />
             </FormGroup>
-            <Button>Lưu</Button>
+            <Button onClick={() => updatePersonViaApi(personId, person)} disabled={isUpdating}>
+              Lưu
+            </Button>
+            {isUpdating && <Loader />}
           </Form>
         </div>
       </div>
