@@ -2,6 +2,7 @@ import { flowRight, map } from 'lodash';
 import React, { Component } from 'react';
 import dimensions from 'react-dimensions';
 import * as d3 from 'd3';
+import { Input } from 'reactstrap';
 
 import { Loader } from 'components/shared';
 import { wrapMainLayout } from 'components/layouts';
@@ -27,7 +28,14 @@ export class TreePage extends Component {
   }
 
   render() {
-    const { treeData, containerWidth, toggleChildren, rootPersonId } = this.props;
+    const {
+      treeData,
+      containerWidth,
+      toggleChildren,
+      rootPersonId,
+      onMarriagesToggle,
+      marriagesEnabled
+    } = this.props;
 
     if (!treeData) {
       return <Loader />;
@@ -37,6 +45,13 @@ export class TreePage extends Component {
 
     return (
       <div>
+        <div>
+          <Input
+            type="checkbox"
+            checked={marriagesEnabled}
+            onChange={e => onMarriagesToggle(e.target.checked)}
+          />
+        </div>
         <svg height="1000" width={containerWidth}>
           <g>
             <g transform="translate(0,0)">
