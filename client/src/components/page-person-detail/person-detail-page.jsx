@@ -9,6 +9,7 @@ import { navigateToPersonEditPage } from 'libs/navigation';
 
 import PersonInfoTable from './person-info-table';
 import ParentsTable from './parents-table';
+import ChildrenTable from './children-table';
 
 const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarriage }) => {
   if (!person) {
@@ -55,6 +56,7 @@ const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarr
         </div>
         <div className="col-md-3">
           <ParentsTable {...{ person }} />
+          <ChildrenTable {...{ person }} />
         </div>
       </div>
     </div>

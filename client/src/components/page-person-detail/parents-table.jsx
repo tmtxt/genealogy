@@ -1,11 +1,8 @@
-// @flow
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { wrapPersonConsumer } from 'contexts';
-import { personDetailUrl } from 'libs/navigation';
+import RelatedPersonRow from './related-person-row';
 
-export const ParentsTable = ({ person, personSelectors }) => {
+export const ParentsTable = ({ person }) => {
   const father = person.get('father');
   const mother = person.get('mother');
 
@@ -16,53 +13,10 @@ export const ParentsTable = ({ person, personSelectors }) => {
   return (
     <div>
       <h3>Cha mẹ</h3>
-      {father && (
-        <div style={styles.container}>
-          <img
-            width="50"
-            height="50"
-            className="img-rounded"
-            alt=""
-            src={personSelectors.selectPersonPicture(father)}
-          />
-          <div style={styles.name}>
-            <Link to={personDetailUrl.stringify({ personId: father.get('id') })}>
-              {father.get('name')}
-            </Link>
-          </div>
-        </div>
-      )}
-      {mother && (
-        <div style={styles.container}>
-          <img
-            width="50"
-            height="50"
-            className="img-rounded"
-            alt=""
-            src={personSelectors.selectPersonPicture(mother)}
-          />
-          <div style={styles.name}>
-            <Link to={personDetailUrl.stringify({ personId: mother.get('id') })}>
-              {mother.get('name')}
-            </Link>
-          </div>
-        </div>
-      )}
+      {father && <RelatedPersonRow person={father} />}
+      {mother && <RelatedPersonRow person={mother} />}
     </div>
   );
 };
 
-export default wrapPersonConsumer(ParentsTable);
-
-const styles = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: 5,
-    justifyContent: 'flex-start'
-  },
-
-  name: {
-    marginLeft: 10
-  }
-};
+export default ParentsTable;
