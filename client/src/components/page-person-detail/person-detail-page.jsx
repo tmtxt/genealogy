@@ -8,6 +8,7 @@ import { Loader } from 'components/shared';
 import { navigateToPersonEditPage } from 'libs/navigation';
 
 import PersonInfoTable from './person-info-table';
+import ParentsTable from './parents-table';
 
 const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarriage }) => {
   if (!person) {
@@ -52,7 +53,9 @@ const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarr
           <h1>{person.get('name')}</h1>
           <PersonInfoTable {...{ person }} />
         </div>
-        <div className="col-md-3">Hello</div>
+        <div className="col-md-3">
+          <ParentsTable {...{ person }} />
+        </div>
       </div>
     </div>
   );

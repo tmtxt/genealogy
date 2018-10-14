@@ -24,7 +24,7 @@ class PersonDetailPageWrapper extends Component {
         params: { personId }
       }
     } = this.props;
-    this.props.personActions.fetchPersonData(personId);
+    this.props.personActions.fetchPersonDataWithRelations(personId, true);
   }
 
   componentDidUpdate(prevProps) {

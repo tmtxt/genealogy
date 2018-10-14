@@ -10,6 +10,7 @@ const { Provider, Consumer } = React.createContext();
 
 // generic url pattern for interacting with 1 person
 const personUrl = new UrlPattern('/api/persons/:personId');
+const personWithRelationsUrl = new UrlPattern('/api/detailed-persons/:personId');
 const addWifeUrl = new UrlPattern('/api/persons/:personId/add-wife');
 const addHusbandUrl = new UrlPattern('/api/persons/:personId/add-husband');
 
@@ -44,6 +45,7 @@ class PersonProviderWrapper extends Component {
       // actions
       personActions: {
         fetchPersonData: this.fetchPersonData,
+        fetchPersonDataWithRelations: this.fetchPersonDataWithRelations,
         updatePersonViaApi: this.updatePersonViaApi,
         addMarriage: this.addMarriage
       },
@@ -51,7 +53,8 @@ class PersonProviderWrapper extends Component {
       // selectors
       personSelectors: {
         selectPersonById: this.selectPersonById,
-        selectPersonMetaById: this.selectPersonMetaById
+        selectPersonMetaById: this.selectPersonMetaById,
+        selectPersonPicture: this.selectPersonPicture
       }
     };
   }
@@ -98,16 +101,43 @@ class PersonProviderWrapper extends Component {
     return personStore.getIn(['personMeta', personId], new ImmutableMap());
   };
 
+  selectPersonPicture = person => {
+    const picture = person.get('picture');
+    const gender = person.get('gender');
+
+    if (picture) return picture;
+
+    return gender === 'male' ? defaultMalePicture : defaultFemalePicture;
+  };
+
   /**
    * Fetch the person data from server and set to the store
    * @param {int} personId
    * @return {Map} personData
    */
-  fetchPersonData = async personId => {
+  fetchPersonData = async (personId, forceReload) => {
     const person = this.selectPersonById(personId);
-    if (person) return;
+    if (person && !forceReload) return;
 
     const res = await requestToApi({ url: personUrl.stringify({ personId }), method: 'GET' });
+    if (!res.isOK) return;
+
+    this.setPersonData(personId, transformGetPersonRes(res.data));
+  };
+
+  /**
+   * Fetch the person data with relations from server and set to the store
+   * @param {int} personId
+   * @return {Map} personData
+   */
+  fetchPersonDataWithRelations = async (personId, forceReload) => {
+    const person = this.selectPersonById(personId);
+    if (person && !forceReload) return;
+
+    const res = await requestToApi({
+      url: personWithRelationsUrl.stringify({ personId }),
+      method: 'GET'
+    });
     if (!res.isOK) return;
 
     this.setPersonData(personId, transformGetPersonRes(res.data));
