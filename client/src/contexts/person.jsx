@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fromJS } from 'immutable';
+import { fromJS, Map as ImmutableMap } from 'immutable';
 import { requestToApi } from 'react-data-fetching';
 import UrlPattern from 'url-pattern';
 
@@ -76,21 +76,23 @@ class PersonProviderWrapper extends Component {
   /**
    * Select the person data by id
    * @param {int} personId
+   * @param {ImmutableMap?} personStore optionally specify the person store, otherwise, select the current from state
    * @return {Map} personData
    */
-  selectPersonById = personId => {
-    const { personStore } = this.state;
+  selectPersonById = (personId, personStore) => {
+    personStore = personStore || this.state.personStore;
     return personStore.getIn(['personMap', personId]);
   };
 
   /**
    * Select the person meta data data by person id
    * @param {int} personId
+   * @param {ImmutableMap?} personStore optionally specify the person store, otherwise, select the current from state
    * @return {Map} {isUpdating: boolean}
    */
-  selectPersonMetaById = personId => {
-    const { personStore } = this.state;
-    return personStore.getIn(['personMeta', personId], new Map());
+  selectPersonMetaById = (personId, personStore) => {
+    personStore = personStore || this.state.personStore;
+    return personStore.getIn(['personMeta', personId], new ImmutableMap());
   };
 
   /**
@@ -110,7 +112,10 @@ class PersonProviderWrapper extends Component {
 
   updatePersonViaApi = async (personId, personData) => {
     let personMeta = this.selectPersonMetaById(personId);
+    console.log('u0');
     this.setPersonMeta(personId, personMeta.set('isUpdating', true));
+
+    console.log('u1');
 
     const res = await requestToApi({
       url: personUrl.stringify({ personId }),
@@ -119,9 +124,13 @@ class PersonProviderWrapper extends Component {
     });
     if (!res.isOK) return;
 
+    console.log('u2');
+
     personMeta = this.selectPersonMetaById(personId);
     this.setPersonData(personId, transformGetPersonRes(res.data));
+    console.log('u3');
     this.setPersonMeta(personId, personMeta.set('isUpdating', false));
+    console.log('u4');
   };
 
   render() {

@@ -11,10 +11,23 @@ const getPersonFromProps = props => {
     match: {
       params: { personId }
     },
+    personStore,
     personSelectors: { selectPersonById }
   } = props;
 
-  return selectPersonById(personId);
+  return selectPersonById(personId, personStore);
+};
+
+const getPersonMetaFromProps = props => {
+  const {
+    match: {
+      params: { personId }
+    },
+    personStore,
+    personSelectors: { selectPersonMetaById }
+  } = props;
+
+  return selectPersonMetaById(personId, personStore);
 };
 
 class PersonEditPageWrapper extends Component {
@@ -47,23 +60,23 @@ class PersonEditPageWrapper extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const currentPerson = getPersonFromProps(this.props);
-  //   const prevPerson = getPersonFromProps(prevProps);
+  componentDidUpdate(prevProps) {
+    const currentMeta = getPersonMetaFromProps(this.props);
+    const prevMeta = getPersonMetaFromProps(prevProps);
 
-  //   const currentUpdating = currentPerson && currentPerson.get('isUpdating');
-  //   const prevUpdating = prevPerson && prevPerson.get('isUpdating');
+    const currentUpdating = currentMeta && currentMeta.get('isUpdating');
+    const prevUpdating = prevMeta && prevMeta.get('isUpdating');
 
-  //   if (prevUpdating && !currentUpdating) {
-  //     const {
-  //       match: {
-  //         params: { personId }
-  //       },
-  //       history
-  //     } = this.props;
-  //     navigateToPersonDetailPage(history, personId);
-  //   }
-  // }
+    if (prevUpdating && !currentUpdating) {
+      const {
+        match: {
+          params: { personId }
+        },
+        history
+      } = this.props;
+      navigateToPersonDetailPage(history, personId);
+    }
+  }
 
   render() {
     const { person } = this.state;
