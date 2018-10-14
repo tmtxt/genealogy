@@ -13,6 +13,22 @@ class PersonUpdate extends ModelBase {
         gender: {
           type: 'string',
           enum: ['male', 'female']
+        },
+        birthDate: {
+          // date string YYYY-MM-DD
+          type: 'string',
+          format: 'dateString'
+        },
+        deathDate: {
+          // date string YYYY-MM-DD
+          type: 'string',
+          format: 'dateString'
+        },
+        job: {
+          type: 'string'
+        },
+        summary: {
+          type: 'string'
         }
       }
     };

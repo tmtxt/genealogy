@@ -19,17 +19,22 @@ class Person extends ModelBase {
         },
         birthDate: {
           // date string YYYY-MM-DD
-          type: 'string'
+          type: 'string',
+          format: 'dateString'
         },
         deathDate: {
           // date string YYYY-MM-DD
-          type: 'string'
+          type: 'string',
+          format: 'dateString'
         },
         job: {
           type: 'string'
         },
         summary: {
           type: 'string'
+        },
+        isDead: {
+          type: 'boolean'
         }
       }
     };
