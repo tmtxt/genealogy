@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { wrapPersonConsumer } from 'contexts';
-import { navigateToPersonEditPage } from 'libs/navigation';
+import { navigateToPersonEditPage, navigateToAddChildPage } from 'libs/navigation';
 
 import PersonDetailPage from './person-detail-page';
 
@@ -51,7 +51,8 @@ class PersonDetailPageWrapper extends Component {
     this.setState({ showAddChildErrorDialog: !this.state.showAddChildErrorDialog });
 
   addChild = () => {
-    this.toggleAddChildDialog();
+    const personId = getPersonIdFromProps(this.props);
+    navigateToAddChildPage(this.props.history, personId);
   };
 
   render() {
