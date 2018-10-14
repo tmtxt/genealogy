@@ -2,7 +2,7 @@
 
 const dal = require('../dal');
 const models = require('../models');
-
+k
 const personDal = dal.person;
 
 // route handlers for person
@@ -25,6 +25,19 @@ const getPersonById = async ctx => {
   const personId = ctx.params.personId;
 
   const person = await personDal.getPersonById(personId, logTrail);
+  if (!person) {
+    ctx.responseError(404, 'Person not found');
+  }
+
+  ctx.body = person;
+};
+
+// GET /detailed-persons/:personId
+const getPersonByIdWithRelations = async ctx => {
+  const logTrail = ctx.logTrail;
+  const personId = ctx.params.personId;
+
+  const person = await personDal.getPersonByIdWithRelations(personId, logTrail);
   if (!person) {
     ctx.responseError(404, 'Person not found');
   }
@@ -94,6 +107,7 @@ const addWife = async ctx => {
 module.exports = {
   getRootPerson,
   getPersonById,
+  getPersonByIdWithRelations,
   updatePersonById,
   addChild,
   addHusband,

@@ -1,10 +1,13 @@
 'use strict';
 
 const _ = require('lodash');
+const neo4j = require('neo4j-driver').v1;
 
 const driver = require('./db').driver;
 
 const models = require('../models');
+
+const int = neo4j.int;
 
 /**
  * Transform a person record returned from the query.
@@ -116,6 +119,80 @@ const getPersonById = async (personId, logTrail) => {
   const res = await session.run(query, { personId: parseInt(personId) });
 
   return transformSingleResult(res);
+};
+
+/**
+ * Get person details with the connected relations
+ *
+ * @param {int} personId
+ *
+ * @param {LogTrail} logTrail
+ *
+ * @returns {Person} The person object with these extra props
+ * {
+ *   marriages: Array<Person>,
+ *   children: Array<Person>,
+ *   father?: <Person>
+ *   mother?: <Person>
+ * }
+ */
+const getPersonByIdWithRelations = async (personId, logTrail) => {
+  const session = driver.session();
+  let query = '';
+  query += 'MATCH (person:Person) WHERE id(person) = $personId ';
+  query += 'WITH ';
+  query += 'person AS person, ';
+  query +=
+    'extract(n IN (person)-[:Husband_wife|Wife_husband]->(:Person) | last(nodes(n))) AS marriages, ';
+  query +=
+    'extract(n IN (person)-[:Father_child|Mother_child]->(:Person) | last(nodes(n))) AS children, ';
+  query += 'extract(n IN (person)<-[:Father_child]-(:Person) | last(nodes(n))) AS fathers, ';
+  query += 'extract(n IN (person)<-[:Mother_child]-(:Person) | last(nodes(n))) AS mothers ';
+  query += 'RETURN ';
+  query += 'id(person) AS id, ';
+  query += 'person AS data, ';
+  query +=
+    'extract(marriage in marriages | {id: id(marriage), node_info: marriage}) AS marriages, ';
+  query += 'extract(child in children | {id: id(child), node_info: child}) AS children, ';
+  query += 'extract(father in fathers | {id: id(father), node_info: father}) AS fathers, ';
+  query += 'extract(mother in mothers | {id: id(mother), node_info: mother}) AS mothers ';
+
+  const res = await session.run(query, { personId: int(personId) });
+  const person = transformSingleResult(res);
+
+  if (!person) return null;
+
+  const record = res.records[0];
+
+  // set marriages
+  person.marriages = record
+    .get('marriages')
+    .map(marriage => _.assign({ id: marriage.id.toInt() }, marriage.node_info.properties));
+  logTrail.push('info', '# marriages', record.get('marriages').length);
+
+  // set children
+  person.children = record
+    .get('children')
+    .map(child => _.assign({ id: child.id.toInt() }, child.node_info.properties));
+  logTrail.push('info', '# children', record.get('children').length);
+
+  // set father
+  person.father = null;
+  const fathers = record.get('fathers');
+  if (fathers.length) {
+    logTrail.push('info', 'Has father', 'TRUE');
+    person.father = _.first(fathers);
+  }
+
+  // set mother
+  person.mother = null;
+  const mothers = record.get('mothers');
+  if (mothers.length) {
+    logTrail.push('info', 'Has mother', 'TRUE');
+    person.mother = _.first(mothers);
+  }
+
+  return person;
 };
 
 /**
@@ -264,8 +341,8 @@ module.exports = {
   insertRootPerson,
   getRootPerson,
   getPersonById,
+  getPersonByIdWithRelations,
   updatePersonById,
-
   addChild,
   addHusband,
   addWife

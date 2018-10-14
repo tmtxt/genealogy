@@ -48,9 +48,9 @@ const getTreeByPersonId = async (rootNodeId, logTrail) => {
   query += 'last(all_nodes) AS `node_info`, ';
   query += 'extract(n IN all_nodes | id(n)) AS `path`, '; // list of ids as the path from root node to this node
   query += 'coalesce(last(extract(r IN all_relationships | r.`order`)), 1) AS `child_order`,';
+  // list of all people get marriage to this node
   (query +=
     'extract(marriage in marriages | {id: id(marriage), node_info: marriage}) AS `marriages` '),
-    // query += 'marriages AS `marriages` '; // list of all people get marriage to this node
     (query += 'ORDER BY `depth`');
 
   const res = await session.run(query, { rootNodeId: int(rootNodeId) });
