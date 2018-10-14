@@ -29,6 +29,9 @@ class PersonUpdate extends ModelBase {
         },
         summary: {
           type: 'string'
+        },
+        isDead: {
+          type: 'boolean'
         }
       }
     };

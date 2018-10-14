@@ -36,6 +36,36 @@ export const PersonEditPage = ({
               />
             </FormGroup>
             <FormGroup>
+              <Label>Ngày sinh</Label>
+              <Input
+                type="date"
+                value={person.get('birthDate') || ''}
+                disabled={isUpdating}
+                onChange={e => updatePerson('birthDate', e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input
+                  checked={!!person.get('isDead')}
+                  type="checkbox"
+                  onChange={e => updatePerson('isDead', e.target.checked)}
+                />{' '}
+                Đã mất?
+              </Label>
+            </FormGroup>
+            {person.get('isDead') && (
+              <FormGroup>
+                <Label>Ngày mất</Label>
+                <Input
+                  type="date"
+                  value={person.get('deathDate') || ''}
+                  disabled={isUpdating}
+                  onChange={e => updatePerson('deathDate', e.target.value)}
+                />
+              </FormGroup>
+            )}
+            <FormGroup>
               <Label>Nghề nghiệp</Label>
               <Input
                 type="text"
@@ -52,15 +82,6 @@ export const PersonEditPage = ({
                 type="textarea"
                 value={person.get('summary') || ''}
                 disabled={isUpdating}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Tên</Label>
-              <Input
-                type="date"
-                value={person.get('birthDate') || ''}
-                disabled={isUpdating}
-                onChange={e => updatePerson('birthDate', e.target.value)}
               />
             </FormGroup>
             <Button onClick={() => updatePersonViaApi(personId, person)} disabled={isUpdating}>
