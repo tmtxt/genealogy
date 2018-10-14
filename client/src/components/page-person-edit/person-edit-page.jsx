@@ -95,4 +95,4 @@ export const PersonEditPage = ({
   );
 };
 
-export default PersonEditPage;
+export default wrapMainLayout(PersonEditPage);

@@ -38,6 +38,9 @@ const updatePersonById = async ctx => {
   const personId = ctx.params.personId;
   const updatingProps = ctx.validateRequestBody(models.PersonUpdate);
 
+  // not allow to update picture here
+  delete updatingProps.picture;
+
   const updatedPerson = await personDal.updatePersonById(personId, updatingProps, logTrail);
   if (!updatedPerson) {
     ctx.responseError(404, 'Person not found');
