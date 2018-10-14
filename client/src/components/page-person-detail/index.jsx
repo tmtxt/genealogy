@@ -5,6 +5,8 @@ import { navigateToPersonEditPage } from 'libs/navigation';
 
 import PersonDetailPage from './person-detail-page';
 
+const getPersonIdFromProps = props => props.match.params.personId;
+
 const selectPersonMetaFromProps = props => {
   const {
     match: {
@@ -19,11 +21,7 @@ const selectPersonMetaFromProps = props => {
 
 class PersonDetailPageWrapper extends Component {
   componentDidMount() {
-    const {
-      match: {
-        params: { personId }
-      }
-    } = this.props;
+    const personId = getPersonIdFromProps(this.props);
     this.props.personActions.fetchPersonDataWithRelations(personId, true);
   }
 
@@ -34,6 +32,14 @@ class PersonDetailPageWrapper extends Component {
 
     if (prevMeta.get('isAddingMarriage') && !currentMeta.get('isAddingMarriage')) {
       navigateToPersonEditPage(history, currentMeta.get('marriagePersonId'));
+      return;
+    }
+
+    const prevPersonId = getPersonIdFromProps(prevProps);
+    const currentPersonId = getPersonIdFromProps(this.props);
+    if (prevPersonId !== currentPersonId) {
+      this.props.personActions.fetchPersonDataWithRelations(currentPersonId, true);
+      return;
     }
   }
 

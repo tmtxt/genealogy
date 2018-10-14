@@ -1,7 +1,9 @@
 // @flow
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { wrapPersonConsumer } from 'contexts';
+import { personDetailUrl } from 'libs/navigation';
 
 export const ParentsTable = ({ person, personSelectors }) => {
   const father = person.get('father');
@@ -23,7 +25,11 @@ export const ParentsTable = ({ person, personSelectors }) => {
             alt=""
             src={personSelectors.selectPersonPicture(father)}
           />
-          <div style={styles.name}>Hello</div>
+          <div style={styles.name}>
+            <Link to={personDetailUrl.stringify({ personId: father.get('id') })}>
+              {father.get('name')}
+            </Link>
+          </div>
         </div>
       )}
       {mother && (
@@ -35,7 +41,11 @@ export const ParentsTable = ({ person, personSelectors }) => {
             alt=""
             src={personSelectors.selectPersonPicture(mother)}
           />
-          <div style={styles.name}>Hello</div>
+          <div style={styles.name}>
+            <Link to={personDetailUrl.stringify({ personId: mother.get('id') })}>
+              {mother.get('name')}
+            </Link>
+          </div>
         </div>
       )}
     </div>

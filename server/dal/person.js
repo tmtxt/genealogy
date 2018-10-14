@@ -181,7 +181,8 @@ const getPersonByIdWithRelations = async (personId, logTrail) => {
   const fathers = record.get('fathers');
   if (fathers.length) {
     logTrail.push('info', 'Has father', 'TRUE');
-    person.father = _.first(fathers);
+    const father = _.first(fathers);
+    person.father = _.assign({ id: father.id.toInt() }, father.node_info.properties);
   }
 
   // set mother
@@ -189,7 +190,8 @@ const getPersonByIdWithRelations = async (personId, logTrail) => {
   const mothers = record.get('mothers');
   if (mothers.length) {
     logTrail.push('info', 'Has mother', 'TRUE');
-    person.mother = _.first(mothers);
+    const mother = _.first(mothers);
+    person.mother = _.assign({ id: mother.id.toInt() }, mother.node_info.properties);
   }
 
   return person;
