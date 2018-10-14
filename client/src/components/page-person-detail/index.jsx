@@ -19,12 +19,16 @@ class PersonDetailPageWrapper extends Component {
       match: {
         params: { personId }
       },
-      personSelectors: { selectPersonById }
+      personSelectors: { selectPersonById, selectPersonMetaById },
+      personActions: { addMarriage }
     } = this.props;
 
     const person = selectPersonById(personId);
+    const personMeta = selectPersonMetaById(personId);
 
-    return <PersonDetailPage {...{ personId, person }} />;
+    const isAddingMarriage = personMeta.get('isAddingMarriage');
+
+    return <PersonDetailPage {...{ personId, person, addMarriage, isAddingMarriage }} />;
   }
 }
 

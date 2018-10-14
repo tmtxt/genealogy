@@ -204,6 +204,7 @@ const addHusband = async (wifeId, husbandOrder, wifeOrder, husbandProps, logTrai
   husbandOrder = husbandOrder || 1;
   wifeOrder = wifeOrder || 1;
   husbandProps = new models.Person(husbandProps || {});
+  husbandProps.gender = 'male';
 
   const session = driver.session();
   const query = `MATCH (wife:Person) WHERE id(wife) = toInteger($wifeId)
@@ -240,6 +241,7 @@ const addWife = async (husbandId, wifeOrder, husbandOrder, wifeProps, logTrail) 
   husbandOrder = husbandOrder || 1;
   wifeOrder = wifeOrder || 1;
   wifeProps = new models.Person(wifeProps);
+  wifeProps.gender = 'female';
 
   const session = driver.session();
   const query = `MATCH (husband:Person) WHERE id(husband) = toInteger($husbandId)

@@ -9,7 +9,7 @@ import { navigateToPersonEditPage } from 'libs/navigation';
 
 import PersonInfoTable from './person-info-table';
 
-const PersonDetailPage = ({ personId, person, history }) => {
+const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarriage }) => {
   if (!person) {
     return (
       <div className="center-block">
@@ -18,15 +18,28 @@ const PersonDetailPage = ({ personId, person, history }) => {
     );
   }
 
+  const gender = person.get('gender');
+  const addMarriageText = gender === 'male' ? 'Thêm vợ' : 'Thêm chồng';
+
+  const isUpdating = !!isAddingMarriage;
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3" />
         <div className="col-md-6">
-          <div class="float-right">
-            <Button color="primary" onClick={() => navigateToPersonEditPage(history, personId)}>
+          <div className="float-right">
+            <Button
+              color="primary"
+              onClick={() => navigateToPersonEditPage(history, personId)}
+              disabled={isUpdating}
+            >
               Sửa thông tin
+            </Button>{' '}
+            <Button disabled={isUpdating} onClick={() => addMarriage(personId)}>
+              {addMarriageText}
             </Button>
+            {isUpdating && <Loader />}
           </div>
         </div>
         <div className="col-md-3" />
@@ -47,10 +60,3 @@ const PersonDetailPage = ({ personId, person, history }) => {
 
 const enhance = flowRight([wrapMainLayout, withRouter]);
 export default enhance(PersonDetailPage);
-
-const styles = {
-  buttonsContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end'
-  }
-};
