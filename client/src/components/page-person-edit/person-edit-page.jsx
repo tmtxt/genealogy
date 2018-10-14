@@ -84,7 +84,11 @@ export const PersonEditPage = ({
                 disabled={isUpdating}
               />
             </FormGroup>
-            <Button onClick={() => updatePersonViaApi(personId, person)} disabled={isUpdating}>
+            <Button
+              color="primary"
+              onClick={() => updatePersonViaApi(personId, person)}
+              disabled={isUpdating}
+            >
               Lưu
             </Button>
             {isUpdating && <Loader />}
