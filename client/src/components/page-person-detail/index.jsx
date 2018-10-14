@@ -20,6 +20,10 @@ const selectPersonMetaFromProps = props => {
 };
 
 class PersonDetailPageWrapper extends Component {
+  state = {
+    showAddChildErrorDialog: false
+  };
+
   componentDidMount() {
     const personId = getPersonIdFromProps(this.props);
     this.props.personActions.fetchPersonDataWithRelations(personId, true);
@@ -43,6 +47,13 @@ class PersonDetailPageWrapper extends Component {
     }
   }
 
+  toggleAddChildDialog = () =>
+    this.setState({ showAddChildErrorDialog: !this.state.showAddChildErrorDialog });
+
+  addChild = () => {
+    this.toggleAddChildDialog();
+  };
+
   render() {
     const {
       match: {
@@ -51,13 +62,27 @@ class PersonDetailPageWrapper extends Component {
       personSelectors: { selectPersonById, selectPersonMetaById },
       personActions: { addMarriage }
     } = this.props;
+    const { toggleAddChildDialog, addChild } = this;
+    const { showAddChildErrorDialog } = this.state;
 
     const person = selectPersonById(personId);
     const personMeta = selectPersonMetaById(personId);
 
     const isAddingMarriage = personMeta.get('isAddingMarriage');
 
-    return <PersonDetailPage {...{ personId, person, addMarriage, isAddingMarriage }} />;
+    return (
+      <PersonDetailPage
+        {...{
+          personId,
+          person,
+          addMarriage,
+          isAddingMarriage,
+          toggleAddChildDialog,
+          showAddChildErrorDialog,
+          addChild
+        }}
+      />
+    );
   }
 }
 

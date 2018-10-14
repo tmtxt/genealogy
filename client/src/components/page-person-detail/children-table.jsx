@@ -5,7 +5,7 @@ import RelatedPersonRow from './related-person-row';
 export const ChildrenTable = ({ person }) => {
   const children = person.get('children');
 
-  if (!children.size) {
+  if (!children || !children.size) {
     return <div />;
   }
 

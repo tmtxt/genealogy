@@ -10,8 +10,19 @@ import { navigateToPersonEditPage } from 'libs/navigation';
 import PersonInfoTable from './person-info-table';
 import ParentsTable from './parents-table';
 import ChildrenTable from './children-table';
+import MarriagesTable from './marriages-table';
+import AddChildErrorDialog from './add-child-error-dialog';
 
-const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarriage }) => {
+const PersonDetailPage = ({
+  personId,
+  person,
+  history,
+  addMarriage,
+  isAddingMarriage,
+  toggleAddChildDialog,
+  showAddChildErrorDialog,
+  addChild
+}) => {
   if (!person) {
     return (
       <div className="center-block">
@@ -40,6 +51,9 @@ const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarr
             </Button>{' '}
             <Button disabled={isUpdating} onClick={() => addMarriage(personId)}>
               {addMarriageText}
+            </Button>{' '}
+            <Button disabled={isUpdating} onClick={() => addChild()}>
+              Thêm con
             </Button>
             {isUpdating && <Loader />}
           </div>
@@ -56,9 +70,11 @@ const PersonDetailPage = ({ personId, person, history, addMarriage, isAddingMarr
         </div>
         <div className="col-md-3">
           <ParentsTable {...{ person }} />
+          <MarriagesTable {...{ person }} />
           <ChildrenTable {...{ person }} />
         </div>
       </div>
+      <AddChildErrorDialog isOpen={showAddChildErrorDialog} toggle={toggleAddChildDialog} />
     </div>
   );
 };
