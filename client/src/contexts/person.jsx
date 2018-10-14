@@ -10,8 +10,8 @@ const { Provider, Consumer } = React.createContext();
 
 // generic url pattern for interacting with 1 person
 const personUrl = new UrlPattern('/api/persons/:personId');
-const addWifeUrl = new UrlPattern('/persons/:personId/add-wife');
-const addHusbandUrl = new UrlPattern('/persons/:personId/add-husband');
+const addWifeUrl = new UrlPattern('/api/persons/:personId/add-wife');
+const addHusbandUrl = new UrlPattern('/api/persons/:personId/add-husband');
 
 const transformGetPersonRes = responseBody => {
   let person = fromJS(responseBody);
@@ -115,11 +115,8 @@ class PersonProviderWrapper extends Component {
 
   /**
    * Update the person via the api and set the new person data into the store
-   *
    * @param {int} personId
-   *
    * @param {ImmutableMap} personData
-   *
    */
   updatePersonViaApi = async (personId, personData) => {
     let personMeta = this.selectPersonMetaById(personId);
@@ -137,6 +134,10 @@ class PersonProviderWrapper extends Component {
     this.setPersonMeta(personId, personMeta.set('isUpdating', false));
   };
 
+  /**
+   * Add a new marriage (wife/husband) for the current person via api
+   * @param {int} personId
+   */
   addMarriage = async personId => {
     let personMeta = this.selectPersonMetaById(personId);
     this.setPersonMeta(
@@ -144,20 +145,20 @@ class PersonProviderWrapper extends Component {
       personMeta.set('isAddingMarriage', true).set('marriagePersonId', null)
     );
 
-    // const person = this.selectPersonById(personId);
-    // const gender = person.get('gender');
-    // const pattern = gender === 'male' ? addWifeUrl : addHusbandUrl;
-    // const res = await requestToApi({
-    //   url: pattern.stringify({ personId }),
-    //   method: 'POST'
-    // });
-    // if (!res.isOK) return;
+    const person = this.selectPersonById(personId);
+    const gender = person.get('gender');
+    const pattern = gender === 'male' ? addWifeUrl : addHusbandUrl;
+    const res = await requestToApi({
+      url: pattern.stringify({ personId }),
+      method: 'POST'
+    });
+    if (!res.isOK) return;
 
-    // personMeta = this.selectPersonMetaById(personId);
-    // this.setPersonMeta(
-    //   'personId',
-    //   personMeta.set('isAddingMarriage', false).set('marriagePersonId', res.data.id)
-    // );
+    personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(
+      personId,
+      personMeta.set('isAddingMarriage', false).set('marriagePersonId', res.data.id)
+    );
   };
 
   render() {
