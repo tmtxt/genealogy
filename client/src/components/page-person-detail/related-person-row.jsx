@@ -1,19 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { wrapPersonConsumer } from 'contexts';
 import { personDetailUrl } from 'libs/navigation';
 
-export const RelatedPersonRow = ({ person, personSelectors }) => {
+export const RelatedPersonRow = ({ person }) => {
   return (
     <div style={styles.container}>
-      <img
-        width="50"
-        height="50"
-        className="img-rounded"
-        alt=""
-        src={personSelectors.selectPersonPicture(person)}
-      />
+      <img width="50" height="50" className="img-rounded" alt="" src={person.getPictureUrl()} />
       <div style={styles.name}>
         <Link to={personDetailUrl.stringify({ personId: person.get('id') })}>
           {person.get('name')}
@@ -23,7 +16,7 @@ export const RelatedPersonRow = ({ person, personSelectors }) => {
   );
 };
 
-export default wrapPersonConsumer(RelatedPersonRow);
+export default RelatedPersonRow;
 
 const styles = {
   container: {

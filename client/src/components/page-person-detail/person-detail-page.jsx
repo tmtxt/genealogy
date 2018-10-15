@@ -72,7 +72,7 @@ const PersonDetailPage = ({
       </div>
       <div className="row">
         <div className="col-md-3">
-          <img className="img-responsive img-rounded" alt="" src={person.get('picture')} />
+          <img className="img-responsive img-rounded" alt="" src={person.getPictureUrl()} />
         </div>
         <div className="col-md-6">
           <h1>{person.get('name')}</h1>

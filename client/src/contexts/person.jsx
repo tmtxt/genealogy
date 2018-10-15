@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { fromJS, Map as ImmutableMap } from 'immutable';
+import { fromJS, Map as ImmutableMap, List as ImmutableList } from 'immutable';
 import { requestToApi } from 'react-data-fetching';
 import UrlPattern from 'url-pattern';
 
-const defaultMalePicture = require('images/male-default.svg');
-const defaultFemalePicture = require('images/female-default.svg');
+import PersonRecord from './records/person';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -19,14 +18,21 @@ const addChildUrl = new UrlPattern(
 const deletePersonUrl = new UrlPattern('/api/persons/:personId');
 
 const transformGetPersonRes = responseBody => {
-  let person = fromJS(responseBody);
+  let person = new PersonRecord(responseBody);
 
-  const gender = person.get('gender', 'male');
-  const picture = person.get('picture');
-
-  if (!picture) {
-    const picture = gender === 'male' ? defaultMalePicture : defaultFemalePicture;
-    person = person.set('picture', picture);
+  if (person.get('father')) {
+    person = person.set('father', new PersonRecord(person.get('father')));
+  }
+  if (person.get('mother')) {
+    person = person.set('mother', new PersonRecord(person.get('mother')));
+  }
+  if (person.get('marriages')) {
+    const marriages = person.get('marriages').map(marriage => new PersonRecord(marriage));
+    person = person.set('marriages', ImmutableList(marriages));
+  }
+  if (person.get('children')) {
+    const children = person.get('children').map(child => new PersonRecord(child));
+    person = person.set('children', ImmutableList(children));
   }
 
   return person;
@@ -59,8 +65,7 @@ class PersonProviderWrapper extends Component {
       // selectors
       personSelectors: {
         selectPersonById: this.selectPersonById,
-        selectPersonMetaById: this.selectPersonMetaById,
-        selectPersonPicture: this.selectPersonPicture
+        selectPersonMetaById: this.selectPersonMetaById
       }
     };
   }
@@ -105,15 +110,6 @@ class PersonProviderWrapper extends Component {
   selectPersonMetaById = (personId, personStore) => {
     personStore = personStore || this.state.personStore;
     return personStore.getIn(['personMeta', personId], new ImmutableMap());
-  };
-
-  selectPersonPicture = person => {
-    const picture = person.get('picture');
-    const gender = person.get('gender');
-
-    if (picture) return picture;
-
-    return gender === 'male' ? defaultMalePicture : defaultFemalePicture;
   };
 
   /**
