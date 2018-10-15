@@ -3,15 +3,11 @@ import { flowRight } from 'lodash';
 
 import { withPersonDataFromParam } from 'components/person';
 import { wrapPersonConsumer } from 'contexts';
-import { navigateToPersonEditPage, navigateToAddChildPage } from 'libs/navigation';
+import { navigateToPersonEditPage } from 'libs/navigation';
 
 import PersonDetailPage from './person-detail-page';
 
 class PersonDetailPageWrapper extends Component {
-  state = {
-    showAddChildErrorDialog: false
-  };
-
   componentDidUpdate(prevProps) {
     const { personMeta: prevMeta } = prevProps;
     const { history, personMeta: currentMeta } = this.props;
@@ -22,21 +18,11 @@ class PersonDetailPageWrapper extends Component {
     }
   }
 
-  toggleAddChildDialog = () =>
-    this.setState({ showAddChildErrorDialog: !this.state.showAddChildErrorDialog });
-
-  addChild = () => {
-    const { personId } = this.props;
-    navigateToAddChildPage(this.props.history, personId);
-  };
-
   render() {
     const { personId, person, personMeta } = this.props;
     const {
       personActions: { addMarriage }
     } = this.props;
-    const { toggleAddChildDialog, addChild } = this;
-    const { showAddChildErrorDialog } = this.state;
 
     const isAddingMarriage = personMeta.get('isAddingMarriage');
 
@@ -47,10 +33,7 @@ class PersonDetailPageWrapper extends Component {
           person,
           personMeta,
           addMarriage,
-          isAddingMarriage,
-          toggleAddChildDialog,
-          showAddChildErrorDialog,
-          addChild
+          isAddingMarriage
         }}
       />
     );

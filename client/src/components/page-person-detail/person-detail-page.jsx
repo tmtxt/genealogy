@@ -11,9 +11,9 @@ import PersonInfoTable from './person-info-table';
 import ParentsTable from './parents-table';
 import ChildrenTable from './children-table';
 import MarriagesTable from './marriages-table';
-import AddChildErrorDialog from './add-child-error-dialog';
 
 import withDeleteDialogHandler from './with-delete-dialog-handler';
+import withAddChildDialogHandler from './with-add-child-dialog-handler';
 
 const PersonDetailPage = ({
   personId,
@@ -81,10 +81,9 @@ const PersonDetailPage = ({
           <ChildrenTable {...{ person }} />
         </div>
       </div>
-      <AddChildErrorDialog isOpen={showAddChildErrorDialog} toggle={toggleAddChildDialog} />
     </div>
   );
 };
 
-const enhance = flowRight([wrapMainLayout, withRouter, withDeleteDialogHandler]);
+const enhance = flowRight([wrapMainLayout, withRouter, withDeleteDialogHandler, withAddChildDialogHandler]);
 export default enhance(PersonDetailPage);
