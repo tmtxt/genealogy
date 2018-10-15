@@ -14,16 +14,18 @@ import MarriagesTable from './marriages-table';
 
 import withDeleteDialogHandler from './with-delete-dialog-handler';
 import withAddChildDialogHandler from './with-add-child-dialog-handler';
+import withAddMarriageHandler from './with-add-marriage-handler';
 
 const PersonDetailPage = ({
   personId,
   person,
   history,
+  // for adding marriage
   addMarriage,
   isAddingMarriage,
-  toggleAddChildDialog,
-  showAddChildErrorDialog,
+  // for adding child
   addChild,
+  // for deleting
   deletePerson,
   isDeleting
 }) => {
@@ -38,7 +40,7 @@ const PersonDetailPage = ({
   const gender = person.get('gender');
   const addMarriageText = gender === 'male' ? 'Thêm vợ' : 'Thêm chồng';
 
-  const isUpdating = !!isAddingMarriage || isDeleting;
+  const isUpdating = !!isAddingMarriage || !!isDeleting;
 
   return (
     <div className="container-fluid">
@@ -53,13 +55,13 @@ const PersonDetailPage = ({
             >
               Sửa thông tin
             </Button>{' '}
-            <Button disabled={isUpdating} onClick={() => addMarriage(personId)}>
+            <Button disabled={isUpdating} onClick={addMarriage}>
               {addMarriageText}
             </Button>{' '}
-            <Button disabled={isUpdating} onClick={() => addChild()}>
+            <Button disabled={isUpdating} onClick={addChild}>
               Thêm con
             </Button>{' '}
-            <Button color="danger" disabled={isUpdating} onClick={() => deletePerson()}>
+            <Button color="danger" disabled={isUpdating} onClick={deletePerson}>
               Xóa
             </Button>
             {isUpdating && <Loader />}
@@ -85,5 +87,11 @@ const PersonDetailPage = ({
   );
 };
 
-const enhance = flowRight([wrapMainLayout, withRouter, withDeleteDialogHandler, withAddChildDialogHandler]);
+const enhance = flowRight([
+  wrapMainLayout,
+  withRouter,
+  withDeleteDialogHandler,
+  withAddChildDialogHandler,
+  withAddMarriageHandler
+]);
 export default enhance(PersonDetailPage);
