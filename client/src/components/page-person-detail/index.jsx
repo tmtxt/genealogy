@@ -45,6 +45,7 @@ class PersonDetailPageWrapper extends Component {
         {...{
           personId,
           person,
+          personMeta,
           addMarriage,
           isAddingMarriage,
           toggleAddChildDialog,

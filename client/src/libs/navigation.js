@@ -11,3 +11,6 @@ export const navigateToPersonEditPage = (history, personId) =>
 export const addChildUrl = new UrlPattern('/persons/:personId/add-child');
 export const navigateToAddChildPage = (history, personId) =>
   history.push(addChildUrl.stringify({ personId }));
+
+export const treeUrl = new UrlPattern('/tree');
+export const navigateToTreePage = history => history.push(treeUrl.stringify());

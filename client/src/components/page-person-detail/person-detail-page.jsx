@@ -13,6 +13,8 @@ import ChildrenTable from './children-table';
 import MarriagesTable from './marriages-table';
 import AddChildErrorDialog from './add-child-error-dialog';
 
+import withDeleteDialogHandler from './with-delete-dialog-handler';
+
 const PersonDetailPage = ({
   personId,
   person,
@@ -21,7 +23,8 @@ const PersonDetailPage = ({
   isAddingMarriage,
   toggleAddChildDialog,
   showAddChildErrorDialog,
-  addChild
+  addChild,
+  deletePerson
 }) => {
   if (!person) {
     return (
@@ -54,6 +57,9 @@ const PersonDetailPage = ({
             </Button>{' '}
             <Button disabled={isUpdating} onClick={() => addChild()}>
               Thêm con
+            </Button>{' '}
+            <Button color="danger" disabled={isUpdating} onClick={() => deletePerson()}>
+              Xóa
             </Button>
             {isUpdating && <Loader />}
           </div>
@@ -79,5 +85,5 @@ const PersonDetailPage = ({
   );
 };
 
-const enhance = flowRight([wrapMainLayout, withRouter]);
+const enhance = flowRight([wrapMainLayout, withRouter, withDeleteDialogHandler]);
 export default enhance(PersonDetailPage);

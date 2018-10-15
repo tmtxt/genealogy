@@ -16,6 +16,7 @@ const addHusbandUrl = new UrlPattern('/api/persons/:personId/add-husband');
 const addChildUrl = new UrlPattern(
   '/api/persons/add-child/father/:fatherPersonId/mother/:motherPersonId'
 );
+const deletePersonUrl = new UrlPattern('/api/persons/:personId');
 
 const transformGetPersonRes = responseBody => {
   let person = fromJS(responseBody);
@@ -51,7 +52,8 @@ class PersonProviderWrapper extends Component {
         fetchPersonDataWithRelations: this.fetchPersonDataWithRelations,
         updatePersonViaApi: this.updatePersonViaApi,
         addMarriage: this.addMarriage,
-        addChild: this.addChild
+        addChild: this.addChild,
+        deletePersonViaApi: this.deletePersonViaApi
       },
 
       // selectors
@@ -195,6 +197,11 @@ class PersonProviderWrapper extends Component {
     );
   };
 
+  /**
+   * Add a new child for this person
+   * @param {int} personId
+   * @param {int} marriagePersonId husband/wife id
+   */
   addChild = async (personId, marriagePersonId) => {
     let personMeta = this.selectPersonMetaById(personId);
     this.setPersonMeta(personId, personMeta.set('isAddingChild', true).set('childPersonId', null));
@@ -221,6 +228,20 @@ class PersonProviderWrapper extends Component {
       personId,
       personMeta.set('isAddingChild', false).set('childPersonId', res.data.id)
     );
+  };
+
+  deletePersonViaApi = async personId => {
+    let personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(personId, personMeta.set('isDeleting', true));
+
+    const res = await requestToApi({
+      url: deletePersonUrl.stringify({ personId }),
+      method: 'DELETE'
+    });
+    if (!res.isOK) return;
+
+    personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(personId, personMeta.set('isDeleting', false));
   };
 
   render() {
