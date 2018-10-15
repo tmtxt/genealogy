@@ -4,7 +4,7 @@ const _ = require('lodash');
 const neo4j = require('neo4j-driver').v1;
 
 const models = require('../models');
-const {BadDataError} = require('../errors');
+const { BadDataError } = require('../errors');
 
 const driver = require('./db').driver;
 
@@ -339,6 +339,12 @@ const addWife = async (husbandId, wifeOrder, husbandOrder, wifeProps, logTrail) 
   return wife;
 };
 
+/**
+ * Delete 1 person.
+ * @param {int} personId
+ * @param {LogTrail} logTrail
+ * @throws {BadDataError} when person still has children
+ */
 const removePerson = async (personId, logTrail) => {
   const session = driver.session();
 
@@ -350,6 +356,7 @@ const removePerson = async (personId, logTrail) => {
   childrenQuery += 'count(child) AS `children_count`';
   const childrenRes = await session.run(childrenQuery, { personId: int(personId) });
   const childrenCount = childrenRes.records[0].get('children_count').toInt();
+  logTrail.push('info', 'childrenCount', `${childrenCount}`);
 
   if (childrenCount) {
     throw new BadDataError('This person has children. Remove children first');
@@ -359,9 +366,7 @@ const removePerson = async (personId, logTrail) => {
 
   // delete the node
   const deleteQuery = 'MATCH (p:Person) WHERE id(p) = $personId DETACH DELETE p';
-  const res = await session.run(deleteQuery, {personId: int(personId)});
-
-  logTrail.push('info', 'a', res);
+  await session.run(deleteQuery, { personId: int(personId) });
 };
 
 module.exports = {

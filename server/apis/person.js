@@ -104,6 +104,7 @@ const addWife = async ctx => {
   ctx.body = await personDal.addWife(husbandId, husbandOrder, wifeOrder, {}, logTrail);
 };
 
+// DELETE /persons/:personId
 const removePerson = async ctx => {
   const logTrail = ctx.logTrail;
   const { personId } = ctx.params;
