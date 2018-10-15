@@ -16,6 +16,8 @@ export const AddChildPage = ({
     return <Loader />;
   }
 
+  const isAddingChild = personMeta.get('isAddingChild');
+
   const marriages = person.get('marriages');
   const gender = person.get('gender');
   const listText = gender === 'male' ? 'Vợ' : 'Chồng';
@@ -40,9 +42,10 @@ export const AddChildPage = ({
                 ))}
               </Input>
             </FormGroup>
-            <Button onClick={handleAddChild} color="primary">
+            <Button onClick={handleAddChild} color="primary" disabled={isAddingChild}>
               Thêm
             </Button>
+            {isAddingChild && <Loader />}
           </Form>
         </div>
       </div>

@@ -13,6 +13,9 @@ const personUrl = new UrlPattern('/api/persons/:personId');
 const personWithRelationsUrl = new UrlPattern('/api/detailed-persons/:personId');
 const addWifeUrl = new UrlPattern('/api/persons/:personId/add-wife');
 const addHusbandUrl = new UrlPattern('/api/persons/:personId/add-husband');
+const addChildUrl = new UrlPattern(
+  '/api/persons/add-child/father/:fatherPersonId/mother/:motherPersonId'
+);
 
 const transformGetPersonRes = responseBody => {
   let person = fromJS(responseBody);
@@ -47,7 +50,8 @@ class PersonProviderWrapper extends Component {
         fetchPersonData: this.fetchPersonData,
         fetchPersonDataWithRelations: this.fetchPersonDataWithRelations,
         updatePersonViaApi: this.updatePersonViaApi,
-        addMarriage: this.addMarriage
+        addMarriage: this.addMarriage,
+        addChild: this.addChild
       },
 
       // selectors
@@ -188,6 +192,34 @@ class PersonProviderWrapper extends Component {
     this.setPersonMeta(
       personId,
       personMeta.set('isAddingMarriage', false).set('marriagePersonId', res.data.id)
+    );
+  };
+
+  addChild = async (personId, marriagePersonId) => {
+    let personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(personId, personMeta.set('isAddingChild', true).set('childPersonId', null));
+
+    const person = this.selectPersonById(personId);
+    const gender = person.get('gender');
+    let fatherPersonId, motherPersonId;
+    if (gender === 'male') {
+      fatherPersonId = personId;
+      motherPersonId = marriagePersonId;
+    } else {
+      motherPersonId = personId;
+      fatherPersonId = marriagePersonId;
+    }
+
+    const res = await requestToApi({
+      url: addChildUrl.stringify({ fatherPersonId, motherPersonId }),
+      method: 'POST'
+    });
+    if (!res.isOK) return;
+
+    personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(
+      personId,
+      personMeta.set('isAddingChild', false).set('childPersonId', res.data.id)
     );
   };
 
