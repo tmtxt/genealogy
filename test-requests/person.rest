@@ -45,3 +45,7 @@ Content-Type: application/json
 {
   "order": 2
 }
+
+# delete person
+:personId = 32
+DELETE http://:host:30001/api/persons/:personId

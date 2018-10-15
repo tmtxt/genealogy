@@ -20,6 +20,7 @@ router.patch('/persons/:personId', person.updatePersonById);
 router.post('/persons/add-child/father/:fatherPersonId/mother/:motherPersonId', person.addChild);
 router.post('/persons/:personId/add-husband', person.addHusband);
 router.post('/persons/:personId/add-wife', person.addWife);
+router.delete('/persons/:personId', person.removePerson);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 

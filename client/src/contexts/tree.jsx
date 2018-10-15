@@ -97,6 +97,8 @@ class TreeProviderWrapper extends Component {
     }
 
     if (!res.isOK) return;
+
+    // TODO collapse by default
     this.setTreeDataById(treeId, fromJS(res.data));
   };
 

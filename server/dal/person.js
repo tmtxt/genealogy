@@ -3,9 +3,10 @@
 const _ = require('lodash');
 const neo4j = require('neo4j-driver').v1;
 
-const driver = require('./db').driver;
-
 const models = require('../models');
+const {BadDataError} = require('../errors');
+
+const driver = require('./db').driver;
 
 const int = neo4j.int;
 
@@ -338,6 +339,31 @@ const addWife = async (husbandId, wifeOrder, husbandOrder, wifeProps, logTrail) 
   return wife;
 };
 
+const removePerson = async (personId, logTrail) => {
+  const session = driver.session();
+
+  // check whether this node has any children
+  let childrenQuery = '';
+  childrenQuery += 'MATCH (p:Person)-[:Father_child|Mother_child]->(child:Person) ';
+  childrenQuery += 'WHERE id(p) = $personId ';
+  childrenQuery += 'RETURN ';
+  childrenQuery += 'count(child) AS `children_count`';
+  const childrenRes = await session.run(childrenQuery, { personId: int(personId) });
+  const childrenCount = childrenRes.records[0].get('children_count').toInt();
+
+  if (childrenCount) {
+    throw new BadDataError('This person has children. Remove children first');
+  }
+
+  // TODO: check for other parent, mother relation
+
+  // delete the node
+  const deleteQuery = 'MATCH (p:Person) WHERE id(p) = $personId DETACH DELETE p';
+  const res = await session.run(deleteQuery, {personId: int(personId)});
+
+  logTrail.push('info', 'a', res);
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
@@ -347,5 +373,6 @@ module.exports = {
   updatePersonById,
   addChild,
   addHusband,
-  addWife
+  addWife,
+  removePerson
 };

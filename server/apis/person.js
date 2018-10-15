@@ -104,6 +104,14 @@ const addWife = async ctx => {
   ctx.body = await personDal.addWife(husbandId, husbandOrder, wifeOrder, {}, logTrail);
 };
 
+const removePerson = async ctx => {
+  const logTrail = ctx.logTrail;
+  const { personId } = ctx.params;
+
+  await personDal.removePerson(personId, logTrail);
+  ctx.status = 204;
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
@@ -111,5 +119,6 @@ module.exports = {
   updatePersonById,
   addChild,
   addHusband,
-  addWife
+  addWife,
+  removePerson
 };
