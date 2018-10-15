@@ -24,7 +24,8 @@ const PersonDetailPage = ({
   toggleAddChildDialog,
   showAddChildErrorDialog,
   addChild,
-  deletePerson
+  deletePerson,
+  isDeleting
 }) => {
   if (!person) {
     return (
@@ -37,7 +38,7 @@ const PersonDetailPage = ({
   const gender = person.get('gender');
   const addMarriageText = gender === 'male' ? 'Thêm vợ' : 'Thêm chồng';
 
-  const isUpdating = !!isAddingMarriage;
+  const isUpdating = !!isAddingMarriage || isDeleting;
 
   return (
     <div className="container-fluid">

@@ -37,10 +37,12 @@ const withDeleteDialogHandler = WrappedComponent => {
     render() {
       const { toggleErrorDialog, deletePerson } = this;
       const { showErrorDialog } = this.state;
+      const { personMeta } = this.props;
+      const isDeleting = !!personMeta.get('isDeleting');
 
       return (
         <div>
-          <WrappedComponent {...this.props} {...{ deletePerson }} />
+          <WrappedComponent {...this.props} {...{ deletePerson, isDeleting }} />
           <Modal isOpen={showErrorDialog} toggle={toggleErrorDialog}>
             <ModalHeader toggle={toggleErrorDialog}>Lỗi</ModalHeader>
             <ModalBody>Cần xóa tất cả con cái trước</ModalBody>
