@@ -6,6 +6,7 @@ import { flowRight } from 'lodash';
 import { wrapMainLayout } from 'components/layouts';
 import { Loader } from 'components/shared';
 import { navigateToPersonEditPage } from 'libs/navigation';
+import { withPersonDataFromParam } from 'components/person';
 
 import PersonInfoTable from './person-info-table';
 import ParentsTable from './parents-table';
@@ -88,6 +89,7 @@ const PersonDetailPage = ({
 };
 
 const enhance = flowRight([
+  withPersonDataFromParam,
   wrapMainLayout,
   withRouter,
   withDeleteDialogHandler,
