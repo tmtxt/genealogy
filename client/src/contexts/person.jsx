@@ -137,13 +137,8 @@ class PersonProviderWrapper extends Component {
     const person = this.selectPersonById(personId);
     if (person && !forceReload) return;
 
-    const res = await requestToApi({
-      url: personWithRelationsUrl.stringify({ personId }),
-      method: 'GET'
-    });
-    if (!res.isOK) return;
-
-    this.setPersonData(personId, transformGetPersonRes(res.data));
+    const data = await this.props.sendApiRequest('person.getPersonByIdWithRelations', { personId });
+    this.setPersonData(personId, transformGetPersonRes(data));
   };
 
   /**
