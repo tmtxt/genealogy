@@ -4,6 +4,7 @@ import { requestToApi } from 'react-data-fetching';
 import UrlPattern from 'url-pattern';
 
 import PersonRecord from './records/person';
+import { wrapApiConsumer } from './api';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -244,11 +245,12 @@ class PersonProviderWrapper extends Component {
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }
+const PersonProviderWrapperWithApi = wrapApiConsumer(PersonProviderWrapper);
 
 export const wrapPersonProvider = WrappedComponent => props => (
-  <PersonProviderWrapper>
+  <PersonProviderWrapperWithApi>
     <WrappedComponent {...props} />
-  </PersonProviderWrapper>
+  </PersonProviderWrapperWithApi>
 );
 
 export const wrapPersonConsumer = WrappedComponent => props => (

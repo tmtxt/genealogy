@@ -13,6 +13,20 @@ import PersonEditPage from 'components/page-person-edit';
 import TreePage from 'components/page-tree';
 import AddChildPage from 'components/page-add-child';
 
+const AppWithRouter = () => (
+  <Router>
+    <div>
+      <Route exact path="/" component={HomePage} />
+      <Route exact path="/persons/:personId/edit" component={PersonEditPage} />
+      <Route exact path="/persons/:personId" component={PersonDetailPage} />
+      <Route exact path="/persons/:personId/add-child" component={AddChildPage} />
+      <Route path="/tree" component={TreePage} />
+    </div>
+  </Router>
+);
+
+const AppWithContextProviders = wrapContextProviders(AppWithRouter);
+
 const App = () => (
   <AlertProvider
     template={AlertTemplate}
@@ -21,16 +35,8 @@ const App = () => (
     offset="30px"
     transition="scale"
   >
-    <Router>
-      <div>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/persons/:personId/edit" component={PersonEditPage} />
-        <Route exact path="/persons/:personId" component={PersonDetailPage} />
-        <Route exact path="/persons/:personId/add-child" component={AddChildPage} />
-        <Route path="/tree" component={TreePage} />
-      </div>
-    </Router>
+    <AppWithContextProviders />
   </AlertProvider>
 );
 
-export default wrapContextProviders(App);
+export default App;
