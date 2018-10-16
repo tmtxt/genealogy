@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
 import { fromJS, Map as ImmutableMap, List as ImmutableList } from 'immutable';
-import { requestToApi } from 'react-data-fetching';
-import UrlPattern from 'url-pattern';
+import { withAlert } from 'react-alert';
 
 import PersonRecord from './records/person';
 import { wrapApiConsumer } from './api';
 
 const { Provider, Consumer } = React.createContext();
-
-// generic url pattern for interacting with 1 person
-const personUrl = new UrlPattern('/api/persons/:personId');
-const personWithRelationsUrl = new UrlPattern('/api/detailed-persons/:personId');
-const addWifeUrl = new UrlPattern('/api/persons/:personId/add-wife');
-const addHusbandUrl = new UrlPattern('/api/persons/:personId/add-husband');
-const addChildUrl = new UrlPattern(
-  '/api/persons/add-child/father/:fatherPersonId/mother/:motherPersonId'
-);
-const deletePersonUrl = new UrlPattern('/api/persons/:personId');
 
 const transformGetPersonRes = responseBody => {
   let person = new PersonRecord(responseBody);
@@ -122,10 +111,8 @@ class PersonProviderWrapper extends Component {
     const person = this.selectPersonById(personId);
     if (person && !forceReload) return;
 
-    const res = await requestToApi({ url: personUrl.stringify({ personId }), method: 'GET' });
-    if (!res.isOK) return;
-
-    this.setPersonData(personId, transformGetPersonRes(res.data));
+    const data = await this.props.sendApiRequest('person.getPersonById', { personId });
+    this.setPersonData(personId, transformGetPersonRes(data));
   };
 
   /**
@@ -150,15 +137,12 @@ class PersonProviderWrapper extends Component {
     let personMeta = this.selectPersonMetaById(personId);
     this.setPersonMeta(personId, personMeta.set('isUpdating', true));
 
-    const res = await requestToApi({
-      url: personUrl.stringify({ personId }),
-      method: 'PATCH',
-      body: personData.toJS()
-    });
-    if (!res.isOK) return;
+    const patch = personData.toJS();
+    const params = { personId };
+    const data = await this.props.sendApiRequest('person.updatePersonById', params, null, patch);
 
     personMeta = this.selectPersonMetaById(personId);
-    this.setPersonData(personId, transformGetPersonRes(res.data));
+    this.setPersonData(personId, transformGetPersonRes(data));
     this.setPersonMeta(personId, personMeta.set('isUpdating', false));
   };
 
@@ -168,25 +152,17 @@ class PersonProviderWrapper extends Component {
    */
   addMarriage = async personId => {
     let personMeta = this.selectPersonMetaById(personId);
-    this.setPersonMeta(
-      personId,
-      personMeta.set('isAddingMarriage', true).set('marriagePersonId', null)
-    );
+    personMeta = personMeta.set('isAddingMarriage', true).set('marriagePersonId', null);
+    this.setPersonMeta(personId, personMeta);
 
     const person = this.selectPersonById(personId);
     const gender = person.get('gender');
-    const pattern = gender === 'male' ? addWifeUrl : addHusbandUrl;
-    const res = await requestToApi({
-      url: pattern.stringify({ personId }),
-      method: 'POST'
-    });
-    if (!res.isOK) return;
+    const routeName = gender === 'male' ? 'person.addWife' : 'person.addHusband';
+    const data = await this.props.sendApiRequest(routeName, { personId });
 
     personMeta = this.selectPersonMetaById(personId);
-    this.setPersonMeta(
-      personId,
-      personMeta.set('isAddingMarriage', false).set('marriagePersonId', res.data.id)
-    );
+    personMeta = personMeta.set('isAddingMarriage', false).set('marriagePersonId', data.id);
+    this.setPersonMeta(personId, personMeta);
   };
 
   /**
@@ -209,28 +185,20 @@ class PersonProviderWrapper extends Component {
       fatherPersonId = marriagePersonId;
     }
 
-    const res = await requestToApi({
-      url: addChildUrl.stringify({ fatherPersonId, motherPersonId }),
-      method: 'POST'
-    });
-    if (!res.isOK) return;
+    const params = { fatherPersonId, motherPersonId };
+    const data = await this.props.sendApiRequest('person.addChild', params);
 
     personMeta = this.selectPersonMetaById(personId);
-    this.setPersonMeta(
-      personId,
-      personMeta.set('isAddingChild', false).set('childPersonId', res.data.id)
-    );
+    personMeta = personMeta.set('isAddingChild', false).set('childPersonId', data.id);
+    this.setPersonMeta(personId, personMeta);
   };
 
   deletePersonViaApi = async personId => {
     let personMeta = this.selectPersonMetaById(personId);
     this.setPersonMeta(personId, personMeta.set('isDeleting', true));
 
-    const res = await requestToApi({
-      url: deletePersonUrl.stringify({ personId }),
-      method: 'DELETE'
-    });
-    if (!res.isOK) return;
+    await this.props.sendApiRequest('person.removePerson', { personId });
+    this.props.alert.success('Đã xóa');
 
     personMeta = this.selectPersonMetaById(personId);
     this.setPersonMeta(personId, personMeta.set('isDeleting', false));
@@ -240,12 +208,12 @@ class PersonProviderWrapper extends Component {
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }
-const PersonProviderWrapperWithApi = wrapApiConsumer(PersonProviderWrapper);
+const EnhancedPersonProviderWrapper = withAlert(wrapApiConsumer(PersonProviderWrapper));
 
 export const wrapPersonProvider = WrappedComponent => props => (
-  <PersonProviderWrapperWithApi>
+  <EnhancedPersonProviderWrapper>
     <WrappedComponent {...props} />
-  </PersonProviderWrapperWithApi>
+  </EnhancedPersonProviderWrapper>
 );
 
 export const wrapPersonConsumer = WrappedComponent => props => (
