@@ -7,6 +7,7 @@ const middlewares = require('../middlewares');
 // route handlers
 const person = require('./person');
 const tree = require('./tree');
+const user = require('./user');
 
 const router = new Router({ prefix: '/api' });
 router.use(middlewares.logTrailMiddleware);
@@ -23,6 +24,8 @@ router.post('/persons/:personId/add-wife', person.addWife);
 router.delete('/persons/:personId', person.removePerson);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
+
+router.post('/login', user.login);
 
 router.all('/*', async ctx => ctx.responseError(404, 'API not found'));
 
