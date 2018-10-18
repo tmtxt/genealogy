@@ -11,6 +11,9 @@ const initApp = require('./init');
 
 const startWebServer = () => {
   const app = new Koa();
+
+  app.keys = [config.secretKey];
+
   app.use(koaStatic('./static'));
   app.use(bodyParser());
   app.use(apiRouter.routes()).use(apiRouter.allowedMethods());

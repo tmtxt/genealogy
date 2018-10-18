@@ -1,12 +1,8 @@
 'use strict';
 // ensure some data for the app to run
 
-const AppLogTrail = require('../logger').AppLogTrail;
-
-const config = require('../config');
 const dal = require('../dal');
 
-const ensureDataEnabled = config.ensureDataEnabled;
 const personDal = dal.person;
 
 // ensure person data
@@ -73,12 +69,8 @@ const ensurePersonData = async logTrail => {
 };
 
 // create data if necessary
-const ensureData = async () => {
-  if (!ensureDataEnabled) return;
-
-  const logTrail = new AppLogTrail();
+const ensureData = async (logTrail) => {
   await ensurePersonData(logTrail);
-  logTrail.flush();
 };
 
 module.exports = ensureData;

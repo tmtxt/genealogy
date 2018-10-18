@@ -9,6 +9,12 @@ services:
     environment:
       NEO4J_AUTH: "none"
 
+  rethinkdb:
+    image: rethinkdb:2.3.6
+    ports:
+      - "30004:8080"
+      - "30005:28015"
+
   # web:
   #   image: tmtxt/genealogy:latest
   #   ports:
