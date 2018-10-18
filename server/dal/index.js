@@ -2,5 +2,6 @@
 
 module.exports = {
   person: require('./person'),
-  tree: require('./tree')
+  tree: require('./tree'),
+  user: require('./user')
 };

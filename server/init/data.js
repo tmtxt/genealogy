@@ -4,6 +4,7 @@
 const dal = require('../dal');
 
 const personDal = dal.person;
+const userDal = dal.user;
 
 // ensure person data
 const ensurePersonData = async logTrail => {
@@ -68,9 +69,23 @@ const ensurePersonData = async logTrail => {
   );
 };
 
+// create default admin user
+const ensureUserData = async logTrail => {
+  try {
+    await userDal.addNewUser({
+      username: 'admin',
+      password: 'admin'
+    });
+    logTrail.push('info', 'ensureUserData', 'User admin inserted');
+  } catch (e) {
+    logTrail.push('info', 'ensureUserData', 'Admin user already exists');
+  }
+};
+
 // create data if necessary
-const ensureData = async (logTrail) => {
+const ensureData = async logTrail => {
   await ensurePersonData(logTrail);
+  await ensureUserData(logTrail);
 };
 
 module.exports = ensureData;

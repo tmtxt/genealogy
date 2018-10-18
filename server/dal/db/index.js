@@ -16,7 +16,8 @@ const driver = neo4j.driver(
 const rethinkdbConfig = config.rethinkdb;
 const r = Rethinkdbdash({
   host: rethinkdbConfig.host,
-  port: rethinkdbConfig.port
+  port: rethinkdbConfig.port,
+  db: rethinkdbConfig.db
 });
 
 module.exports = {
