@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/Library/Caches/Rider2018.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2018.2/resharper-host/local/Transient/ReSharperHost/v182/SolutionCaches/_server.155568811.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/consoles/graphdb-parameters" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/_http_incoming.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/_http_outgoing.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/_http_server.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/assert.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/async_hooks.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/child_process.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/cluster.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/crypto.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/dgram.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/dns.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/domain.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/events.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/fs.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/http.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/https.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/net.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/os.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/path.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/punycode.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/querystring.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/readline.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/repl.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/stream.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/string_decoder.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/tls.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/tty.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/url.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/util.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/v8.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/vm.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/nodejs/8.10.0/core-modules/zlib.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="node_modules" t="ExcludeRecursive">
+        <e p="eslint" t="IncludeRecursive" />
+        <e p="jsonschema" t="IncludeRecursive" />
+        <e p="koa" t="IncludeRecursive" />
+        <e p="koa-bodyparser" t="IncludeRecursive" />
+        <e p="koa-router" t="IncludeRecursive" />
+        <e p="koa-send" t="IncludeRecursive" />
+        <e p="koa-static" t="IncludeRecursive" />
+        <e p="moment-timezone" t="IncludeRecursive" />
+        <e p="neo4j-driver" t="IncludeRecursive" />
+        <e p="node-uuid" t="IncludeRecursive" />
+        <e p="rethinkdbdash" t="IncludeRecursive" />
+        <e p="winston" t="IncludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>
