@@ -32,5 +32,10 @@ export default {
   'person.removePerson': {
     path: '/api/persons/:personId',
     method: 'DELETE'
+  },
+
+  'user.login': {
+    path: '/api/login',
+    method: 'POST'
   }
 };

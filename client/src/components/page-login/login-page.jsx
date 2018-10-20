@@ -2,8 +2,13 @@
 import React from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
-type PropsType = {};
-export const LoginPage = (props: PropsType) => {
+export const LoginPage = ({
+  username,
+  password,
+  login,
+  handleUsernameChanged,
+  handlePasswordChanged
+}) => {
   return (
     <Container>
       <Row>
@@ -12,13 +17,21 @@ export const LoginPage = (props: PropsType) => {
           <Form>
             <FormGroup>
               <Label>Tên đăng nhập</Label>
-              <Input type="text" />
+              <Input
+                type="text"
+                value={username}
+                onChange={e => handleUsernameChanged(e.target.value)}
+              />
             </FormGroup>
             <FormGroup>
               <Label>Mật khẩu</Label>
-              <Input type="password" />
+              <Input
+                type="password"
+                value={password}
+                onChange={e => handlePasswordChanged(e.target.value)}
+              />
             </FormGroup>
-            <Button>Đăng nhập</Button>
+            <Button onClick={login}>Đăng nhập</Button>
           </Form>
         </Col>
         <Col md="4" />
