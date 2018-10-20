@@ -6,6 +6,7 @@ import { flowRight } from 'lodash';
 import { Loader } from 'components/shared';
 import { navigateToPersonEditPage } from 'libs/navigation';
 import { withPersonDataFromParam } from 'components/person';
+import { wrapUserConsumer } from 'contexts';
 
 import PersonInfoTable from './person-info-table';
 import ParentsTable from './parents-table';
@@ -27,7 +28,8 @@ const PersonDetailPage = ({
   addChild,
   // for deleting
   deletePerson,
-  isDeleting
+  isDeleting,
+  userSelectors: { isLoggedIn }
 }) => {
   if (!person) {
     return (
@@ -47,25 +49,27 @@ const PersonDetailPage = ({
       <div className="row">
         <div className="col-md-3" />
         <div className="col-md-6">
-          <div className="float-right">
-            <Button
-              color="primary"
-              onClick={() => navigateToPersonEditPage(history, personId)}
-              disabled={isUpdating}
-            >
-              Sửa thông tin
-            </Button>{' '}
-            <Button disabled={isUpdating} onClick={addMarriage}>
-              {addMarriageText}
-            </Button>{' '}
-            <Button disabled={isUpdating} onClick={addChild}>
-              Thêm con
-            </Button>{' '}
-            <Button color="danger" disabled={isUpdating} onClick={deletePerson}>
-              Xóa
-            </Button>
-            {isUpdating && <Loader />}
-          </div>
+          {isLoggedIn() && (
+            <div className="float-right">
+              <Button
+                color="primary"
+                onClick={() => navigateToPersonEditPage(history, personId)}
+                disabled={isUpdating}
+              >
+                Sửa thông tin
+              </Button>{' '}
+              <Button disabled={isUpdating} onClick={addMarriage}>
+                {addMarriageText}
+              </Button>{' '}
+              <Button disabled={isUpdating} onClick={addChild}>
+                Thêm con
+              </Button>{' '}
+              <Button color="danger" disabled={isUpdating} onClick={deletePerson}>
+                Xóa
+              </Button>
+              {isUpdating && <Loader />}
+            </div>
+          )}
         </div>
         <div className="col-md-3" />
       </div>
@@ -88,6 +92,7 @@ const PersonDetailPage = ({
 };
 
 const enhance = flowRight([
+  wrapUserConsumer,
   withPersonDataFromParam,
   withRouter,
   withDeleteDialogHandler,

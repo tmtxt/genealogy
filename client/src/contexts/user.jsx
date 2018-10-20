@@ -30,10 +30,13 @@ class UserProviderWrapper extends Component {
 
       // selectors
       userSelectors: {
-        selectCurrentUser: this.selectCurrentUser
+        selectCurrentUser: this.selectCurrentUser,
+        isLoggedIn: this.isLoggedIn
       }
     };
   }
+
+  isLoggedIn = () => this.state.userStore.get('isLoggedIn');
 
   setUserFromCookies = () => {
     const username = Cookies.get('username');

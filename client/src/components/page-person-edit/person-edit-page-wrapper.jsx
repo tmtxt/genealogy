@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { navigateToPersonDetailPage } from 'libs/navigation';
 
 import { wrapPersonConsumer } from 'contexts';
+import { requireLoggedInUser } from 'components/user';
 
 import PersonEditPage from './person-edit-page';
 
@@ -101,4 +102,4 @@ class PersonEditPageWrapper extends Component {
   }
 }
 
-export default wrapPersonConsumer(PersonEditPageWrapper);
+export default requireLoggedInUser(wrapPersonConsumer(PersonEditPageWrapper));

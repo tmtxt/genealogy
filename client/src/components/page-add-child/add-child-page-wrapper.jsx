@@ -3,6 +3,7 @@ import { flowRight } from 'lodash';
 
 import { withPersonDataFromParam } from 'components/person';
 import { wrapPersonConsumer } from 'contexts';
+import { requireLoggedInUser } from 'components/user';
 import { navigateToPersonEditPage } from 'libs/navigation';
 
 import AddChildPage from './add-child-page';
@@ -58,5 +59,5 @@ export class AddChildPageWrapper extends Component {
   }
 }
 
-const enhance = flowRight([withPersonDataFromParam, wrapPersonConsumer]);
+const enhance = flowRight([requireLoggedInUser, withPersonDataFromParam, wrapPersonConsumer]);
 export default enhance(AddChildPageWrapper);
