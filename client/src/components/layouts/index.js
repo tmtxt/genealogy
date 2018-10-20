@@ -1,8 +1,10 @@
 import React from 'react';
-import MainLayout from './main';
+import MainLayoutComponent from './main';
 
 export const wrapMainLayout = WrappedComponent => props => (
-  <MainLayout>
+  <MainLayoutComponent>
     <WrappedComponent {...props} />
-  </MainLayout>
+  </MainLayoutComponent>
 );
+
+export const MainLayout = MainLayoutComponent;
