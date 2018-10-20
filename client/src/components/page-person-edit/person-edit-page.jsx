@@ -2,7 +2,6 @@
 import React from 'react';
 import { Form, Label, Input, FormGroup, Button } from 'reactstrap';
 
-import { wrapMainLayout } from 'components/layouts';
 import { Loader } from 'components/shared';
 
 export const PersonEditPage = ({
@@ -99,4 +98,4 @@ export const PersonEditPage = ({
   );
 };
 
-export default wrapMainLayout(PersonEditPage);
+export default PersonEditPage;

@@ -1,11 +1,10 @@
-import { flowRight, map } from 'lodash';
+import { map } from 'lodash';
 import React, { Component } from 'react';
 import dimensions from 'react-dimensions';
 import * as d3 from 'd3';
 import { Input } from 'reactstrap';
 
 import { Loader } from 'components/shared';
-import { wrapMainLayout } from 'components/layouts';
 
 import PersonNode from './person-node';
 import PersonLink from './person-link';
@@ -71,5 +70,4 @@ export class TreePage extends Component {
   }
 }
 
-const enhance = flowRight([wrapMainLayout, dimensions()]);
-export default enhance(TreePage);
+export default dimensions()(TreePage);

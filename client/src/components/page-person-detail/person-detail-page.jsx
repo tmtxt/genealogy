@@ -3,7 +3,6 @@ import { Button } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { flowRight } from 'lodash';
 
-import { wrapMainLayout } from 'components/layouts';
 import { Loader } from 'components/shared';
 import { navigateToPersonEditPage } from 'libs/navigation';
 import { withPersonDataFromParam } from 'components/person';
@@ -90,7 +89,6 @@ const PersonDetailPage = ({
 
 const enhance = flowRight([
   withPersonDataFromParam,
-  wrapMainLayout,
   withRouter,
   withDeleteDialogHandler,
   withAddChildDialogHandler,

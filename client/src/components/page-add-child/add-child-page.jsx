@@ -2,7 +2,6 @@
 import React from 'react';
 import { Form, Button, Label, Input, FormGroup } from 'reactstrap';
 
-import { wrapMainLayout } from 'components/layouts';
 import { Loader } from 'components/shared';
 
 export const AddChildPage = ({
@@ -53,4 +52,4 @@ export const AddChildPage = ({
   );
 };
 
-export default wrapMainLayout(AddChildPage);
+export default AddChildPage;
