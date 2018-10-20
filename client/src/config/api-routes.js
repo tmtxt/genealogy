@@ -37,5 +37,10 @@ export default {
   'user.login': {
     path: '/api/login',
     method: 'POST'
+  },
+
+  'user.logout': {
+    path: '/api/logout',
+    method: 'POST'
   }
 };

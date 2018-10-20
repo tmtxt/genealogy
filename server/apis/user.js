@@ -28,6 +28,14 @@ const login = async ctx => {
   ctx.status = 204;
 };
 
+const logout = async ctx => {
+  ctx.cookies.set('username', 'username', { signed: true, maxAge: 0, httpOnly: false });
+  ctx.cookies.set('password', 'password', { signed: true, maxAge: 0, httpOnly: false });
+
+  ctx.status = 204;
+};
+
 module.exports = {
-  login
+  login,
+  logout
 };

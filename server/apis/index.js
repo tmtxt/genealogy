@@ -26,6 +26,7 @@ router.delete('/persons/:personId', person.removePerson);
 router.get('/root-person/tree', tree.getTreeFromRoot);
 
 router.post('/login', user.login);
+router.post('/logout', user.logout);
 
 router.all('/*', async ctx => ctx.responseError(404, 'API not found'));
 

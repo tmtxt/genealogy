@@ -24,6 +24,7 @@ class UserProviderWrapper extends Component {
       // actions
       userActions: {
         login: this.login,
+        logout: this.logout,
         clearCurrentUser: this.clearCurrentUser
       },
 
@@ -50,6 +51,11 @@ class UserProviderWrapper extends Component {
   selectCurrentUser = () => this.state.userStore;
 
   clearCurrentUser = () => this.setState({ userStore: defaultUser });
+
+  logout = async () => {
+    await this.props.sendApiRequest('user.logout');
+    this.clearCurrentUser();
+  };
 
   /**
    * Login through API
