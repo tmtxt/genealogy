@@ -33,8 +33,13 @@ class NavbarComponent extends Component {
         </NavLink>
       );
     } else {
+      const logout = e => {
+        e.preventDefault();
+        this.props.userActions.logout();
+        navigateToHomePage(this.props.history);
+      };
       userLink = (
-        <NavLink href="/" onClick={e => this.navigate(e, navigateToLoginPage)}>
+        <NavLink href="/" onClick={logout}>
           Đăng xuất {user.get('username')}
         </NavLink>
       );
