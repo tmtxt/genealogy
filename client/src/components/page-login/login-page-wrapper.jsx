@@ -21,12 +21,22 @@ class LoginPageWrapper extends Component {
   handleUsernameChanged = username => this.setState({ username });
   handlePasswordChanged = password => this.setState({ password });
 
+  componentDidMount() {
+    this.props.userActions.clearCurrentUser();
+  }
+
   render() {
-    const { username, password } = this.state;
     const { login, handleUsernameChanged, handlePasswordChanged } = this;
+    const { username, password } = this.state;
+    const {
+      userSelectors: { selectCurrentUser }
+    } = this.props;
+    const user = selectCurrentUser();
 
     return (
-      <LoginPage {...{ username, password, login, handleUsernameChanged, handlePasswordChanged }} />
+      <LoginPage
+        {...{ username, password, login, handleUsernameChanged, handlePasswordChanged, user }}
+      />
     );
   }
 }

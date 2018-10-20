@@ -14,9 +14,10 @@ class ApiProviderWrapper extends Component {
    * @param {object?} param route params
    * @param {object?} query query string opts
    * @param {object?} null
+   * @param {object?} { ignoreAlert: false }
    * @return {object?} api response body
    */
-  sendApiRequest = async (routeName, param = {}, query = {}, body = null) => {
+  sendApiRequest = async (routeName, param = {}, query = {}, body = null, opts = {}) => {
     const routeConfig = apiRoutes[routeName];
     if (!routeConfig) {
       this.props.alert.error(`Invalid API route name ${routeName}`);
@@ -38,7 +39,9 @@ class ApiProviderWrapper extends Component {
 
       return res.data;
     } catch (e) {
-      this.props.alert.error(e.message || e.response || 'An error occured');
+      if (!opts.ignoreAlert) {
+        this.props.alert.error(e.message || e.response || 'An error occured');
+      }
       throw e;
     }
   };

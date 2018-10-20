@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fromJS, Map as ImmutableMap, List as ImmutableList } from 'immutable';
+import { fromJS } from 'immutable';
 import { withAlert } from 'react-alert';
 import Cookies from 'js-cookie';
 
@@ -7,25 +7,30 @@ import { wrapApiConsumer } from './api';
 
 const { Provider, Consumer } = React.createContext();
 
+const defaultUser = fromJS({
+  username: null,
+  isLoggedIn: false,
+  isLoggingIn: false
+});
+
 class UserProviderWrapper extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       // data
-      userStore: fromJS({
-        username: null,
-        isLoggedIn: false,
-        isLoggingIn: false
-      }),
+      userStore: defaultUser,
 
       // actions
       userActions: {
-        login: this.login
+        login: this.login,
+        clearCurrentUser: this.clearCurrentUser
       },
 
       // selectors
-      userSelectors: {}
+      userSelectors: {
+        selectCurrentUser: this.selectCurrentUser
+      }
     };
   }
 
@@ -35,15 +40,46 @@ class UserProviderWrapper extends Component {
 
     if (!username || !password) return;
 
-    this.login(username, password);
+    this.login(username, password, true);
   };
 
   componentDidMount() {
     this.setUserFromCookies();
   }
 
-  login = async (username, password) => {
-    await this.props.sendApiRequest('user.login', null, null, { username, password });
+  selectCurrentUser = () => this.state.userStore;
+
+  clearCurrentUser = () => this.setState({ userStore: defaultUser });
+
+  /**
+   * Login through API
+   * @param {string} username
+   * @param {string} password
+   * @param {boolean} ignoreAlert
+   */
+  login = async (username, password, ignoreAlert) => {
+    let { userStore } = this.state;
+    this.setState({ userStore: userStore.set('isLoggingIn', true) });
+
+    try {
+      await this.props.sendApiRequest(
+        'user.login',
+        null,
+        null,
+        { username, password },
+        { ignoreAlert }
+      );
+
+      userStore = this.state.userStore;
+      this.setState({
+        userStore: userStore
+          .set(username, 'username')
+          .set('isLoggingIn', false)
+          .set('isLoggedIn', true)
+      });
+    } catch (e) {
+      this.setState({ userStore: userStore.set('isLoggingIn', false) });
+    }
   };
 
   render() {

@@ -14,3 +14,5 @@ export const navigateToAddChildPage = (history, personId) =>
 
 export const treeUrl = new UrlPattern('/tree');
 export const navigateToTreePage = history => history.push(treeUrl.stringify());
+
+export const navigateToHomePage = history => history.push('/');
