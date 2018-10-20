@@ -17,11 +17,15 @@ router.use(middlewares.schemaValidation);
 router.get('/root-person', person.getRootPerson);
 router.get('/persons/:personId', person.getPersonById);
 router.get('/detailed-persons/:personId', person.getPersonByIdWithRelations);
-router.patch('/persons/:personId', person.updatePersonById);
-router.post('/persons/add-child/father/:fatherPersonId/mother/:motherPersonId', person.addChild);
-router.post('/persons/:personId/add-husband', person.addHusband);
-router.post('/persons/:personId/add-wife', person.addWife);
-router.delete('/persons/:personId', person.removePerson);
+router.patch('/persons/:personId', middlewares.requireLoggedIn, person.updatePersonById);
+router.post(
+  '/persons/add-child/father/:fatherPersonId/mother/:motherPersonId',
+  middlewares.requireLoggedIn,
+  person.addChild
+);
+router.post('/persons/:personId/add-husband', middlewares.requireLoggedIn, person.addHusband);
+router.post('/persons/:personId/add-wife', middlewares.requireLoggedIn, person.addWife);
+router.delete('/persons/:personId', middlewares.requireLoggedIn, person.removePerson);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 

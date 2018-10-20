@@ -8,27 +8,37 @@ class PersonUpdate extends ModelBase {
       type: 'object',
       properties: {
         name: {
-          type: 'string'
+          oneOf: [{ type: 'string' }, { type: 'null' }]
         },
         gender: {
           type: 'string',
           enum: ['male', 'female']
         },
         birthDate: {
-          // date string YYYY-MM-DD
-          type: 'string',
-          format: 'dateString'
+          oneOf: [
+            {
+              // date string YYYY-MM-DD
+              type: 'string',
+              format: 'dateString'
+            },
+            { type: 'null' }
+          ]
         },
         deathDate: {
-          // date string YYYY-MM-DD
-          type: 'string',
-          format: 'dateString'
+          oneOf: [
+            {
+              // date string YYYY-MM-DD
+              type: 'string',
+              format: 'dateString'
+            },
+            { type: 'null' }
+          ]
         },
         job: {
-          type: 'string'
+          oneOf: [{ type: 'string' }, { type: 'null' }]
         },
         summary: {
-          type: 'string'
+          oneOf: [{ type: 'string' }, { type: 'null' }]
         },
         isDead: {
           type: 'boolean'
