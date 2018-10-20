@@ -4,6 +4,8 @@ const dal = require('../dal');
 
 const userDal = dal.user;
 
+const ms1Week = 7 * 24 * 60 * 60 * 1000;
+
 // POST /login
 // Body:
 // {
@@ -20,8 +22,8 @@ const login = async ctx => {
     ctx.responseError(401, 'Invalid username or password');
   }
 
-  ctx.cookies.set('username', username, { signed: true });
-  ctx.cookies.set('password', password, { signed: true });
+  ctx.cookies.set('username', username, { signed: true, maxAge: ms1Week, httpOnly: false });
+  ctx.cookies.set('password', password, { signed: true, maxAge: ms1Week, httpOnly: false });
 
   ctx.status = 204;
 };

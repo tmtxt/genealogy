@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { fromJS, Map as ImmutableMap, List as ImmutableList } from 'immutable';
 import { withAlert } from 'react-alert';
+import Cookies from 'js-cookie';
 
 import { wrapApiConsumer } from './api';
 
@@ -12,7 +13,11 @@ class UserProviderWrapper extends Component {
 
     this.state = {
       // data
-      userStore: fromJS({}),
+      userStore: fromJS({
+        username: null,
+        isLoggedIn: false,
+        isLoggingIn: false
+      }),
 
       // actions
       userActions: {
@@ -22,6 +27,19 @@ class UserProviderWrapper extends Component {
       // selectors
       userSelectors: {}
     };
+  }
+
+  setUserFromCookies = () => {
+    const username = Cookies.get('username');
+    const password = Cookies.get('password');
+
+    if (!username || !password) return;
+
+    this.login(username, password);
+  };
+
+  componentDidMount() {
+    this.setUserFromCookies();
   }
 
   login = async (username, password) => {
