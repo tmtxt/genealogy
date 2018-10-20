@@ -1,57 +1,52 @@
 // @flow
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import { withRouter } from 'react-router';
 
-import navbarStyles from './navbar.scss';
+import { navigateToTreePage, navigateToHomePage } from 'libs/navigation';
 
-const CollapseToggleButton = () => (
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon" />
-  </button>
-);
+import styles from './navbar.scss';
 
-export const Navbar = props => {
-  return (
-    <nav className={`navbar navbar-expand-lg ${navbarStyles.navBarWrapper}`}>
-      <CollapseToggleButton />
+class NavbarComponent extends Component {
+  state = { isOpen: false };
+  toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
-      <div className="collapse navbar-collapse">
-        <ul className={`navbar-nav mr-auto ${navbarStyles.listWrapper}`}>
-          <li class="nav-item">
-            <Link to="/">Trang chủ</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/">Thành viên</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/tree">Cây gia phả</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/tree">Lịch sử dòng họ</Link>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            Search
-          </button>
-        </form>
+  navigate = (e, navigateFunc) => {
+    e.preventDefault();
+    navigateFunc(this.props.history);
+  };
+
+  render() {
+    return (
+      <div>
+        <Navbar expand="md" light className={styles.navBarWrapper}>
+          <div className="container">
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className={`mr-auto ${styles.listWrapper}`} navbar>
+                <NavItem>
+                  <NavLink href="/" onClick={e => this.navigate(e, navigateToHomePage)}>
+                    Trang chủ
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/">Thành viên</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/" onClick={e => this.navigate(e, navigateToTreePage)}>
+                    Cây gia phả
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/">Lịch sử dòng họ</NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </div>
+        </Navbar>
       </div>
-    </nav>
-  );
-};
+    );
+  }
+}
 
-export default Navbar;
+export default withRouter(NavbarComponent);
