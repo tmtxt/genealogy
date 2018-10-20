@@ -4,6 +4,7 @@ import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reac
 import { withRouter } from 'react-router';
 
 import { navigateToHomePage } from 'libs/navigation';
+import { Loader } from 'components/shared';
 
 class LoginPage extends Component {
   componentDidUpdate(prevProps) {
@@ -20,7 +21,15 @@ class LoginPage extends Component {
   }
 
   render() {
-    const { username, password, login, handleUsernameChanged, handlePasswordChanged } = this.props;
+    const {
+      username,
+      password,
+      login,
+      handleUsernameChanged,
+      handlePasswordChanged,
+      user
+    } = this.props;
+    const isLoggingIn = user.get('isLoggingIn');
 
     return (
       <Container>
@@ -44,7 +53,10 @@ class LoginPage extends Component {
                   onChange={e => handlePasswordChanged(e.target.value)}
                 />
               </FormGroup>
-              <Button onClick={login}>Đăng nhập</Button>
+              <Button color="primary" onClick={login} disabled={isLoggingIn}>
+                Đăng nhập
+              </Button>
+              {isLoggingIn && <Loader />}
             </Form>
           </Col>
           <Col md="4" />

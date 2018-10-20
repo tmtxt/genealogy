@@ -79,7 +79,7 @@ class UserProviderWrapper extends Component {
       userStore = this.state.userStore;
       this.setState({
         userStore: userStore
-          .set(username, 'username')
+          .set('username', username)
           .set('isLoggingIn', false)
           .set('isLoggedIn', true)
       });

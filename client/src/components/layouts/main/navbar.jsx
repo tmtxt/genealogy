@@ -1,9 +1,11 @@
 // @flow
+import { flowRight } from 'lodash';
 import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 import { withRouter } from 'react-router';
 
-import { navigateToTreePage, navigateToHomePage } from 'libs/navigation';
+import { navigateToTreePage, navigateToHomePage, navigateToLoginPage } from 'libs/navigation';
+import { wrapUserConsumer } from 'contexts';
 
 import styles from './navbar.scss';
 
@@ -15,6 +17,35 @@ class NavbarComponent extends Component {
     e.preventDefault();
     navigateFunc(this.props.history);
   };
+
+  renderRightNav() {
+    const {
+      userSelectors: { selectCurrentUser }
+    } = this.props;
+    const user = selectCurrentUser();
+
+    let userLink;
+
+    if (!user.get('isLoggedIn')) {
+      userLink = (
+        <NavLink href="/" onClick={e => this.navigate(e, navigateToLoginPage)}>
+          Đăng nhập
+        </NavLink>
+      );
+    } else {
+      userLink = (
+        <NavLink href="/" onClick={e => this.navigate(e, navigateToLoginPage)}>
+          Đăng xuất {user.get('username')}
+        </NavLink>
+      );
+    }
+
+    return (
+      <Nav className={`ml-auto ${styles.listWrapper}`} navbar>
+        <NavItem>{userLink}</NavItem>
+      </Nav>
+    );
+  }
 
   render() {
     return (
@@ -41,6 +72,7 @@ class NavbarComponent extends Component {
                   <NavLink href="/">Lịch sử dòng họ</NavLink>
                 </NavItem>
               </Nav>
+              {this.renderRightNav()}
             </Collapse>
           </div>
         </Navbar>
@@ -49,4 +81,5 @@ class NavbarComponent extends Component {
   }
 }
 
-export default withRouter(NavbarComponent);
+const enhance = flowRight([withRouter, wrapUserConsumer]);
+export default enhance(NavbarComponent);
