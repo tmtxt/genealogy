@@ -78,7 +78,7 @@ const PersonDetailPage = ({
           <img className="img-responsive img-rounded" alt="" src={person.getPictureUrl()} />
         </div>
         <div className="col-md-6">
-          <h1>{person.get('name')}</h1>
+          <h1>{person.getDisplayName()}</h1>
           <PersonInfoTable {...{ person }} />
         </div>
         <div className="col-md-3">

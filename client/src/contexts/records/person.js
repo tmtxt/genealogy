@@ -4,13 +4,13 @@ import moment from 'moment';
 import defaultMalePicture from 'images/male-default.svg';
 import defaultFemalePicture from 'images/female-default.svg';
 
-const renderDate = (dateValue) => {
+const renderDate = dateValue => {
   if (!dateValue) {
     return 'Không rõ';
   }
 
   return new moment(dateValue).locale('vi').format('DD MMMM, YYYY');
-}
+};
 
 const defaultProps = {
   id: null,
@@ -30,7 +30,7 @@ const defaultProps = {
 
 export default class PersonRecord extends Record(defaultProps) {
   getDisplayName() {
-    return this.name || 'Không rõ';
+    return this.name || 'Không rõ tên';
   }
 
   getPictureUrl() {
@@ -45,5 +45,9 @@ export default class PersonRecord extends Record(defaultProps) {
 
   getDeathDate() {
     return renderDate(this.deathDate);
+  }
+
+  getGender() {
+    return this.gender === 'female' ? 'Nữ' : 'Nam';
   }
 }

@@ -9,7 +9,7 @@ export const RelatedPersonRow = ({ person }) => {
       <img width="50" height="50" className="img-rounded" alt="" src={person.getPictureUrl()} />
       <div style={styles.name}>
         <Link to={personDetailUrl.stringify({ personId: person.get('id') })}>
-          {person.get('name')}
+          {person.getDisplayName()}
         </Link>
       </div>
     </div>
