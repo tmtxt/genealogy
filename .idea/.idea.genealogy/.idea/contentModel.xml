@@ -14,6 +14,7 @@
         <e p="d3" t="IncludeRecursive" />
         <e p="font-awesome" t="IncludeRecursive" />
         <e p="immutable" t="IncludeRecursive" />
+        <e p="js-cookie" t="IncludeRecursive" />
         <e p="lato-font" t="IncludeRecursive" />
         <e p="moment" t="IncludeRecursive" />
         <e p="node-sass" t="IncludeRecursive" />
