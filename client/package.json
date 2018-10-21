@@ -34,5 +34,9 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:30001"
+  "proxy": "http://localhost:30001",
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100
+  }
 }

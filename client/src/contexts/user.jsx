@@ -10,7 +10,8 @@ const { Provider, Consumer } = React.createContext();
 const defaultUser = fromJS({
   username: null,
   isLoggedIn: false,
-  isLoggingIn: false
+  isLoggingIn: false,
+  isInitializing: false
 });
 
 class UserProviderWrapper extends Component {
@@ -19,7 +20,7 @@ class UserProviderWrapper extends Component {
 
     this.state = {
       // data
-      userStore: defaultUser,
+      userStore: defaultUser.set('isInitializing', true),
 
       // actions
       userActions: {
@@ -31,10 +32,13 @@ class UserProviderWrapper extends Component {
       // selectors
       userSelectors: {
         selectCurrentUser: this.selectCurrentUser,
-        isLoggedIn: this.isLoggedIn
+        isLoggedIn: this.isLoggedIn,
+        isInitializing: this.isInitializing
       }
     };
   }
+
+  isInitializing = () => this.state.userStore.get('isInitializing');
 
   isLoggedIn = () => this.state.userStore.get('isLoggedIn');
 

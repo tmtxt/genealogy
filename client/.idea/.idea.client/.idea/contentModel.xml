@@ -29,6 +29,7 @@
         <e p="reactstrap" t="IncludeRecursive" />
         <e p="url-pattern" t="IncludeRecursive" />
       </e>
+      <e p="src" t="IncludeRecursive" />
     </e>
   </component>
 </project>
