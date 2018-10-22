@@ -1,6 +1,7 @@
 System.config({
-  "paths": {
-    "components/*": "./src/components/*",
-    "contexts": "./src/contexts"
+  paths: {
+    'components/*': './src/components/*',
+    contexts: './src/contexts',
+    'libs/*': './src/libs/*'
   }
 });

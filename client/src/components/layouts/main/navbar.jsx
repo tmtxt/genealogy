@@ -14,7 +14,12 @@ import {
 } from 'reactstrap';
 import { withRouter } from 'react-router';
 
-import { navigateToTreePage, navigateToHomePage, navigateToLoginPage } from 'libs/navigation';
+import {
+  navigateToTreePage,
+  navigateToHomePage,
+  navigateToLoginPage,
+  navigateToChangePasswordPage
+} from 'libs/navigation';
 import { wrapUserConsumer } from 'contexts';
 
 import styles from './navbar.scss';
@@ -57,7 +62,9 @@ class NavbarComponent extends Component {
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem onClick={logout}>Đăng xuất</DropdownItem>
-            <DropdownItem>Đổi mật khẩu</DropdownItem>
+            <DropdownItem onClick={e => this.navigate(e, navigateToChangePasswordPage)}>
+              Đổi mật khẩu
+            </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
       );
