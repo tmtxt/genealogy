@@ -31,6 +31,7 @@ router.get('/root-person/tree', tree.getTreeFromRoot);
 
 router.post('/login', user.login);
 router.post('/logout', user.logout);
+router.post('/change-password', user.changePassword);
 
 router.all('/*', async ctx => ctx.responseError(404, 'API not found'));
 

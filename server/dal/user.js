@@ -10,6 +10,12 @@ const r = require('./db').r;
 
 const encryptKey = config.encryptKey;
 
+const encryptPassword = password =>
+  crypto
+    .createHmac('sha256', encryptKey)
+    .update(password)
+    .digest('hex');
+
 /**
  * Insert new user
  * @param {User} userProps
@@ -43,15 +49,32 @@ const comparePassword = async (username, password) => {
   const user = await r.table('users').get(username);
   if (!user) return false;
 
-  const encrypted = crypto
-    .createHmac('sha256', encryptKey)
-    .update(password)
-    .digest('hex');
+  const encrypted = encryptPassword(password);
 
   return encrypted === user.password;
 };
 
+/**
+ * Change password
+ * @param {string} username
+ * @param {string} newPassword
+ * @returns {Promise<boolean>}
+ */
+const changePassword = async (username, newPassword) => {
+  if (!newPassword) throw new Error('newPassword cannot be empty');
+
+  const encrypted = encryptPassword(newPassword);
+
+  const res = await r
+    .table('users')
+    .get(username)
+    .update({ password: encrypted });
+  
+  return !!res.replaced;
+};
+
 module.exports = {
   addNewUser,
-  comparePassword
+  comparePassword,
+  changePassword
 };

@@ -12,6 +12,7 @@ const requireLoggedIn = async (ctx, next) => {
     throw new ResponseError(401, 'Not allowed');
   }
 
+  ctx.username = username;
   await next();
 };
 

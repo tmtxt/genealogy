@@ -28,6 +28,11 @@ const login = async ctx => {
   ctx.status = 204;
 };
 
+/**
+ * POST /logout
+ * @param ctx
+ * @returns {Promise<void>}
+ */
 const logout = async ctx => {
   ctx.cookies.set('username', 'username', { signed: true, maxAge: 0, httpOnly: false });
   ctx.cookies.set('password', 'password', { signed: true, maxAge: 0, httpOnly: false });
@@ -35,7 +40,27 @@ const logout = async ctx => {
   ctx.status = 204;
 };
 
+/**
+ *
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+const changePassword = async ctx => {
+  const { body } = ctx.request;
+  const { newPassword } = body;
+  const username = ctx.username;
+
+  const res = await userDal.changePassword(username, newPassword);
+
+  if (!res) {
+    ctx.responseError(400, 'Fail to change password');
+  }
+
+  ctx.status = 204;
+};
+
 module.exports = {
   login,
-  logout
+  logout,
+  changePassword
 };
