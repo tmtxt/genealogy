@@ -10,10 +10,22 @@ class ChangePasswordPageWrapper extends Component {
   };
 
   handlePasswordChange = password => this.setState({ password });
+  handleSubmit = () => this.props.userActions.changePassword(this.state.password);
 
   render() {
     const { password } = this.state;
-    return <ChangePasswordPage onPasswordChange={this.handlePasswordChange} {...{ password }} />;
+    const {
+      userSelectors: { isChangingPassword }
+    } = this.props;
+
+    return (
+      <ChangePasswordPage
+        onPasswordChange={this.handlePasswordChange}
+        onSubmit={this.handleSubmit}
+        isChangingPassword={isChangingPassword()}
+        {...{ password }}
+      />
+    );
   }
 }
 

@@ -30,8 +30,8 @@ router.delete('/persons/:personId', middlewares.requireLoggedIn, person.removePe
 router.get('/root-person/tree', tree.getTreeFromRoot);
 
 router.post('/login', user.login);
-router.post('/logout', user.logout);
-router.post('/change-password', user.changePassword);
+router.post('/logout', middlewares.requireLoggedIn, user.logout);
+router.post('/change-password', middlewares.requireLoggedIn, user.changePassword);
 
 router.all('/*', async ctx => ctx.responseError(404, 'API not found'));
 

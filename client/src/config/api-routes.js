@@ -44,6 +44,11 @@ export default {
     method: 'POST'
   },
 
+  'user.changePassword': {
+    path: '/api/change-password',
+    method: 'POST'
+  },
+
   'tree.getTreeFromRoot': {
     path: '/api/root-person/tree',
     method: 'GET'

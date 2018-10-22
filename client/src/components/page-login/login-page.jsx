@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { withRouter } from 'react-router';

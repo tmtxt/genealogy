@@ -11,7 +11,8 @@ const defaultUser = fromJS({
   username: null,
   isLoggedIn: false,
   isLoggingIn: false,
-  isInitializing: false
+  isInitializing: false,
+  isChangingPassword: false
 });
 
 class UserProviderWrapper extends Component {
@@ -26,21 +27,23 @@ class UserProviderWrapper extends Component {
       userActions: {
         login: this.login,
         logout: this.logout,
-        clearCurrentUser: this.clearCurrentUser
+        clearCurrentUser: this.clearCurrentUser,
+        changePassword: this.changePassword
       },
 
       // selectors
       userSelectors: {
         selectCurrentUser: this.selectCurrentUser,
         isLoggedIn: this.isLoggedIn,
-        isInitializing: this.isInitializing
+        isInitializing: this.isInitializing,
+        isChangingPassword: this.isChangingPassword
       }
     };
   }
 
   isInitializing = () => this.state.userStore.get('isInitializing');
-
   isLoggedIn = () => this.state.userStore.get('isLoggedIn');
+  isChangingPassword = () => this.state.userStore.get('isChangingPassword');
 
   setUserFromCookies = async () => {
     const username = Cookies.get('username');
@@ -97,6 +100,17 @@ class UserProviderWrapper extends Component {
     } catch (e) {
       this.setState({ userStore: userStore.set('isLoggingIn', false) });
     }
+  };
+
+  /**
+   * Change password via api
+   * @param {string} newPassword
+   * @returns {Promise<void>}
+   */
+  changePassword = async newPassword => {
+    this.setState({ userStore: this.state.userStore.set('isChangingPassword', true) });
+    await this.props.sendApiRequest('user.changePassword', null, null, { newPassword });
+    this.setState({ userStore: this.state.userStore.set('isChangingPassword', false) });
   };
 
   render() {
