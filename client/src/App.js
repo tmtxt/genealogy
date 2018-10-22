@@ -15,6 +15,7 @@ import PersonEditPage from 'components/page-person-edit';
 import TreePage from 'components/page-tree';
 import AddChildPage from 'components/page-add-child';
 import LoginPage from 'components/page-login';
+import ChangePasswordPage from 'components/page-change-password';
 
 const AppWithRouter = () => (
   <Router>
@@ -24,6 +25,7 @@ const AppWithRouter = () => (
       <Route exact path="/persons/:personId" component={PersonDetailPage} />
       <Route exact path="/persons/:personId/add-child" component={AddChildPage} />
       <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/change-password" component={ChangePasswordPage} />
       <Route path="/tree" component={TreePage} />
     </MainLayout>
   </Router>
