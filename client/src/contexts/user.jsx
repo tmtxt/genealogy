@@ -111,6 +111,11 @@ export const wrapUserProvider = WrappedComponent => props => (
   </EnhancedUserProviderWrapper>
 );
 
+/**
+ * Wrap the component with user contexts
+ * @param {Component} WrappedComponent
+ * @returns {Component} The wrapper component
+ */
 export const wrapUserConsumer = WrappedComponent => props => (
   <Consumer>{values => <WrappedComponent {...props} {...values} />}</Consumer>
 );
