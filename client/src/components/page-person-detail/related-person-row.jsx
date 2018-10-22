@@ -6,7 +6,7 @@ import { personDetailUrl } from 'libs/navigation';
 export const RelatedPersonRow = ({ person }) => {
   return (
     <div style={styles.container}>
-      <img width="50" height="50" className="img-rounded" alt="" src={person.getPictureUrl()} />
+      <img width="50" height="50" className="img-fluid" alt="" src={person.getPictureUrl()} />
       <div style={styles.name}>
         <Link to={personDetailUrl.stringify({ personId: person.get('id') })}>
           {person.getDisplayName()}
