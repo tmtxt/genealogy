@@ -1,7 +1,17 @@
-// @flow
 import { flowRight } from 'lodash';
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import { withRouter } from 'react-router';
 
 import { navigateToTreePage, navigateToHomePage, navigateToLoginPage } from 'libs/navigation';
@@ -28,9 +38,11 @@ class NavbarComponent extends Component {
 
     if (!user.get('isLoggedIn')) {
       userLink = (
-        <NavLink href="/" onClick={e => this.navigate(e, navigateToLoginPage)}>
-          Đăng nhập
-        </NavLink>
+        <NavItem>
+          <NavLink href="/" onClick={e => this.navigate(e, navigateToLoginPage)}>
+            Đăng nhập
+          </NavLink>
+        </NavItem>
       );
     } else {
       const logout = e => {
@@ -39,15 +51,21 @@ class NavbarComponent extends Component {
         navigateToHomePage(this.props.history);
       };
       userLink = (
-        <NavLink href="/" onClick={logout}>
-          Đăng xuất {user.get('username')}
-        </NavLink>
+        <UncontrolledDropdown nav inNavbar>
+          <DropdownToggle nav caret>
+            Xin chào {user.get('username')}
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem onClick={logout}>Đăng xuất</DropdownItem>
+            <DropdownItem>Đổi mật khẩu</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
       );
     }
 
     return (
       <Nav className={`ml-auto ${styles.listWrapper}`} navbar>
-        <NavItem>{userLink}</NavItem>
+        {userLink}
       </Nav>
     );
   }
