@@ -42,13 +42,17 @@ class UserProviderWrapper extends Component {
 
   isLoggedIn = () => this.state.userStore.get('isLoggedIn');
 
-  setUserFromCookies = () => {
+  setUserFromCookies = async () => {
     const username = Cookies.get('username');
     const password = Cookies.get('password');
 
     if (!username || !password) return;
 
-    this.login(username, password, true);
+    await this.login(username, password, true);
+
+    this.setState({
+      userStore: this.state.userStore.set('isInitializing', false)
+    });
   };
 
   componentDidMount() {

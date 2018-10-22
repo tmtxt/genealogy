@@ -2,24 +2,18 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
 import { wrapUserConsumer } from 'contexts';
-import { navigateToHomePage } from 'libs/navigation';
+import { Loader } from 'components/shared';
 
 const requireLoggedInUser = WrappedComponent => {
   class RequireLoggedInUser extends Component {
-    componentDidMount() {
-      const {
-        userSelectors: { isLoggedIn }
-      } = this.props;
-
-      if (!isLoggedIn()) {
-        navigateToHomePage(this.props.history);
-      }
-    }
-
     render() {
       const {
-        userSelectors: { isLoggedIn }
+        userSelectors: { isLoggedIn, isInitializing }
       } = this.props;
+
+      if (isInitializing()) {
+        return <Loader />;
+      }
 
       if (!isLoggedIn()) return <div />;
 
