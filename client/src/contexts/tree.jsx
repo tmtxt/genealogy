@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
-import { requestToApi } from 'react-data-fetching';
-import UrlPattern from 'url-pattern';
 import _ from 'lodash';
+
+import { wrapApiConsumer } from './api';
 
 const { Provider, Consumer } = React.createContext();
 
-const getTreeFromRootUrl = new UrlPattern('/api/root-person/tree');
 const getTreeId = rootPersonId =>
   _.isNumber(rootPersonId)
     ? rootPersonId.toString()
@@ -91,26 +90,25 @@ class TreeProviderWrapper extends Component {
 
     let res;
     if (!rootPersonId) {
-      res = await requestToApi({ url: getTreeFromRootUrl.stringify(), method: 'GET' });
+      res = await this.props.sendApiRequest('tree.getTreeFromRoot');
     } else {
       // TODO call api to get from a specific person id
     }
 
-    if (!res.isOK) return;
-
     // TODO collapse by default
-    this.setTreeDataById(treeId, fromJS(res.data));
+    this.setTreeDataById(treeId, fromJS(res));
   };
 
   render() {
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }
+const EnhancedTreeProviderWrapper = wrapApiConsumer(TreeProviderWrapper);
 
 export const wrapTreeProvider = WrappedComponent => props => (
-  <TreeProviderWrapper>
+  <EnhancedTreeProviderWrapper>
     <WrappedComponent {...props} />
-  </TreeProviderWrapper>
+  </EnhancedTreeProviderWrapper>
 );
 
 export const wrapTreeConsumer = WrappedComponent => props => (

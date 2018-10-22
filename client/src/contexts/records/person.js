@@ -1,8 +1,8 @@
 import { Record } from 'immutable';
 import moment from 'moment';
 
-import defaultMalePicture from 'images/male-default.svg';
-import defaultFemalePicture from 'images/female-default.svg';
+import defaultMalePicture from 'images/male-default.png';
+import defaultFemalePicture from 'images/female-default.png';
 
 const renderDate = dateValue => {
   if (!dateValue) {

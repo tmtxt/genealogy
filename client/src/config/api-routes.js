@@ -42,5 +42,10 @@ export default {
   'user.logout': {
     path: '/api/logout',
     method: 'POST'
+  },
+
+  'tree.getTreeFromRoot': {
+    path: '/api/root-person/tree',
+    method: 'GET'
   }
 };

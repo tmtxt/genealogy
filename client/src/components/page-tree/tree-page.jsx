@@ -50,6 +50,7 @@ export class TreePage extends Component {
             checked={marriagesEnabled}
             onChange={e => onMarriagesToggle(e.target.checked)}
           />
+          Hiện vợ/chồng
         </div>
         <svg height="1000" width={containerWidth}>
           <g>

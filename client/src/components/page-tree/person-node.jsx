@@ -4,8 +4,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { navigateToPersonDetailPage } from 'libs/navigation';
 
-const defaultMalePicture = require('images/male-default.svg');
-const defaultFemalePicture = require('images/female-default.svg');
+const defaultMalePicture = require('images/male-default.png');
+const defaultFemalePicture = require('images/female-default.png');
 
 const getDefaultPicture = gender => (gender === 'male' ? defaultMalePicture : defaultFemalePicture);
 
