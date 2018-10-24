@@ -22,9 +22,7 @@ export const PersonEditPage = ({
   return (
     <div className="container-fluid">
       <div className="row">
-        <div class="col-md-3">
-
-        </div>
+        <div className="col-md-3" />
         <div className="col-md-9">
           <Form>
             <FormGroup>
@@ -36,6 +34,17 @@ export const PersonEditPage = ({
                 disabled={isUpdating}
                 onChange={e => updatePerson('name', e.target.value)}
               />
+            </FormGroup>
+            <FormGroup>
+              <Label>Giới tính</Label>
+              <Input
+                type="select"
+                value={person.get('gender') || 'male'}
+                onChange={e => updatePerson('gender', e.target.value)}
+              >
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+              </Input>
             </FormGroup>
             <FormGroup>
               <Label>Ngày sinh</Label>

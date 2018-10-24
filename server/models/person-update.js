@@ -11,8 +11,15 @@ class PersonUpdate extends ModelBase {
           oneOf: [{ type: 'string' }, { type: 'null' }]
         },
         gender: {
-          type: 'string',
-          enum: ['male', 'female']
+          oneOf: [
+            {
+              type: 'string',
+              enum: ['male', 'female']
+            },
+            {
+              type: 'null'
+            }
+          ]
         },
         birthDate: {
           oneOf: [

@@ -243,6 +243,7 @@ const updatePersonById = async (personId, updatingProps, logTrail) => {
 const addChild = async (fatherPersonId, motherPersonId, childOrder, childProps, logTrail) => {
   childOrder = childOrder || 1;
   childProps = new models.Person(childProps || {});
+  childProps.gender = 'male'; // default to male
 
   const session = driver.session();
   const query = `MATCH (father:Person) WHERE id(father) = toInteger($fatherPersonId)
