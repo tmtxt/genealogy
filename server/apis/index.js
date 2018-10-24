@@ -1,6 +1,7 @@
 'use strict';
 
 const Router = require('koa-router');
+const busboy = require('koa-busboy');
 
 const middlewares = require('../middlewares');
 
@@ -8,6 +9,8 @@ const middlewares = require('../middlewares');
 const person = require('./person');
 const tree = require('./tree');
 const user = require('./user');
+
+const uploader = busboy();
 
 const router = new Router({ prefix: '/api' });
 router.use(middlewares.logTrailMiddleware);
@@ -26,6 +29,12 @@ router.post(
 router.post('/persons/:personId/add-husband', middlewares.requireLoggedIn, person.addHusband);
 router.post('/persons/:personId/add-wife', middlewares.requireLoggedIn, person.addWife);
 router.delete('/persons/:personId', middlewares.requireLoggedIn, person.removePerson);
+router.post(
+  '/persons/:personId/picture',
+  middlewares.requireLoggedIn,
+  uploader,
+  person.uploadPicture
+);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 

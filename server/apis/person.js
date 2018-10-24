@@ -1,5 +1,9 @@
 'use strict';
 
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
 const dal = require('../dal');
 const models = require('../models');
 
@@ -113,6 +117,28 @@ const removePerson = async ctx => {
   ctx.status = 204;
 };
 
+const uploadPicture = async ctx => {
+  const file = ctx.request.files[0];
+  if (!file) {
+    this.responseError(400, 'File is required');
+  }
+
+  // save file
+  const fileExt = path.extname(file.filename) || '.jpg';
+  const filename = `${Math.random().toString()}${fileExt}`;
+  const saveFile = new Promise((resolve, reject) => {
+    const reader = fs.createReadStream(file.path);
+    const stream = fs.createWriteStream(
+      path.join('/Users/tmtxt/Projects/genealogy/server/static', filename)
+    );
+    reader.pipe(stream).on('finish', resolve).on('error', reject);
+  });
+  await saveFile;
+
+  ctx.body = 'aa';
+  ctx.status = 200;
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
@@ -121,5 +147,6 @@ module.exports = {
   addChild,
   addHusband,
   addWife,
-  removePerson
+  removePerson,
+  uploadPicture
 };
