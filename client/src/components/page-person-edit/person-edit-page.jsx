@@ -22,8 +22,7 @@ export const PersonEditPage = ({
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-3" />
-        <div className="col-md-9">
+        <div className="col-md-12">
           <Form>
             <FormGroup>
               <Label>Tên</Label>

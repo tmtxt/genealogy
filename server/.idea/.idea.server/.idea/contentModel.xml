@@ -44,6 +44,8 @@
         <e p="jsonschema" t="IncludeRecursive" />
         <e p="koa" t="IncludeRecursive" />
         <e p="koa-bodyparser" t="IncludeRecursive" />
+        <e p="koa-busboy" t="IncludeRecursive" />
+        <e p="koa-mount" t="IncludeRecursive" />
         <e p="koa-router" t="IncludeRecursive" />
         <e p="koa-send" t="IncludeRecursive" />
         <e p="koa-static" t="IncludeRecursive" />

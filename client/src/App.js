@@ -16,17 +16,20 @@ import TreePage from 'components/page-tree';
 import AddChildPage from 'components/page-add-child';
 import LoginPage from 'components/page-login';
 import ChangePasswordPage from 'components/page-change-password';
+import EditPicturePage from 'components/page-edit-picture';
 
 const AppWithRouter = () => (
   <Router>
     <MainLayout>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/persons/:personId/edit" component={PersonEditPage} />
+      <Route exact path="/persons/:personId/edit-picture" component={EditPicturePage} />
       <Route exact path="/persons/:personId" component={PersonDetailPage} />
       <Route exact path="/persons/:personId/add-child" component={AddChildPage} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/change-password" component={ChangePasswordPage} />
       <Route path="/tree" component={TreePage} />
+
     </MainLayout>
   </Router>
 );
