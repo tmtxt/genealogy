@@ -130,9 +130,7 @@ const uploadPicture = async ctx => {
   const filename = `${Date.now()}${fileExt}`;
   const saveFile = new Promise((resolve, reject) => {
     const reader = fs.createReadStream(file.path);
-    const stream = fs.createWriteStream(
-      path.join('/Users/tmtxt/Projects/genealogy/server/static', filename)
-    );
+    const stream = fs.createWriteStream(path.join(process.cwd(), 'pictures', filename));
     reader
       .pipe(stream)
       .on('finish', resolve)
