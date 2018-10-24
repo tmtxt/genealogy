@@ -118,6 +118,8 @@ const removePerson = async ctx => {
 };
 
 const uploadPicture = async ctx => {
+  const logTrail = ctx.logTrail;
+  const personId = ctx.params.personId;
   const file = ctx.request.files[0];
   if (!file) {
     this.responseError(400, 'File is required');
@@ -125,17 +127,25 @@ const uploadPicture = async ctx => {
 
   // save file
   const fileExt = path.extname(file.filename) || '.jpg';
-  const filename = `${Math.random().toString()}${fileExt}`;
+  const filename = `${Date.now()}${fileExt}`;
   const saveFile = new Promise((resolve, reject) => {
     const reader = fs.createReadStream(file.path);
     const stream = fs.createWriteStream(
       path.join('/Users/tmtxt/Projects/genealogy/server/static', filename)
     );
-    reader.pipe(stream).on('finish', resolve).on('error', reject);
+    reader
+      .pipe(stream)
+      .on('finish', resolve)
+      .on('error', reject);
   });
   await saveFile;
 
-  ctx.body = 'aa';
+  const person = await personDal.updatePersonById(personId, { picture: filename }, logTrail);
+  if (!person) {
+    ctx.responseError(404, 'Person not found');
+  }
+
+  ctx.body = person;
   ctx.status = 200;
 };
 

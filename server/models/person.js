@@ -35,6 +35,9 @@ class Person extends ModelBase {
         },
         isDead: {
           type: 'boolean'
+        },
+        picture: {
+          type: 'string'
         }
       }
     };

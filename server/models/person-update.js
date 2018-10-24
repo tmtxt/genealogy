@@ -49,6 +49,9 @@ class PersonUpdate extends ModelBase {
         },
         isDead: {
           type: 'boolean'
+        },
+        picture: {
+          type: 'string'
         }
       }
     };
