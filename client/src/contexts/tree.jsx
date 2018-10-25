@@ -86,8 +86,6 @@ class TreeProviderWrapper extends Component {
    *
    */
   fetchTreeData = async rootPersonId => {
-    const treeId = getTreeId(rootPersonId);
-
     let res;
     if (!rootPersonId) {
       res = await this.props.sendApiRequest('tree.getTreeFromRoot');
@@ -95,8 +93,10 @@ class TreeProviderWrapper extends Component {
       res = await this.props.sendApiRequest('tree.getTreeFromPerson', { personId: rootPersonId });
     }
 
-    // TODO collapse by default
     this.setTreeDataById(rootPersonId, fromJS(res));
+    if (res.children) {
+      _.each(res.children, child => this.toggleChildren(rootPersonId, child.path));
+    }
   };
 
   render() {
