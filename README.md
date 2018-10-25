@@ -48,6 +48,7 @@ $ ./push.sh $VERSION
 # Deploy
 
 Run docker image `neo4j:3.4.7`
+Run docker image `rethinkdb:2.3.6`
 Run docker image `tmtxt/genealogy:latest` with these env
 - `BACKEND_PORT`: web server port
 - `ENSURE_DATA_ENABLED`: whether to ensure data the app, required for first time
@@ -55,4 +56,13 @@ Run docker image `tmtxt/genealogy:latest` with these env
 - `NEO4J_SERVER`: neo4j server address
 - `NEO4J_PORT`: neo4j bolt port
 - `NEO4J_USER`: default to `neo4j`
-- `NEO4J_PASSWORD`: empty for no authentication
+- `NEO4J_PASSWORD`: empty if no authentication
+- `SECRET_KEY`: cookie signed key
+- `ENCRYPT_KEY`: key for encrypting admin password
+- `RETHINKDB_HOST`
+- `RETHINKDB_PORT`
+- `RETHINKDB_DB`
+and these volumes
+- `/usr/src/app/pictures`
+
+Sample <https://github.com/tmtxt/truongtx-ansible/blob/master/genealogy.yml>
