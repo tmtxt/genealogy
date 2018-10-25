@@ -19,6 +19,10 @@ export const navigateToPictureEditPage = (history, personId) =>
 export const treeUrl = new UrlPattern('/tree');
 export const navigateToTreePage = history => history.push(treeUrl.stringify());
 
+export const personTreeUrl = new UrlPattern('/persons/:personId/tree');
+export const navigateToPersonTreePage = (history, personId) =>
+  history.push(personTreeUrl.stringify({ personId }));
+
 export const navigateToHomePage = history => history.push('/');
 
 export const navigateToLoginPage = history => history.push('/login');

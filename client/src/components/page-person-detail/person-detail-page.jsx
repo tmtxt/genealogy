@@ -4,7 +4,11 @@ import { withRouter } from 'react-router-dom';
 import { flowRight } from 'lodash';
 
 import { Loader } from 'components/shared';
-import { navigateToPersonEditPage, navigateToPictureEditPage } from 'libs/navigation';
+import {
+  navigateToPersonEditPage,
+  navigateToPictureEditPage,
+  navigateToPersonTreePage
+} from 'libs/navigation';
 import { withPersonDataFromParam } from 'components/person';
 import { wrapUserConsumer } from 'contexts';
 
@@ -83,7 +87,19 @@ const PersonDetailPage = ({
             </div>
           )}
         </div>
-        <div className="col-md-3" />
+        <div className="col-md-3">
+          {isLoggedIn() && (
+            <div className="float-right">
+              <Button
+                onClick={() => navigateToPersonTreePage(history, personId)}
+                disabled={isUpdating}
+              >
+                Cây gia phả
+              </Button>{' '}
+              {isUpdating && <Loader />}
+            </div>
+          )}
+        </div>
       </div>
       <div className="row">
         <div className="col-md-3">
