@@ -28,7 +28,8 @@ const AppWithRouter = () => (
       <Route exact path="/persons/:personId/add-child" component={AddChildPage} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/change-password" component={ChangePasswordPage} />
-      <Route path="/tree" component={TreePage} />
+      <Route exact path="/tree" component={TreePage} />
+      <Route exact path="/persons/:personId/tree" component={TreePage} />
 
     </MainLayout>
   </Router>

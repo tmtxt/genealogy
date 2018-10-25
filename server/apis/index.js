@@ -37,6 +37,7 @@ router.post(
 );
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
+router.get('/persons/:personId/tree', tree.getTreeFromPerson);
 
 router.post('/login', user.login);
 router.post('/logout', middlewares.requireLoggedIn, user.logout);

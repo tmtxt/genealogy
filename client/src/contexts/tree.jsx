@@ -8,10 +8,10 @@ const { Provider, Consumer } = React.createContext();
 
 const getTreeId = rootPersonId =>
   _.isNumber(rootPersonId)
-    ? rootPersonId.toString()
+    ? `tree-${rootPersonId}`
     : _.isString(rootPersonId)
-      ? rootPersonId
-      : 'root';
+      ? `tree-${rootPersonId}`
+      : 'tree-root';
 
 class TreeProviderWrapper extends Component {
   constructor(props) {
@@ -92,11 +92,11 @@ class TreeProviderWrapper extends Component {
     if (!rootPersonId) {
       res = await this.props.sendApiRequest('tree.getTreeFromRoot');
     } else {
-      // TODO call api to get from a specific person id
+      res = await this.props.sendApiRequest('tree.getTreeFromPerson', { personId: rootPersonId });
     }
 
     // TODO collapse by default
-    this.setTreeDataById(treeId, fromJS(res));
+    this.setTreeDataById(rootPersonId, fromJS(res));
   };
 
   render() {

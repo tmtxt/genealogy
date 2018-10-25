@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { get } from 'lodash';
 
 import { wrapTreeConsumer } from 'contexts';
 
@@ -12,14 +13,14 @@ export class TreePageWrapper extends Component {
   };
 
   componentDidMount() {
-    const rootPersonId = null;
+    const rootPersonId = get(this.props, ['match', 'params', 'personId'], null);
     this.props.treeActions.fetchTreeData(rootPersonId);
   }
 
   handleMarriagesToggle = enabled => this.setState({ marriagesEnabled: !!enabled });
 
   render() {
-    const rootPersonId = null;
+    const rootPersonId = get(this.props, ['match', 'params', 'personId'], null);
     const treeData = this.props.treeSelectors.selectTreeDataById(rootPersonId);
     const { toggleChildren } = this.props.treeActions;
     const { marriagesEnabled } = this.state;

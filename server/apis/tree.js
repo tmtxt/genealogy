@@ -19,6 +19,22 @@ const getTreeFromRoot = async ctx => {
   ctx.body = tree;
 };
 
+// GET /persons/:personId/tree
+const getTreeFromPerson = async ctx => {
+  const logTrail = ctx.logTrail;
+  const personId = ctx.params.personId;
+  
+  const person = await personDal.getPersonById(personId, logTrail);
+  if (!person) {
+    ctx.responseError(404, 'Person not found');
+  }
+  
+  const tree = await treeDal.getTreeByPersonId(personId, logTrail);
+  
+  ctx.body = tree;
+};
+
 module.exports = {
-  getTreeFromRoot
+  getTreeFromRoot,
+  getTreeFromPerson
 };

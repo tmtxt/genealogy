@@ -52,5 +52,10 @@ export default {
   'tree.getTreeFromRoot': {
     path: '/api/root-person/tree',
     method: 'GET'
+  },
+
+  'tree.getTreeFromPerson': {
+    path: '/api/persons/:personId/tree',
+    method: 'GET'
   }
 };
