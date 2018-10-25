@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { flowRight } from 'lodash';
 
 import { Loader } from 'components/shared';
-import { navigateToPersonEditPage } from 'libs/navigation';
+import { navigateToPersonEditPage, navigateToPictureEditPage } from 'libs/navigation';
 import { withPersonDataFromParam } from 'components/person';
 import { wrapUserConsumer } from 'contexts';
 
@@ -46,8 +46,20 @@ const PersonDetailPage = ({
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-3" />
+      <div className="row" style={{ marginBottom: 10 }}>
+        <div className="col-md-3">
+          {isLoggedIn() && (
+            <div className="float-right">
+              <Button
+                onClick={() => navigateToPictureEditPage(history, personId)}
+                disabled={isUpdating}
+              >
+                Sửa ảnh
+              </Button>{' '}
+              {isUpdating && <Loader />}
+            </div>
+          )}
+        </div>
         <div className="col-md-6">
           {isLoggedIn() && (
             <div className="float-right">
@@ -75,7 +87,7 @@ const PersonDetailPage = ({
       </div>
       <div className="row">
         <div className="col-md-3">
-          <img className="img-fluid" alt="" src={person.getPictureUrl()} />
+          <img className="img-fluid img-thumbnail" alt="" src={person.getPictureUrl()} />
         </div>
         <div className="col-md-6">
           <h1>{person.getDisplayName()}</h1>

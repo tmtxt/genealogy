@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { flowRight } from 'lodash';
 
 import { withPersonDataFromParam } from 'components/person';
 import { wrapPersonConsumer } from 'contexts';
 import { navigateToPersonDetailPage } from 'libs/navigation';
+import { requireLoggedInUser } from 'components/user';
 
 import EditPicturePage from './edit-picture-page';
 
@@ -40,4 +42,5 @@ class EpicPicturePageWrapper extends Component {
   }
 }
 
-export default withPersonDataFromParam(wrapPersonConsumer(EpicPicturePageWrapper));
+const enhance = flowRight([requireLoggedInUser, withPersonDataFromParam, wrapPersonConsumer]);
+export default enhance(EpicPicturePageWrapper);

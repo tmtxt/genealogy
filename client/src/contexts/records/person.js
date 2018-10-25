@@ -34,7 +34,9 @@ export default class PersonRecord extends Record(defaultProps) {
   }
 
   getPictureUrl() {
-    if (this.picture) return this.picture;
+    if (this.picture) {
+      return `/pictures/${this.picture}`;
+    }
 
     return (this.gender || 'male') === 'male' ? defaultMalePicture : defaultFemalePicture;
   }
