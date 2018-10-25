@@ -51,7 +51,7 @@ class PersonUpdate extends ModelBase {
           type: 'boolean'
         },
         picture: {
-          type: 'string'
+          oneOf: [{ type: 'string' }, { type: 'null' }]
         }
       }
     };

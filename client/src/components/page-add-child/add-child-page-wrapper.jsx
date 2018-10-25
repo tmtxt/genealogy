@@ -11,9 +11,21 @@ import AddChildPage from './add-child-page';
 export class AddChildPageWrapper extends Component {
   static displayName = 'AddChildPageWrapper';
 
-  state = {
-    marriageId: ''
-  };
+  constructor(props) {
+    super(props);
+
+    const { person } = props;
+    const marriageId =
+      person &&
+      person
+        .get('marriages')
+        .first()
+        .get('id');
+
+    this.state = {
+      marriageId: marriageId || ''
+    };
+  }
 
   componentDidUpdate(prevProps) {
     const { person: prevPerson } = prevProps;

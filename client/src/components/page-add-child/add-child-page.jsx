@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Form, Button, Label, Input, FormGroup } from 'reactstrap';
 
