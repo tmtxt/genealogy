@@ -8,6 +8,13 @@ const defaultMalePicture = require('images/male-default.png');
 const defaultFemalePicture = require('images/female-default.png');
 
 const getDefaultPicture = gender => (gender === 'male' ? defaultMalePicture : defaultFemalePicture);
+const getPicture = person => {
+  if (person.picture) {
+    return `/pictures/${person.picture}`;
+  }
+
+  return getDefaultPicture(person.gender);
+};
 
 const styles = {
   circleFill: {
@@ -36,7 +43,7 @@ const styles = {
 const MarriageNode = ({ history, person, order }) => {
   const x = (order + 1) * 21;
   const translate = `translate(${x}, 0)`;
-  const picture = getDefaultPicture(person.gender);
+  const picture = getPicture(person);
 
   return (
     <g transform={translate}>
@@ -70,7 +77,7 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
       <image
         onClick={() => navigateToPersonDetailPage(history, personNode.id)}
         style={styles.personPicture}
-        href={personNode.info.picture || getDefaultPicture(personNode.info.gender)}
+        href={getPicture(personNode.info)}
         x="-20"
         y="-68"
         width="40px"
