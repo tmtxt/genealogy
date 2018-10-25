@@ -49,7 +49,8 @@ class PersonProviderWrapper extends Component {
         updatePersonViaApi: this.updatePersonViaApi,
         addMarriage: this.addMarriage,
         addChild: this.addChild,
-        deletePersonViaApi: this.deletePersonViaApi
+        deletePersonViaApi: this.deletePersonViaApi,
+        updatePictureViaApi: this.updatePictureViaApi
       },
 
       // selectors
@@ -143,6 +144,23 @@ class PersonProviderWrapper extends Component {
 
     personMeta = this.selectPersonMetaById(personId);
     this.setPersonData(personId, transformGetPersonRes(data));
+    this.setPersonMeta(personId, personMeta.set('isUpdating', false));
+  };
+
+  updatePictureViaApi = async (personId, file) => {
+    let personMeta = this.selectPersonMetaById(personId);
+    this.setPersonMeta(personId, personMeta.set('isUpdating', true));
+
+    const form = new FormData();
+    form.append('pic', file);
+    const res = await fetch(`/api/persons/${personId}/picture`, {
+      method: 'POST',
+      body: form
+    });
+
+    const body = await res.json();
+    personMeta = this.selectPersonMetaById(personId);
+    this.setPersonData(personId, transformGetPersonRes(body));
     this.setPersonMeta(personId, personMeta.set('isUpdating', false));
   };
 
