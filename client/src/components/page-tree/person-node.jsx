@@ -55,6 +55,7 @@ const MarriageNode = ({ history, person, order }) => {
         y="-68"
         width="40px"
         height="40px"
+        xlinkHref={picture}
       />
     </g>
   );
@@ -82,6 +83,7 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
         y="-68"
         width="40px"
         height="40px"
+        xlinkHref={getPicture(personNode.info)}
       />
       {marriagesEnabled &&
         map(personNode.marriages, (person, order) => (
