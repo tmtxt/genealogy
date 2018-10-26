@@ -90,9 +90,9 @@ class NavbarComponent extends Component {
                     Trang chủ
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink href="/">Thành viên</NavLink>
-                </NavItem>
+                {/*<NavItem>*/}
+                  {/*<NavLink href="/">Thành viên</NavLink>*/}
+                {/*</NavItem>*/}
                 <NavItem>
                   <NavLink href="/" onClick={e => this.navigate(e, navigateToTreePage)}>
                     Cây gia phả
