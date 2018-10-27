@@ -72,6 +72,12 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
 
   return (
     <g transform={`translate(${personNode.x}, ${personNode.y})`}>
+      <defs>
+        <rect id="rect" x="-20" y="-68" width="40px" height="40px" rx="8" ry="8" />
+        <clipPath id="clip">
+          <use xlinkHref="#rect" />
+        </clipPath>
+      </defs>
       <circle
         r="10"
         style={circleStyle}
@@ -81,6 +87,7 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
         {displayName}
       </text>
       <image
+        clipPath="url(#clip)"
         onClick={() => navigateToPersonDetailPage(history, personNode.id)}
         style={styles.personPicture}
         href={getPicture(personNode.info)}
