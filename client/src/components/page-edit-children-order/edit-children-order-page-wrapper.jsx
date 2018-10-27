@@ -1,12 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import EditChildrenOrderPage from './edit-children-order-page';
 
 class EditChildrenOrderPageWrapper extends Component {
-  render() {
-    return (
-      <div>
+  state = {
+    children: null
+  };
 
-      </div>
-    );
+  render() {
+    const { children } = this.state;
+
+    return <EditChildrenOrderPage {...{ children }} />;
   }
 }
 
