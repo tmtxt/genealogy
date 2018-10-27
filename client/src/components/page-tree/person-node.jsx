@@ -1,5 +1,5 @@
 // @flow
-import { isEmpty, map } from 'lodash';
+import { isEmpty, map, words, last } from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { navigateToPersonDetailPage } from 'libs/navigation';
@@ -65,6 +65,11 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
   const circleStyle =
     personNode.children || isEmpty(personNode._children) ? styles.circleEmpty : styles.circleFill;
 
+  const fullName = personNode.info.name;
+  const name = last(words(fullName));
+  const namePrefix = personNode.info.gender === 'female' ? 'B.' : 'Ô.';
+  const displayName = name ? `${namePrefix} ${name}` : 'Không rõ';
+
   return (
     <g transform={`translate(${personNode.x}, ${personNode.y})`}>
       <circle
@@ -73,7 +78,7 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
         onClick={() => toggleChildren(rootPersonId, personNode.path)}
       />
       <text y="-19" dy=".35em" textAnchor="middle" style={styles.name}>
-        {personNode.info.name}
+        {displayName}
       </text>
       <image
         onClick={() => navigateToPersonDetailPage(history, personNode.id)}
