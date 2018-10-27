@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map as ImmutableMap } from 'immutable';
+import { fromJS, Map as ImmutableMap } from 'immutable';
 
 import { wrapApiConsumer } from './api';
 
@@ -14,12 +14,38 @@ class ChildrenOrderProviderWrapper extends Component {
       childrenOrderStore: ImmutableMap(),
 
       // actions
-      childrenOrderActions: {},
+      childrenOrderActions: {
+        fetchChildrenWithOrder: this.fetchChildrenWithOrder
+      },
 
       // selectors
-      childrenOrderSelectors: {}
+      childrenOrderSelectors: {
+        selectChildrenInfo: this.selectChildrenInfo
+      }
     };
   }
+
+  setChildrenDetail = (personId, data) => {
+    const { childrenOrderStore } = this.state;
+    this.setState({ childrenOrderStore: childrenOrderStore.set(personId, data) });
+  };
+
+  selectChildrenInfo = parentPersonId => {
+    return this.state.childrenOrderStore.get(parentPersonId);
+  };
+
+  /**
+   * Fetch children with order from server
+   * @param {int} parentPersonId
+   * @returns {Promise<void>}
+   */
+  fetchChildrenWithOrder = async parentPersonId => {
+    const res = await this.props.sendApiRequest('person.getChildrenWithOrder', {
+      personId: parentPersonId
+    });
+
+    this.setChildrenDetail(parentPersonId, fromJS(res));
+  };
 
   render() {
     return <Provider value={this.state}>{this.props.children}</Provider>;

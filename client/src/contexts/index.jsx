@@ -18,4 +18,4 @@ export const wrapContextProviders = _.flowRight([
 export { wrapPersonConsumer } from './person';
 export { wrapTreeConsumer } from './tree';
 export { wrapUserConsumer } from './user';
-export { wrapChildrenOrderProvider } from './children-order';
+export { wrapChildrenOrderConsumer } from './children-order';

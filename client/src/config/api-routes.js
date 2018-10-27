@@ -34,6 +34,11 @@ export default {
     method: 'DELETE'
   },
 
+  'person.getChildrenWithOrder': {
+    path: '/api/persons/:personId/children-order',
+    method: 'GET'
+  },
+
   'user.login': {
     path: '/api/login',
     method: 'POST'
