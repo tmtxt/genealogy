@@ -94,8 +94,16 @@ class TreeProviderWrapper extends Component {
     }
 
     this.setTreeDataById(rootPersonId, fromJS(res));
+    const toggle = (person) => {
+      if (_.isEmpty(person.children)) {
+        return;
+      }
+
+      _.each(person.children, child => toggle(child));
+      this.toggleChildren(rootPersonId, person.path);
+    };
     if (res.children) {
-      _.each(res.children, child => this.toggleChildren(rootPersonId, child.path));
+      _.each(res.children, child => toggle(child));
     }
   };
 
