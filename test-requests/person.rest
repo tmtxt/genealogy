@@ -49,3 +49,7 @@ Content-Type: application/json
 # delete person
 :personId = 32
 DELETE http://:host:30001/api/persons/:personId
+
+# get children with order
+:personId = 0
+GET http://:host:30001/api/persons/:personId/children-order

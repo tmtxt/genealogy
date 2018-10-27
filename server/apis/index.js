@@ -35,6 +35,7 @@ router.post(
   uploader,
   person.uploadPicture
 );
+router.get('/persons/:personId/children-order', person.getChildrenWithOrder);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 router.get('/persons/:personId/tree', tree.getTreeFromPerson);

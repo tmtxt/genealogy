@@ -370,6 +370,31 @@ const removePerson = async (personId, logTrail) => {
   await session.run(deleteQuery, { personId: int(personId) });
 };
 
+/**
+ * Get list of children with the order
+ * @param {int} personId
+ * @param {AppLogTrail} logTrail
+ * @returns {Promise<{id: number, order: number, name: *}[]>}
+ */
+const getChildrenWithOrder = async (personId, logTrail) => {
+  const session = driver.session();
+  let query = '';
+  query += 'MATCH (person:Person)-[r:Father_child|Mother_child]->(child:Person) ';
+  query += 'WHERE id(person) = $personId ';
+  query += 'RETURN ';
+  query += 'id(child) AS child_id, ';
+  query += 'child.name AS child_name, ';
+  query += 'r.order AS child_order';
+
+  const res = await session.run(query, { personId: int(personId) });
+
+  return res.records.map(record => ({
+    id: record.get('child_id').toInt(),
+    order: record.get('child_order').toInt(),
+    name: record.get('child_name').toString()
+  }));
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
@@ -380,5 +405,6 @@ module.exports = {
   addChild,
   addHusband,
   addWife,
-  removePerson
+  removePerson,
+  getChildrenWithOrder
 };

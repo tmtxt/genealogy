@@ -147,6 +147,16 @@ const uploadPicture = async ctx => {
   ctx.status = 200;
 };
 
+// Get list of children with name and order
+const getChildrenWithOrder = async ctx => {
+  const logTrail = ctx.logTrail;
+  const personId = ctx.params.personId;
+
+  const children = await personDal.getChildrenWithOrder(personId, logTrail);
+
+  ctx.body = { children };
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
@@ -156,5 +166,6 @@ module.exports = {
   addHusband,
   addWife,
   removePerson,
-  uploadPicture
+  uploadPicture,
+  getChildrenWithOrder
 };
