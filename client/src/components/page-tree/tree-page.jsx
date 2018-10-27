@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { map, maxBy } from 'lodash';
 import React, { Component } from 'react';
 import dimensions from 'react-dimensions';
 import * as d3 from 'd3';
@@ -41,6 +41,8 @@ export class TreePage extends Component {
     }
 
     const { nodeList, linkList } = this.computeTreeData(treeData, containerWidth);
+    const deepestPerson = maxBy(nodeList, node => node.path.length);
+    const treeDepth = deepestPerson.path.length;
 
     return (
       <div>
@@ -52,7 +54,7 @@ export class TreePage extends Component {
           />
           Hiện vợ/chồng
         </div>
-        <svg height="1000" width={containerWidth}>
+        <svg height={200 * treeDepth + 160} width={containerWidth}>
           <g>
             <g transform="translate(0,0)">
               {map(linkList, (personLink, key) => (
@@ -61,7 +63,9 @@ export class TreePage extends Component {
             </g>
             <g transform="translate(0,0)">
               {map(nodeList, (personNode, key) => (
-                <PersonNode {...{ key, personNode, toggleChildren, rootPersonId, marriagesEnabled }} />
+                <PersonNode
+                  {...{ key, personNode, toggleChildren, rootPersonId, marriagesEnabled }}
+                />
               ))}
             </g>
           </g>
