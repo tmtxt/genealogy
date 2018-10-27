@@ -44,7 +44,7 @@ export class TreePage extends Component {
 
     return (
       <div>
-        <div>
+        <div className="container">
           <Input
             type="checkbox"
             checked={marriagesEnabled}
