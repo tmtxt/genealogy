@@ -1,10 +1,27 @@
 import React from 'react';
-import MainLayoutComponent from './main';
+import { Route } from 'react-router-dom';
 
-export const wrapMainLayout = WrappedComponent => props => (
-  <MainLayoutComponent>
-    <WrappedComponent {...props} />
-  </MainLayoutComponent>
+import MainLayout from './main';
+import FullWidthLayout from './full-width';
+
+export const MainLayoutRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      <MainLayout>
+        <Component {...props} />
+      </MainLayout>
+    )}
+  />
 );
 
-export const MainLayout = MainLayoutComponent;
+export const FullWidthLayoutRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      <FullWidthLayout>
+        <Component {...props} />
+      </FullWidthLayout>
+    )}
+  />
+);

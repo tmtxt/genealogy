@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 
@@ -7,7 +7,7 @@ import 'libs/moment';
 
 import { wrapContextProviders } from './contexts';
 
-import { MainLayout } from 'components/layouts';
+import { MainLayoutRoute, FullWidthLayoutRoute } from 'components/layouts';
 
 import HomePage from 'components/page-home';
 import PersonDetailPage from 'components/page-person-detail';
@@ -20,18 +20,18 @@ import EditPicturePage from 'components/page-edit-picture';
 
 const AppWithRouter = () => (
   <Router>
-    <MainLayout>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/persons/:personId/edit" component={PersonEditPage} />
-      <Route exact path="/persons/:personId/edit-picture" component={EditPicturePage} />
-      <Route exact path="/persons/:personId" component={PersonDetailPage} />
-      <Route exact path="/persons/:personId/add-child" component={AddChildPage} />
-      <Route exact path="/login" component={LoginPage} />
-      <Route exact path="/change-password" component={ChangePasswordPage} />
-      <Route exact path="/tree" component={TreePage} />
-      <Route exact path="/persons/:personId/tree" component={TreePage} />
+    <Switch>
+      <MainLayoutRoute exact path="/" component={HomePage} />
+      <MainLayoutRoute exact path="/persons/:personId/edit" component={PersonEditPage} />
+      <MainLayoutRoute exact path="/persons/:personId/edit-picture" component={EditPicturePage} />
+      <MainLayoutRoute exact path="/persons/:personId" component={PersonDetailPage} />
+      <MainLayoutRoute exact path="/persons/:personId/add-child" component={AddChildPage} />
+      <MainLayoutRoute exact path="/login" component={LoginPage} />
+      <MainLayoutRoute exact path="/change-password" component={ChangePasswordPage} />
 
-    </MainLayout>
+      <FullWidthLayoutRoute exact path="/tree" component={TreePage} />
+      <FullWidthLayoutRoute exact path="/persons/:personId/tree" component={TreePage} />
+    </Switch>
   </Router>
 );
 
