@@ -88,17 +88,15 @@ const PersonDetailPage = ({
           )}
         </div>
         <div className="col-md-3">
-          {isLoggedIn() && (
-            <div className="float-right">
-              <Button
-                onClick={() => navigateToPersonTreePage(history, personId)}
-                disabled={isUpdating}
-              >
-                Cây gia phả
-              </Button>{' '}
-              {isUpdating && <Loader />}
-            </div>
-          )}
+          <div className="float-right">
+            <Button
+              onClick={() => navigateToPersonTreePage(history, personId)}
+              disabled={isUpdating}
+            >
+              Cây gia phả
+            </Button>{' '}
+            {isUpdating && <Loader />}
+          </div>
         </div>
       </div>
       <div className="row">
