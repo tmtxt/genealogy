@@ -7,7 +7,7 @@ import 'libs/moment';
 
 import { wrapContextProviders } from './contexts';
 
-import { MainLayoutRoute, FullWidthLayoutRoute } from 'components/layouts';
+import { MainLayoutRoute, FullWidthLayoutRoute, AdminLayoutRoute } from 'components/layouts';
 
 import HomePage from 'components/page-home';
 import PersonDetailPage from 'components/page-person-detail';
@@ -18,6 +18,7 @@ import LoginPage from 'components/page-login';
 import ChangePasswordPage from 'components/page-change-password';
 import EditPicturePage from 'components/page-edit-picture';
 import EditChildrenOrderPage from 'components/page-edit-children-order';
+import EditPrefacePage from 'components/page-edit-preface';
 
 const AppWithRouter = () => (
   <Router>
@@ -37,6 +38,8 @@ const AppWithRouter = () => (
 
       <FullWidthLayoutRoute exact path="/tree" component={TreePage} />
       <FullWidthLayoutRoute exact path="/persons/:personId/tree" component={TreePage} />
+
+      <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
     </Switch>
   </Router>
 );
