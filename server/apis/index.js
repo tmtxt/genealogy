@@ -9,6 +9,7 @@ const middlewares = require('../middlewares');
 const person = require('./person');
 const tree = require('./tree');
 const user = require('./user');
+const content = require('./content');
 
 const uploader = busboy();
 
@@ -44,6 +45,9 @@ router.post(
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 router.get('/persons/:personId/tree', tree.getTreeFromPerson);
+
+router.post('/contents/:contentKey', middlewares.requireLoggedIn, content.upsertContent);
+router.get('/contents/:contentKey', content.getContent);
 
 router.post('/login', user.login);
 router.post('/logout', middlewares.requireLoggedIn, user.logout);

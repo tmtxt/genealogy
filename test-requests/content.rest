@@ -1,0 +1,10 @@
+# get
+GET http://localhost:30001/api/contents/preface
+
+# upsert
+POST http://localhost:30001/api/contents/preface
+Content-Type: application/json
+
+{
+  "contentValue": "hello"
+}
