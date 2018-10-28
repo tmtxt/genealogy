@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import {
+  Button,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledButtonDropdown
+} from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { flowRight } from 'lodash';
 
@@ -51,52 +57,47 @@ const PersonDetailPage = ({
   return (
     <div className="container-fluid">
       <div className="row" style={{ marginBottom: 10 }}>
-        <div className="col-md-3">
+        <div className="col-md-12">
           {isLoggedIn() && (
             <div className="float-right">
+              <UncontrolledButtonDropdown>
+                <DropdownToggle caret color="primary">
+                  Chỉnh Sửa
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem
+                    onClick={() => navigateToPictureEditPage(history, personId)}
+                    disabled={isUpdating}
+                  >
+                    Sửa ảnh
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={() => navigateToPersonEditPage(history, personId)}
+                    disabled={isUpdating}
+                  >
+                    Sửa thông tin
+                  </DropdownItem>
+                  <DropdownItem onClick={addMarriage} disabled={isUpdating}>
+                    {addMarriageText}
+                  </DropdownItem>
+                  <DropdownItem onClick={addChild} disabled={isUpdating}>
+                    Thêm con
+                  </DropdownItem>
+                  <DropdownItem onClick={deletePerson} disabled={isUpdating}>
+                    Xóa
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledButtonDropdown>
+              {' '}
               <Button
-                onClick={() => navigateToPictureEditPage(history, personId)}
+                onClick={() => navigateToPersonTreePage(history, personId)}
                 disabled={isUpdating}
               >
-                Sửa ảnh
-              </Button>{' '}
-              {isUpdating && <Loader />}
-            </div>
-          )}
-        </div>
-        <div className="col-md-6">
-          {isLoggedIn() && (
-            <div className="float-right">
-              <Button
-                color="primary"
-                onClick={() => navigateToPersonEditPage(history, personId)}
-                disabled={isUpdating}
-              >
-                Sửa thông tin
-              </Button>{' '}
-              <Button disabled={isUpdating} onClick={addMarriage}>
-                {addMarriageText}
-              </Button>{' '}
-              <Button disabled={isUpdating} onClick={addChild}>
-                Thêm con
-              </Button>{' '}
-              <Button color="danger" disabled={isUpdating} onClick={deletePerson}>
-                Xóa
+                Cây gia phả
               </Button>
-              {isUpdating && <Loader />}
+                 {isUpdating && <Loader />}
             </div>
           )}
-        </div>
-        <div className="col-md-3">
-          <div className="float-right">
-            <Button
-              onClick={() => navigateToPersonTreePage(history, personId)}
-              disabled={isUpdating}
-            >
-              Cây gia phả
-            </Button>{' '}
-            {isUpdating && <Loader />}
-          </div>
         </div>
       </div>
       <div className="row">
@@ -110,7 +111,7 @@ const PersonDetailPage = ({
         <div className="col-md-3">
           <ParentsTable {...{ person }} />
           <MarriagesTable {...{ person }} />
-          <ChildrenTable {...{ personId, person }} />
+          <ChildrenTable {...{ personId, person, isLoggedIn }} />
         </div>
       </div>
     </div>
