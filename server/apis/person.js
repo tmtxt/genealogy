@@ -117,6 +117,7 @@ const removePerson = async ctx => {
   ctx.status = 204;
 };
 
+// POST /persons/:personId/picture
 const uploadPicture = async ctx => {
   const logTrail = ctx.logTrail;
   const personId = ctx.params.personId;
@@ -148,6 +149,8 @@ const uploadPicture = async ctx => {
 };
 
 // Get list of children with name and order
+// Response body
+// {id: number, order: number, name: *}[]
 const getChildrenWithOrder = async ctx => {
   const logTrail = ctx.logTrail;
   const personId = ctx.params.personId;
@@ -155,6 +158,15 @@ const getChildrenWithOrder = async ctx => {
   const children = await personDal.getChildrenWithOrder(personId, logTrail);
 
   ctx.body = { children };
+};
+
+const updateChildrenOrder = async ctx => {
+  const logTrail = ctx.logTrail;
+  const personId = ctx.params.personId;
+  const childrenOrderList = ctx.request.body.childrenOrderList;
+
+  await personDal.updateChildrenOrder(personId, childrenOrderList, logTrail);
+  ctx.status = 204;
 };
 
 module.exports = {
@@ -167,5 +179,6 @@ module.exports = {
   addWife,
   removePerson,
   uploadPicture,
-  getChildrenWithOrder
+  getChildrenWithOrder,
+  updateChildrenOrder
 };

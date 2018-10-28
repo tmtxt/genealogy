@@ -395,6 +395,30 @@ const getChildrenWithOrder = async (personId, logTrail) => {
   }));
 };
 
+/**
+ * Update this person's children order
+ * @param {int} personId
+ * @param {{id: int, order: int}[]} childrenOrderList
+ * @param {AppLogTrail} logTrail
+ * @returns {Promise<void>}
+ */
+const updateChildrenOrder = async (personId, childrenOrderList, logTrail) => {
+  const session = driver.session();
+  const updateChildOrder = async (childId, childOrder) => {
+    let query = '';
+    query += 'MATCH (parent:Person)-[r:Father_child|Mother_child]->(child:Person) ';
+    query += 'WHERE id(parent) = $parentId AND id(child) = $childId ';
+    query += 'SET r.order = $childOrder';
+    await session.run(query, {
+      parentId: int(personId),
+      childId: int(childId),
+      childOrder: int(childOrder)
+    });
+  };
+
+  await Promise.all(_.map(childrenOrderList, item => updateChildOrder(item.id, item.order)));
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
@@ -406,5 +430,6 @@ module.exports = {
   addHusband,
   addWife,
   removePerson,
-  getChildrenWithOrder
+  getChildrenWithOrder,
+  updateChildrenOrder
 };

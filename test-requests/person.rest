@@ -53,3 +53,21 @@ DELETE http://:host:30001/api/persons/:personId
 # get children with order
 :personId = 0
 GET http://:host:30001/api/persons/:personId/children-order
+
+# update children order
+:personId = 0
+POST http://:host:30001/api/persons/:personId/children-order
+Content-Type: application/json
+
+{
+  "childrenOrderList": [
+    {
+      "id": 1,
+      "order": 2
+    },
+    {
+      "id": 22,
+      "order": 1
+    }
+  ]
+}
