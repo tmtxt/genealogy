@@ -59,45 +59,39 @@ const PersonDetailPage = ({
       <div className="row" style={{ marginBottom: 10 }}>
         <div className="col-md-12">
           {isLoggedIn() && (
-            <div className="float-right">
-              <UncontrolledButtonDropdown>
-                <DropdownToggle caret color="primary">
-                  Chỉnh Sửa
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem
-                    onClick={() => navigateToPictureEditPage(history, personId)}
-                    disabled={isUpdating}
-                  >
-                    Sửa ảnh
-                  </DropdownItem>
-                  <DropdownItem
-                    onClick={() => navigateToPersonEditPage(history, personId)}
-                    disabled={isUpdating}
-                  >
-                    Sửa thông tin
-                  </DropdownItem>
-                  <DropdownItem onClick={addMarriage} disabled={isUpdating}>
-                    {addMarriageText}
-                  </DropdownItem>
-                  <DropdownItem onClick={addChild} disabled={isUpdating}>
-                    Thêm con
-                  </DropdownItem>
-                  <DropdownItem onClick={deletePerson} disabled={isUpdating}>
-                    Xóa
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledButtonDropdown>
-              {' '}
-              <Button
-                onClick={() => navigateToPersonTreePage(history, personId)}
-                disabled={isUpdating}
-              >
-                Cây gia phả
-              </Button>
-                 {isUpdating && <Loader />}
-            </div>
-          )}
+            <UncontrolledButtonDropdown>
+              <DropdownToggle caret color="primary">
+                Chỉnh Sửa
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem
+                  onClick={() => navigateToPictureEditPage(history, personId)}
+                  disabled={isUpdating}
+                >
+                  Sửa ảnh
+                </DropdownItem>
+                <DropdownItem
+                  onClick={() => navigateToPersonEditPage(history, personId)}
+                  disabled={isUpdating}
+                >
+                  Sửa thông tin
+                </DropdownItem>
+                <DropdownItem onClick={addMarriage} disabled={isUpdating}>
+                  {addMarriageText}
+                </DropdownItem>
+                <DropdownItem onClick={addChild} disabled={isUpdating}>
+                  Thêm con
+                </DropdownItem>
+                <DropdownItem onClick={deletePerson} disabled={isUpdating}>
+                  Xóa
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledButtonDropdown>
+          )}{' '}
+          <Button onClick={() => navigateToPersonTreePage(history, personId)} disabled={isUpdating}>
+            Cây gia phả
+          </Button>
+          {isUpdating && <Loader />}
         </div>
       </div>
       <div className="row">
