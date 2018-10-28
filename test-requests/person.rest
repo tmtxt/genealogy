@@ -4,7 +4,7 @@
 GET http://:host:30001/api/person/1
 
 # get person with relations
-GET http://:host:30001/api/detailed-persons/1
+GET http://:host:30001/api/detailed-persons/0
 
 # get root person
 GET http://:host:30001/api/root-person

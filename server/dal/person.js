@@ -139,63 +139,45 @@ const getPersonById = async (personId, logTrail) => {
  */
 const getPersonByIdWithRelations = async (personId, logTrail) => {
   const session = driver.session();
-  let query = '';
-  query += 'MATCH (person:Person) WHERE id(person) = $personId ';
-  query += 'WITH ';
-  query += 'person AS person, ';
-  query +=
-    'extract(n IN (person)-[:Husband_wife|Wife_husband]->(:Person) | last(nodes(n))) AS marriages, ';
-  query +=
-    'extract(n IN (person)-[:Father_child|Mother_child]->(:Person) | last(nodes(n))) AS children, ';
-  query += 'extract(n IN (person)<-[:Father_child]-(:Person) | last(nodes(n))) AS fathers, ';
-  query += 'extract(n IN (person)<-[:Mother_child]-(:Person) | last(nodes(n))) AS mothers ';
-  query += 'RETURN ';
-  query += 'id(person) AS id, ';
-  query += 'person AS data, ';
-  query +=
-    'extract(marriage in marriages | {id: id(marriage), node_info: marriage}) AS marriages, ';
-  query += 'extract(child in children | {id: id(child), node_info: child}) AS children, ';
-  query += 'extract(father in fathers | {id: id(father), node_info: father}) AS fathers, ';
-  query += 'extract(mother in mothers | {id: id(mother), node_info: mother}) AS mothers ';
 
-  const res = await session.run(query, { personId: int(personId) });
-  const person = transformSingleResult(res);
+  const getPerson = async () => {
+    const query = 'MATCH (p:Person) WHERE id(p) = $personId RETURN id(p) AS id, p AS data';
+    const res = await session.run(query, { personId: int(personId) });
+    return transformSingleResult(res);
+  };
+  const getMarriages = async () => {
+    const query = `MATCH (p:Person)-[r:Husband_wife|Wife_husband]->(m:Person) WHERE id(p) = $personId
+                   RETURN id(m) AS id, m AS data ORDER BY r.order`;
+    const res = await session.run(query, { personId: int(personId) });
+    return _.map(res.records, transformRecord);
+  };
+  const getChildren = async () => {
+    const query = `MATCH (p:Person)-[r:Father_child|Mother_child]->(c:Person) WHERE id(p) = $personId
+                   RETURN id(c) AS id, c AS data ORDER BY r.order`;
+    const res = await session.run(query, { personId: int(personId) });
+    return _.map(res.records, transformRecord);
+  };
+  const getFather = async () => {
+    const query = `MATCH (p:Person)<-[:Father_child]-(f:Person) WHERE id(p) = $personId
+                   RETURN id(f) AS id, f AS data`;
+    const res = await session.run(query, { personId: int(personId) });
+    return transformSingleResult(res);
+  };
+  const getMother = async () => {
+    const query = `MATCH (p:Person)<-[:Mother_child]-(m:Person) WHERE id(p) = $personId
+                   RETURN id(m) AS id, m AS data`;
+    const res = await session.run(query, { personId: int(personId) });
+    return transformSingleResult(res);
+  };
 
-  if (!person) return null;
-
-  const record = res.records[0];
-
-  // set marriages
-  person.marriages = record
-    .get('marriages')
-    .map(marriage => _.assign({ id: marriage.id.toInt() }, marriage.node_info.properties));
-  logTrail.push('info', '# marriages', record.get('marriages').length);
-
-  // set children
-  person.children = record
-    .get('children')
-    .map(child => _.assign({ id: child.id.toInt() }, child.node_info.properties));
-  logTrail.push('info', '# children', record.get('children').length);
-
-  // set father
-  person.father = null;
-  const fathers = record.get('fathers');
-  if (fathers.length) {
-    logTrail.push('info', 'Has father', 'TRUE');
-    const father = _.first(fathers);
-    person.father = _.assign({ id: father.id.toInt() }, father.node_info.properties);
-  }
-
-  // set mother
-  person.mother = null;
-  const mothers = record.get('mothers');
-  if (mothers.length) {
-    logTrail.push('info', 'Has mother', 'TRUE');
-    const mother = _.first(mothers);
-    person.mother = _.assign({ id: mother.id.toInt() }, mother.node_info.properties);
-  }
-
-  return person;
+  const [person, marriages, children, father, mother] = await Promise.all([
+    getPerson(),
+    getMarriages(),
+    getChildren(),
+    getFather(),
+    getMother()
+  ]);
+  return _.assign(person, { marriages, children, father, mother });
 };
 
 /**
