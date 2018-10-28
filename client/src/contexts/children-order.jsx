@@ -15,7 +15,8 @@ class ChildrenOrderProviderWrapper extends Component {
 
       // actions
       childrenOrderActions: {
-        fetchChildrenWithOrder: this.fetchChildrenWithOrder
+        fetchChildrenWithOrder: this.fetchChildrenWithOrder,
+        updateChildrenOrder: this.updateChildrenOrder
       },
 
       // selectors
@@ -32,6 +33,21 @@ class ChildrenOrderProviderWrapper extends Component {
 
   selectChildrenInfo = parentPersonId => {
     return this.state.childrenOrderStore.get(parentPersonId);
+  };
+
+  updateChildrenOrder = async (parentPersonId, childrenOrderList) => {
+    let childrenDetail = this.selectChildrenInfo(parentPersonId);
+    this.setChildrenDetail(parentPersonId, childrenDetail.set('isUpdating', true));
+
+    await this.props.sendApiRequest(
+      'person.updateChildrenOrder',
+      { personId: parentPersonId },
+      null,
+      { childrenOrderList }
+    );
+
+    childrenDetail = this.selectChildrenInfo(parentPersonId);
+    this.setChildrenDetail(parentPersonId, childrenDetail.set('isUpdating', false));
   };
 
   /**

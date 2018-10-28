@@ -39,6 +39,11 @@ export default {
     method: 'GET'
   },
 
+  'person.updateChildrenOrder': {
+    path: '/api/persons/:personId/children-order',
+    method: 'POST'
+  },
+
   'user.login': {
     path: '/api/login',
     method: 'POST'

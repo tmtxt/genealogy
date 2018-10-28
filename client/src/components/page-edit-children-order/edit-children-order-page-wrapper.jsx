@@ -12,12 +12,16 @@ class EditChildrenOrderPageWrapper extends Component {
 
   render() {
     const {
-      childrenOrderSelectors: { selectChildrenInfo }
+      childrenOrderSelectors: { selectChildrenInfo },
+      childrenOrderActions: { updateChildrenOrder }
     } = this.props;
     const personId = getPersonIdFromProps(this.props);
     const childrenInfo = selectChildrenInfo(personId);
+    const isUpdating = childrenInfo && childrenInfo.get('isUpdating');
 
-    return <EditChildrenOrderPage {...{ childrenInfo }} />;
+    return (
+      <EditChildrenOrderPage {...{ personId, childrenInfo, updateChildrenOrder, isUpdating }} />
+    );
   }
 }
 

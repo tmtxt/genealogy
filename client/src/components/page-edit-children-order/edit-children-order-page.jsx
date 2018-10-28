@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Loader } from '../shared';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
+import { navigateToPersonDetailPage } from 'libs/navigation';
 
 export class EditChildrenOrderPage extends Component {
   state = {
@@ -15,6 +17,12 @@ export class EditChildrenOrderPage extends Component {
     }
 
     return null;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isUpdating && !this.props.isUpdating) {
+      navigateToPersonDetailPage(this.props.history, this.props.personId);
+    }
   }
 
   /**
@@ -38,6 +46,7 @@ export class EditChildrenOrderPage extends Component {
   };
 
   render() {
+    const { personId, isUpdating } = this.props;
     let { childrenInfo } = this.state;
 
     if (!childrenInfo) {
@@ -62,10 +71,19 @@ export class EditChildrenOrderPage extends Component {
           </FormGroup>
         ))}
 
-        <Button color="primary">Cập nhật</Button>
+        <Button
+          disabled={isUpdating}
+          color="primary"
+          onClick={() =>
+            this.props.updateChildrenOrder(personId, this.state.childrenInfo.get('children'))
+          }
+        >
+          Cập nhật
+        </Button>
+        {isUpdating && <Loader />}
       </Form>
     );
   }
 }
 
-export default EditChildrenOrderPage;
+export default withRouter(EditChildrenOrderPage);
