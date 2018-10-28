@@ -19,9 +19,7 @@ const ensureDatabase = async logTrail => {
   logTrail.push('info', 'ensureDatabase', 'Database created');
 };
 
-const ensureTables = async logTrail => {
-  const tableList = await r.tableList();
-
+const ensureUsersTable = async (tableList, logTrail) => {
   if (_.includes(tableList, 'users')) {
     logTrail.push('info', 'ensureTables', 'users table already exists');
     return;
@@ -29,6 +27,23 @@ const ensureTables = async logTrail => {
 
   await r.tableCreate('users', { primaryKey: 'username' });
   logTrail.push('info', 'ensureTables', 'users table created');
+};
+
+const ensureContentsTable = async (tableList, logTrail) => {
+  if (_.includes(tableList, 'contents')) {
+    logTrail.push('info', 'ensureTables', 'contents table already exists');
+    return;
+  }
+
+  await r.tableCreate('contents', { primaryKey: 'contentKey' });
+  logTrail.push('info', 'ensureTables', 'contents table created');
+};
+
+const ensureTables = async logTrail => {
+  const tableList = await r.tableList();
+
+  await ensureUsersTable(tableList, logTrail);
+  await ensureContentsTable(tableList, logTrail);
 };
 
 const ensure = async logTrail => {
