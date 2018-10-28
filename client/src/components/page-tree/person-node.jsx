@@ -1,5 +1,5 @@
 // @flow
-import { isEmpty, map, words, last } from 'lodash';
+import { isEmpty, map, words, last, reverse } from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { navigateToPersonDetailPage } from 'libs/navigation';
@@ -41,17 +41,24 @@ const styles = {
 };
 
 const MarriageNode = ({ history, person, order }) => {
-  const x = (order + 1) * 21;
+  const x = (order + 1) * 20 + 21;
   const translate = `translate(${x}, 0)`;
   const picture = getPicture(person);
 
   return (
     <g transform={translate}>
+      <defs>
+        <rect id="rect" x="-20" y="-68" width="40px" height="40px" rx="8" ry="8" />
+        <clipPath id="clip">
+          <use xlinkHref="#rect" />
+        </clipPath>
+      </defs>
       <image
+        clipPath="url(#clip)"
         onClick={() => navigateToPersonDetailPage(history, person.id)}
         href={picture}
         style={styles.personPicture}
-        x="0"
+        x="-20"
         y="-68"
         width="40px"
         height="40px"
@@ -98,8 +105,11 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
         xlinkHref={getPicture(personNode.info)}
       />
       {marriagesEnabled &&
-        map(personNode.marriages, (person, order) => (
-          <MarriageNode key={order} {...{ history, person, order }} />
+        map(reverse(personNode.marriages), (person, order) => (
+          <MarriageNode
+            key={personNode.marriages.length - 1 - order}
+            {...{ history, person, order: personNode.marriages.length - 1 - order }}
+          />
         ))}
     </g>
   );
