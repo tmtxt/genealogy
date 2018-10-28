@@ -41,7 +41,7 @@ const getTreeByPersonId = async (rootNodeId, logTrail) => {
   query += 'length(p) AS depth, '; // the depth of the current relation
   // also query the marriage of each node (to display on the tree)
   query +=
-    'extract(n IN (child)-[:Husband_wife|Wife_husband]->(:Pderson) | last(nodes(n))) AS marriages ';
+    'extract(n IN (child)-[:Husband_wife|Wife_husband]->(:Person) | last(nodes(n))) AS marriages ';
   // beginning returning data
   query += 'RETURN ';
   query += 'id(last(all_nodes)) AS `id`, ';
