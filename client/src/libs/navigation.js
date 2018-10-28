@@ -8,6 +8,10 @@ export const personEditUrl = new UrlPattern('/persons/:personId/edit');
 export const navigateToPersonEditPage = (history, personId) =>
   history.push(personEditUrl.stringify({ personId }));
 
+export const editChildrenOrderUrl = new UrlPattern('/persons/:personId/edit-children-order');
+export const navigateToEditChildrenOrderPage = (history, personId) =>
+  history.push(editChildrenOrderUrl.stringify({ personId }));
+
 export const addChildUrl = new UrlPattern('/persons/:personId/add-child');
 export const navigateToAddChildPage = (history, personId) =>
   history.push(addChildUrl.stringify({ personId }));

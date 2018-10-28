@@ -110,7 +110,7 @@ const PersonDetailPage = ({
         <div className="col-md-3">
           <ParentsTable {...{ person }} />
           <MarriagesTable {...{ person }} />
-          <ChildrenTable {...{ person }} />
+          <ChildrenTable {...{ personId, person }} />
         </div>
       </div>
     </div>
