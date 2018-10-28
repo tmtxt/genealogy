@@ -31,11 +31,6 @@ export class EditChildrenOrderPage extends Component {
    * @param {int} childOrder
    */
   handleChildOrderUpdate = (childId, childOrder) => {
-    childOrder = parseInt(childOrder);
-    if (!childOrder || childOrder < 1) {
-      childOrder = 1;
-    }
-
     const { childrenInfo } = this.state;
     const children = childrenInfo
       .get('children')
