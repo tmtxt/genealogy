@@ -19,6 +19,7 @@ import ChangePasswordPage from 'components/page-change-password';
 import EditPicturePage from 'components/page-edit-picture';
 import EditChildrenOrderPage from 'components/page-edit-children-order';
 import EditPrefacePage from 'components/page-edit-preface';
+import AdminIndexPage from 'components/page-admin-index';
 
 const AppWithRouter = () => (
   <Router>
@@ -39,6 +40,7 @@ const AppWithRouter = () => (
       <FullWidthLayoutRoute exact path="/tree" component={TreePage} />
       <FullWidthLayoutRoute exact path="/persons/:personId/tree" component={TreePage} />
 
+      <AdminLayoutRoute exact path="/admin" component={AdminIndexPage} />
       <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
     </Switch>
   </Router>

@@ -32,3 +32,7 @@ export const navigateToHomePage = history => history.push('/');
 export const navigateToLoginPage = history => history.push('/login');
 
 export const navigateToChangePasswordPage = history => history.push('/change-password');
+
+export const navigateToEditPrefacePage = history => history.push('/admin/preface');
+
+export const navigateToAdminIndexPage = history => history.push('/admin');

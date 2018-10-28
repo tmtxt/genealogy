@@ -18,7 +18,7 @@ import {
   navigateToTreePage,
   navigateToHomePage,
   navigateToLoginPage,
-  navigateToChangePasswordPage
+  navigateToAdminIndexPage
 } from 'libs/navigation';
 import { wrapUserConsumer } from 'contexts';
 
@@ -62,8 +62,8 @@ class NavbarComponent extends Component {
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem onClick={logout}>Đăng xuất</DropdownItem>
-            <DropdownItem onClick={e => this.navigate(e, navigateToChangePasswordPage)}>
-              Đổi mật khẩu
+            <DropdownItem onClick={e => this.navigate(e, navigateToAdminIndexPage)}>
+              Quản trị
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
@@ -91,7 +91,7 @@ class NavbarComponent extends Component {
                   </NavLink>
                 </NavItem>
                 {/*<NavItem>*/}
-                  {/*<NavLink href="/">Thành viên</NavLink>*/}
+                {/*<NavLink href="/">Thành viên</NavLink>*/}
                 {/*</NavItem>*/}
                 <NavItem>
                   <NavLink href="/" onClick={e => this.navigate(e, navigateToTreePage)}>
