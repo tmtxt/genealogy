@@ -68,7 +68,7 @@ const PersonNode = ({ personNode, history, toggleChildren, rootPersonId, marriag
   const fullName = personNode.info.name;
   const name = last(words(fullName));
   const namePrefix = personNode.info.gender === 'female' ? 'B.' : 'Ô.';
-  const displayName = name ? `${namePrefix} ${name}` : 'Không rõ';
+  const displayName = name ? `${namePrefix}${name}` : 'Không rõ';
 
   return (
     <g transform={`translate(${personNode.x}, ${personNode.y})`}>
