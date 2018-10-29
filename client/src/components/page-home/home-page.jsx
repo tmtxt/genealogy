@@ -41,14 +41,14 @@ const items = [
 const HomePage = () => (
   <div>
     <Row>
-      <Col md="5">
-        <Card style={{height: '100%'}}>
+      <Col md="5" style={{ marginTop: 10 }}>
+        <Card style={{ height: '100%' }}>
           <CardHeader className={styles.cardTitle}>Thông tin dòng họ</CardHeader>
           <CardBody>Hello</CardBody>
         </Card>
       </Col>
-      <Col md="7" style={{height: '100%'}}>
-        <Card>
+      <Col md="7" style={{ marginTop: 10 }}>
+        <Card style={{ height: '100%' }}>
           <CardHeader className={styles.cardTitle}>Hình ảnh</CardHeader>
           <CardBody>
             <UncontrolledCarousel items={items} />
