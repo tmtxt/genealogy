@@ -1,5 +1,18 @@
 import React from 'react';
-import { Row, Col, UncontrolledCarousel, Card, CardText, CardTitle, CardDeck } from 'reactstrap';
+import {
+  Row,
+  Col,
+  UncontrolledCarousel,
+  Card,
+  CardText,
+  CardTitle,
+  CardDeck,
+  CardHeader,
+  CardBody
+} from 'reactstrap';
+import PrefaceText from './preface';
+
+import styles from './style.scss';
 
 const items = [
   {
@@ -27,19 +40,37 @@ const items = [
 
 const HomePage = () => (
   <div>
-    <CardDeck>
-      <Card body outline color="warning">
-        <CardTitle>Lời giới thiệu</CardTitle>
-        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-      </Card>
-      <Card body outline color="warning">
-        <CardTitle>Hình ảnh</CardTitle>
-        <UncontrolledCarousel items={items} />
-      </Card>
-    </CardDeck>
-    <Card body outline color="warning" style={{ marginTop: 10 }}>
-      <CardTitle>Lời nói đầu</CardTitle>
-      <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+    <Row>
+      <Col md="5">
+        <Card style={{height: '100%'}}>
+          <CardHeader className={styles.cardTitle}>Thông tin dòng họ</CardHeader>
+          <CardBody>Hello</CardBody>
+        </Card>
+      </Col>
+      <Col md="7" style={{height: '100%'}}>
+        <Card>
+          <CardHeader className={styles.cardTitle}>Hình ảnh</CardHeader>
+          <CardBody>
+            <UncontrolledCarousel items={items} />
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+    {/*<CardDeck>*/}
+    {/*<Card body outline color="warning">*/}
+    {/*<CardTitle>Lời giới thiệu</CardTitle>*/}
+    {/*<CardText>With supporting text below as a natural lead-in to additional content.</CardText>*/}
+    {/*</Card>*/}
+    {/*<Card body outline color="warning">*/}
+    {/*<CardTitle>Hình ảnh</CardTitle>*/}
+    {/*<UncontrolledCarousel items={items} />*/}
+    {/*</Card>*/}
+    {/*</CardDeck>*/}
+    <Card style={{ marginTop: 10 }}>
+      <CardHeader className={styles.cardTitle}>Lời nói đầu</CardHeader>
+      <CardBody>
+        <PrefaceText />
+      </CardBody>
     </Card>
   </div>
 );
