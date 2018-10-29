@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Map as ImmutableMap } from 'immutable';
+import { withAlert } from 'react-alert';
 
 import { wrapApiConsumer } from './api';
 
@@ -14,7 +15,10 @@ class ContentProviderWrapper extends Component {
       contentStore: ImmutableMap(),
 
       // actions
-      contentActions: { fetchContentValue: this.fetchContentValue }
+      contentActions: {
+        fetchContentValue: this.fetchContentValue,
+        updateContentViaApi: this.updateContentViaApi
+      }
     };
   }
 
@@ -29,11 +33,18 @@ class ContentProviderWrapper extends Component {
     this.setContent(contentKey, res.contentValue);
   };
 
+  updateContentViaApi = async (contentKey, contentValue) => {
+    await this.props.sendApiRequest('content.upsertContent', { contentKey }, null, {
+      contentValue
+    });
+    this.props.alert.info('Thành công');
+  };
+
   render() {
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }
-const EnhancedContentProviderWrapper = wrapApiConsumer(ContentProviderWrapper);
+const EnhancedContentProviderWrapper = wrapApiConsumer(withAlert(ContentProviderWrapper));
 
 export const wrapContentProvider = WrappedComponent => props => (
   <EnhancedContentProviderWrapper>
