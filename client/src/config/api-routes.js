@@ -67,5 +67,15 @@ export default {
   'tree.getTreeFromPerson': {
     path: '/api/persons/:personId/tree',
     method: 'GET'
+  },
+
+  'content.getContent': {
+    path: '/api/contents/:contentKey',
+    method: 'GET'
+  },
+
+  'content.upsertContent': {
+    path: '/api/contents/:contentKey',
+    method: 'POST'
   }
 };
