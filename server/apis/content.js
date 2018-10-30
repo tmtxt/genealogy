@@ -16,8 +16,8 @@ const upsertContent = async ctx => {
   const contentKey = ctx.params.contentKey;
   const contentValue = ctx.request.body.contentValue;
 
-  if (!_.includes(['preface'], contentKey)) {
-    this.responseError(405, 'Not allowed');
+  if (!_.includes(['preface', 'general-info'], contentKey)) {
+    ctx.responseError(405, 'Not allowed');
   }
 
   await contentDal.upsertContent(contentKey, contentValue, logTrail);

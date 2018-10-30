@@ -18,8 +18,9 @@ import LoginPage from 'components/page-login';
 import ChangePasswordPage from 'components/page-change-password';
 import EditPicturePage from 'components/page-edit-picture';
 import EditChildrenOrderPage from 'components/page-edit-children-order';
-import EditPrefacePage from 'components/page-edit-preface';
 import AdminIndexPage from 'components/page-admin-index';
+import EditPrefacePage from 'components/page-edit-preface';
+import EditGeneralInfoPage from 'components/page-edit-general-info';
 
 const AppWithRouter = () => (
   <Router>
@@ -42,6 +43,7 @@ const AppWithRouter = () => (
 
       <AdminLayoutRoute exact path="/admin" component={AdminIndexPage} />
       <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
+      <AdminLayoutRoute exact path="/admin/general-info" component={EditGeneralInfoPage} />
     </Switch>
   </Router>
 );

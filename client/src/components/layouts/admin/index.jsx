@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import MainLayout from '../main';
 import { Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import { navigateToChangePasswordPage, navigateToEditPrefacePage } from 'libs/navigation';
+import {
+  navigateToEditGeneralInfoPage,
+  navigateToChangePasswordPage,
+  navigateToEditPrefacePage
+} from 'libs/navigation';
 
 export class AdminLayout extends Component {
   navigate = (e, navigateFunc) => {
@@ -29,6 +33,13 @@ export class AdminLayout extends Component {
                 onClick={e => this.navigate(e, navigateToEditPrefacePage)}
               >
                 Sửa Lời nói đầu
+              </ListGroupItem>
+              <ListGroupItem
+                tag="a"
+                href="/"
+                onClick={e => this.navigate(e, navigateToEditGeneralInfoPage)}
+              >
+                Sửa Thông tin dòng họ
               </ListGroupItem>
             </ListGroup>
           </Col>
