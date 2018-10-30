@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  UncontrolledCarousel,
-  Card,
-  CardText,
-  CardTitle,
-  CardDeck,
-  CardHeader,
-  CardBody
-} from 'reactstrap';
+import { Row, Col, UncontrolledCarousel, Card, CardHeader, CardBody } from 'reactstrap';
 import PrefaceText from './preface';
+import GeneralInfoText from './general-info';
 
 import styles from './style.scss';
 
@@ -44,7 +35,9 @@ const HomePage = () => (
       <Col md="5" style={{ marginTop: 10 }}>
         <Card style={{ height: '100%' }}>
           <CardHeader className={styles.cardTitle}>Thông tin dòng họ</CardHeader>
-          <CardBody>Hello</CardBody>
+          <CardBody>
+            <GeneralInfoText />
+          </CardBody>
         </Card>
       </Col>
       <Col md="7" style={{ marginTop: 10 }}>
@@ -56,16 +49,6 @@ const HomePage = () => (
         </Card>
       </Col>
     </Row>
-    {/*<CardDeck>*/}
-    {/*<Card body outline color="warning">*/}
-    {/*<CardTitle>Lời giới thiệu</CardTitle>*/}
-    {/*<CardText>With supporting text below as a natural lead-in to additional content.</CardText>*/}
-    {/*</Card>*/}
-    {/*<Card body outline color="warning">*/}
-    {/*<CardTitle>Hình ảnh</CardTitle>*/}
-    {/*<UncontrolledCarousel items={items} />*/}
-    {/*</Card>*/}
-    {/*</CardDeck>*/}
     <Card style={{ marginTop: 10 }}>
       <CardHeader className={styles.cardTitle}>Lời nói đầu</CardHeader>
       <CardBody>

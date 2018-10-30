@@ -3,6 +3,7 @@ import { Component } from 'react';
 import React from 'react';
 import { wrapContentConsumer } from 'contexts';
 import EditContentPage from './edit-content-page';
+import { requireLoggedInUser } from 'components/user';
 
 const createEditContentPage = (contentKey, contentTitle) => {
   class EditContentPageWrapper extends Component {
@@ -38,7 +39,7 @@ const createEditContentPage = (contentKey, contentTitle) => {
     }
   }
 
-  return wrapContentConsumer(EditContentPageWrapper);
+  return requireLoggedInUser(wrapContentConsumer(EditContentPageWrapper));
 };
 
 export default createEditContentPage;
