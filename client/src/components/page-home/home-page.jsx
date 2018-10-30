@@ -36,7 +36,7 @@ const HomePage = () => (
     <Row>
       <Col md="5" style={{ marginTop: 10 }}>
         <Card style={{ height: '100%' }}>
-          <CardHeader className={styles.cardTitle}>Thông tin dòng họ</CardHeader>
+          <CardHeader className={styles.cardTitle}>Thông tin chung</CardHeader>
           <CardBody>
             <GeneralInfoText />
           </CardBody>
