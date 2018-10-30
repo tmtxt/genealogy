@@ -32,7 +32,7 @@ const items = [
 ];
 
 const HomePage = () => (
-  <div>
+  <div style={{ paddingBottom: 20 }}>
     <Row>
       <Col md="5" style={{ marginTop: 10 }}>
         <Card style={{ height: '100%' }}>
