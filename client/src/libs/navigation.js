@@ -35,3 +35,5 @@ export const navigateToAdminIndexPage = history => history.push('/admin');
 export const navigateToChangePasswordPage = history => history.push('/change-password');
 export const navigateToEditPrefacePage = history => history.push('/admin/preface');
 export const navigateToEditGeneralInfoPage = history => history.push('/admin/general-info');
+
+export const navigateToHistoryPage = history => history.push('/history');

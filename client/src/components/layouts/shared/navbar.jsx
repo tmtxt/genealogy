@@ -18,7 +18,8 @@ import {
   navigateToTreePage,
   navigateToHomePage,
   navigateToLoginPage,
-  navigateToAdminIndexPage
+  navigateToAdminIndexPage,
+  navigateToHistoryPage
 } from 'libs/navigation';
 import { wrapUserConsumer } from 'contexts';
 
@@ -99,7 +100,9 @@ class NavbarComponent extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/">Lịch sử dòng họ</NavLink>
+                  <NavLink href="/" onClick={e => this.navigate(e, navigateToHistoryPage)}>
+                    Lịch sử dòng họ
+                  </NavLink>
                 </NavItem>
               </Nav>
               {this.renderRightNav()}
