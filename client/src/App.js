@@ -13,6 +13,7 @@ import HomePage from 'components/page-home';
 import PersonDetailPage from 'components/page-person-detail';
 import PersonEditPage from 'components/page-person-edit';
 import TreePage from 'components/page-tree';
+import HistoryPage from 'components/page-history';
 import AddChildPage from 'components/page-add-child';
 import LoginPage from 'components/page-login';
 import ChangePasswordPage from 'components/page-change-password';
@@ -30,13 +31,14 @@ const AppWithRouter = () => (
       <MainLayoutRoute exact path="/persons/:personId/edit-picture" component={EditPicturePage} />
       <MainLayoutRoute exact path="/persons/:personId" component={PersonDetailPage} />
       <MainLayoutRoute exact path="/persons/:personId/add-child" component={AddChildPage} />
-      <MainLayoutRoute exact path="/login" component={LoginPage} />
-      <MainLayoutRoute exact path="/change-password" component={ChangePasswordPage} />
       <MainLayoutRoute
         exact
         path="/persons/:personId/edit-children-order"
         component={EditChildrenOrderPage}
       />
+      <MainLayoutRoute exact path="/login" component={LoginPage} />
+      <MainLayoutRoute exact path="/change-password" component={ChangePasswordPage} />
+      <MainLayoutRoute exact path="/history" component={HistoryPage} />
 
       <FullWidthLayoutRoute exact path="/tree" component={TreePage} />
       <FullWidthLayoutRoute exact path="/persons/:personId/tree" component={TreePage} />

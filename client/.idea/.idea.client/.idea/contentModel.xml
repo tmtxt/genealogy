@@ -24,6 +24,7 @@
         <e p="react-data-fetching" t="IncludeRecursive" />
         <e p="react-dimensions" t="IncludeRecursive" />
         <e p="react-dom" t="IncludeRecursive" />
+        <e p="react-markdown" t="IncludeRecursive" />
         <e p="react-router-dom" t="IncludeRecursive" />
         <e p="react-scripts" t="IncludeRecursive" />
         <e p="reactstrap" t="IncludeRecursive" />
