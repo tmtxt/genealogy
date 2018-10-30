@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 import {
   navigateToEditGeneralInfoPage,
   navigateToChangePasswordPage,
-  navigateToEditPrefacePage
+  navigateToEditPrefacePage,
+  navigateToEditHistoryPage
 } from 'libs/navigation';
 
 export class AdminLayout extends Component {
@@ -40,6 +41,13 @@ export class AdminLayout extends Component {
                 onClick={e => this.navigate(e, navigateToEditGeneralInfoPage)}
               >
                 Sửa Thông tin dòng họ
+              </ListGroupItem>
+              <ListGroupItem
+                tag="a"
+                href="/"
+                onClick={e => this.navigate(e, navigateToEditHistoryPage)}
+              >
+                Sửa Lịch sử dòng họ
               </ListGroupItem>
             </ListGroup>
           </Col>

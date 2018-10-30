@@ -1,14 +1,9 @@
 import React from 'react';
 import withContentData from '../content/with-content-data';
-import { CardText } from 'reactstrap';
 import ReactMarkdown from 'react-markdown';
 
 const GeneralInfoText = ({ contentValue }) => {
-  return (
-    <CardText>
-      <ReactMarkdown source={contentValue} />
-    </CardText>
-  );
+  return <ReactMarkdown source={contentValue} />;
 };
 
 export default withContentData('general-info')(GeneralInfoText);

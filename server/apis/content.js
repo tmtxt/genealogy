@@ -16,7 +16,7 @@ const upsertContent = async ctx => {
   const contentKey = ctx.params.contentKey;
   const contentValue = ctx.request.body.contentValue;
 
-  if (!_.includes(['preface', 'general-info'], contentKey)) {
+  if (!_.includes(['preface', 'general-info', 'history'], contentKey)) {
     ctx.responseError(405, 'Not allowed');
   }
 

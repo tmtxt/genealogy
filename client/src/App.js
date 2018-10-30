@@ -22,6 +22,7 @@ import EditChildrenOrderPage from 'components/page-edit-children-order';
 import AdminIndexPage from 'components/page-admin-index';
 import EditPrefacePage from 'components/page-edit-preface';
 import EditGeneralInfoPage from 'components/page-edit-general-info';
+import EditHistoryPage from 'components/page-edit-history';
 
 const AppWithRouter = () => (
   <Router>
@@ -46,6 +47,7 @@ const AppWithRouter = () => (
       <AdminLayoutRoute exact path="/admin" component={AdminIndexPage} />
       <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
       <AdminLayoutRoute exact path="/admin/general-info" component={EditGeneralInfoPage} />
+      <AdminLayoutRoute exact path="/admin/history" component={EditHistoryPage} />
     </Switch>
   </Router>
 );

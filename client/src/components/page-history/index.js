@@ -6,7 +6,9 @@ import withContentData from 'components/content/with-content-data';
 import styles from './style.scss';
 import { Card, CardBody, CardHeader } from 'reactstrap';
 
-const ContentValue = withContentData(({ contentValue }) => <ReactMarkdown source={contentValue} />);
+const ContentValue = withContentData('history')(({ contentValue }) => (
+  <ReactMarkdown source={contentValue} />
+));
 
 const HistoryPage = () => (
   <Card>
