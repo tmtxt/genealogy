@@ -12,7 +12,7 @@ const ContentValue = withContentData('history')(({ contentValue }) => (
 
 const HistoryPage = () => (
   <Card>
-    <CardHeader className={styles.cardTitle}>Lịch sử dòng họ</CardHeader>
+    <CardHeader className={styles.cardTitle}>Văn tế tổ</CardHeader>
     <CardBody>
       <ContentValue />
     </CardBody>

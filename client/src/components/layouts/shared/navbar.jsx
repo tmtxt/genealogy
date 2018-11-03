@@ -101,7 +101,7 @@ class NavbarComponent extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink href="/" onClick={e => this.navigate(e, navigateToHistoryPage)}>
-                    Lịch sử dòng họ
+                    Văn tế tổ
                   </NavLink>
                 </NavItem>
               </Nav>

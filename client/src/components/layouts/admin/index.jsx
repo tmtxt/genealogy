@@ -47,7 +47,7 @@ export class AdminLayout extends Component {
                 href="/"
                 onClick={e => this.navigate(e, navigateToEditHistoryPage)}
               >
-                Sửa Lịch sử dòng họ
+                Sửa Văn tế tổ
               </ListGroupItem>
             </ListGroup>
           </Col>
