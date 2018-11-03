@@ -16,6 +16,7 @@
         <e p="immutable" t="IncludeRecursive" />
         <e p="js-cookie" t="IncludeRecursive" />
         <e p="lato-font" t="IncludeRecursive" />
+        <e p="lodash" t="IncludeRecursive" />
         <e p="moment" t="IncludeRecursive" />
         <e p="node-sass" t="IncludeRecursive" />
         <e p="react" t="IncludeRecursive" />
@@ -24,6 +25,7 @@
         <e p="react-data-fetching" t="IncludeRecursive" />
         <e p="react-dimensions" t="IncludeRecursive" />
         <e p="react-dom" t="IncludeRecursive" />
+        <e p="react-helmet" t="IncludeRecursive" />
         <e p="react-markdown" t="IncludeRecursive" />
         <e p="react-router-dom" t="IncludeRecursive" />
         <e p="react-scripts" t="IncludeRecursive" />

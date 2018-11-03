@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { flowRight } from 'lodash';
+import { Helmet } from 'react-helmet';
 
 import { Loader } from 'components/shared';
 import {
@@ -56,6 +57,9 @@ const PersonDetailPage = ({
 
   return (
     <div className="container-fluid">
+      <Helmet>
+        <title>{person.getDisplayName()}</title>
+      </Helmet>
       <div className="row" style={{ marginBottom: 10 }}>
         <div className="col-md-12">
           {isLoggedIn() && (
