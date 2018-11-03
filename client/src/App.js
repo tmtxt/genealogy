@@ -23,6 +23,7 @@ import AdminIndexPage from 'components/page-admin-index';
 import EditPrefacePage from 'components/page-edit-preface';
 import EditGeneralInfoPage from 'components/page-edit-general-info';
 import EditHistoryPage from 'components/page-edit-history';
+import PersonsRelationPage from 'components/page-persons-relation';
 
 const AppWithRouter = () => (
   <Router>
@@ -43,6 +44,11 @@ const AppWithRouter = () => (
 
       <FullWidthLayoutRoute exact path="/tree" component={TreePage} />
       <FullWidthLayoutRoute exact path="/persons/:personId/tree" component={TreePage} />
+      <FullWidthLayoutRoute
+        exact
+        path="/relationship/from/:fromPersonId/to/:toPersonId"
+        component={PersonsRelationPage}
+      />
 
       <AdminLayoutRoute exact path="/admin" component={AdminIndexPage} />
       <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
