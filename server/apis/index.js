@@ -42,6 +42,7 @@ router.post(
   middlewares.requireLoggedIn,
   person.updateChildrenOrder
 );
+router.get('/relationship/:sourcePersonId/:destPersonId', person.getRelationBetweenPerson);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 router.get('/persons/:personId/tree', tree.getTreeFromPerson);

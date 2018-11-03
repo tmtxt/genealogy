@@ -168,6 +168,13 @@ const updateChildrenOrder = async ctx => {
   ctx.status = 204;
 };
 
+const getRelationBetweenPerson = async ctx => {
+  const sourcePersonId = ctx.params.sourcePersonId;
+  const destPersonId = ctx.params.destPersonId;
+
+  ctx.body = await personDal.getRelationBetweenPerson(sourcePersonId, destPersonId);
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
@@ -179,5 +186,6 @@ module.exports = {
   removePerson,
   uploadPicture,
   getChildrenWithOrder,
-  updateChildrenOrder
+  updateChildrenOrder,
+  getRelationBetweenPerson
 };

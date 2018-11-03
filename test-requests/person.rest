@@ -71,3 +71,9 @@ Content-Type: application/json
     }
   ]
 }
+
+#
+GET http://:host:30001/api/relationship/0/24
+
+#
+GET http://:host:30001/api/relationship/24/0

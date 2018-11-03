@@ -401,6 +401,68 @@ const updateChildrenOrder = async (personId, childrenOrderList, logTrail) => {
   await Promise.all(_.map(childrenOrderList, item => updateChildOrder(item.id, item.order)));
 };
 
+/**
+ * Find the shortest relationship between 2 person
+ * @param {int} sourcePersonId
+ * @param {int} destPersonId
+ * @param logTrail
+ * @returns {Promise<Array>}
+ * {
+ *   startPerson: Person,
+ *   endPerson: Person,
+ *   type: string // relationship type
+ * }
+ */
+const getRelationBetweenPerson = async (sourcePersonId, destPersonId, logTrail) => {
+  // query to get the shortest path
+  const query = `
+  MATCH (from:Person), (to:Person)
+  WHERE id(from) = $sourcePersonId AND id(to) = $destPersonId
+  WITH
+  shortestpath((from)-[*]-(to)) AS path
+  RETURN path`;
+
+  const session = driver.session();
+  const res = await session.run(query, {
+    sourcePersonId: int(sourcePersonId),
+    destPersonId: int(destPersonId)
+  });
+
+  const record = res.records[0];
+  if (!record) {
+    throw new Error('No relationships found between 2 nodes');
+  }
+
+  const path = record.get('path');
+  const segments = path.segments;
+
+  const relations = _.map(segments, segment => {
+    const { start, end } = segment;
+
+    const startPerson = _.assign({ id: start.identity.toInt() }, start.properties);
+    const endPerson = _.assign({ id: end.identity.toInt() }, end.properties);
+
+    // fix the type
+    const type = segment.relationship.type.toString();
+    const relStart = segment.relationship.start.toInt();
+    if (relStart === startPerson.id) {
+      // no need to fix
+      return { startPerson, endPerson, type };
+    }
+
+    const typeMap = {
+      Father_child: 'Child_father',
+      Mother_child: 'Child_mother',
+      Husband_wife: 'Wife_husband',
+      Wife_husband: 'Husband_wife'
+    };
+    const fixedType = typeMap[type];
+    return { startPerson, endPerson, type: fixedType };
+  });
+
+  return relations;
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
@@ -413,5 +475,6 @@ module.exports = {
   addWife,
   removePerson,
   getChildrenWithOrder,
-  updateChildrenOrder
+  updateChildrenOrder,
+  getRelationBetweenPerson
 };
