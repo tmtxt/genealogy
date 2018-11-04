@@ -1,14 +1,13 @@
 import React from 'react';
-import d3 from 'd3';
 import { last, words } from 'lodash';
 import { withRouter } from 'react-router-dom';
 
 import { navigateToPersonDetailPage } from 'libs/navigation';
-import PersonEditPage from '../page-person-edit/person-edit-page';
+
+import RelationLink from './relation-link';
+
 const defaultMalePicture = require('images/male-default.png');
 const defaultFemalePicture = require('images/female-default.png');
-
-const diagonal = d3.svg.diagonal().projection(d => [d.x, d.y]);
 
 const getDefaultPicture = gender => (gender === 'male' ? defaultMalePicture : defaultFemalePicture);
 const getPicture = person => {
@@ -20,26 +19,10 @@ const getPicture = person => {
   return getDefaultPicture(person.get('gender'));
 };
 
-const linkWidth = 100;
+const linkWidth = 150;
 const linkHeight = 150;
 const xOffset = 80;
 const yOffset = 80;
-
-const RelationLink = ({ rel }) => {
-  const data = {
-    source: {
-      x: rel.get('startWidth') * linkWidth + xOffset,
-      y: rel.get('startHeight') * linkHeight + yOffset
-    },
-    target: {
-      x: rel.get('endWidth') * linkWidth + xOffset,
-      y: rel.get('endHeight') * linkHeight + yOffset
-    }
-  };
-  const d = diagonal(data);
-
-  return <path d={d} style={styles.link} />;
-};
 
 const PersonNode = ({ history, x, y, person }) => {
   const fullName = person.get('name');
@@ -110,12 +93,6 @@ const PersonsRelationPage = ({ width, height, initialHeight, path, history }) =>
 export default withRouter(PersonsRelationPage);
 
 const styles = {
-  link: {
-    fill: 'none',
-    stroke: '#ccc',
-    strokeWidth: '1.5px'
-  },
-
   name: {
     fillOpacity: 1
   },
