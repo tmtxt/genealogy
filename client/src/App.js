@@ -2,12 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
+import { Provider as ReduxProvider } from 'react-redux';
 
 import 'libs/moment';
 
 import { wrapContextProviders } from './contexts';
 
 import { MainLayoutRoute, FullWidthLayoutRoute, AdminLayoutRoute } from 'components/layouts';
+import store from 'store/store';
 
 import HomePage from 'components/page-home';
 import PersonDetailPage from 'components/page-person-detail';
@@ -68,7 +70,9 @@ const App = () => (
     offset="30px"
     transition="scale"
   >
-    <AppWithContextProviders />
+    <ReduxProvider store={store}>
+      <AppWithContextProviders />
+    </ReduxProvider>
   </AlertProvider>
 );
 

@@ -27,9 +27,15 @@
         <e p="react-dom" t="IncludeRecursive" />
         <e p="react-helmet" t="IncludeRecursive" />
         <e p="react-markdown" t="IncludeRecursive" />
+        <e p="react-redux" t="IncludeRecursive" />
         <e p="react-router-dom" t="IncludeRecursive" />
         <e p="react-scripts" t="IncludeRecursive" />
         <e p="reactstrap" t="IncludeRecursive" />
+        <e p="redux" t="IncludeRecursive" />
+        <e p="redux-actions" t="IncludeRecursive" />
+        <e p="redux-immutable" t="IncludeRecursive" />
+        <e p="redux-logger" t="IncludeRecursive" />
+        <e p="redux-thunk" t="IncludeRecursive" />
         <e p="url-pattern" t="IncludeRecursive" />
       </e>
     </e>
