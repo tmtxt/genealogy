@@ -48,7 +48,9 @@ $ ./push.sh $VERSION
 # Deploy
 
 Run docker image `neo4j:3.4.7`
+
 Run docker image `rethinkdb:2.3.6`
+
 Run docker image `tmtxt/genealogy:latest` with these settings
 
 - Environment variables
