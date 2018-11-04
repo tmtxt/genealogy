@@ -175,6 +175,31 @@ const getRelationBetweenPerson = async ctx => {
   ctx.body = await personDal.getRelationBetweenPerson(fromPersonId, toPersonId);
 };
 
+/**
+ * POST /search-persons
+ * Request body
+ * {
+ *   searchKey: <string>
+ * }
+ * Response body
+ * {
+ *   results: Person[]
+ * }
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+const findPersonByName = async ctx => {
+  const logTrail = ctx.logTrail;
+  const searchKey = ctx.request.body.searchKey;
+
+  if (!searchKey) {
+    ctx.responseError(400, 'searchKey is required');
+  }
+
+  const persons = await personDal.searchByName(searchKey, logTrail);
+  ctx.body = { results: persons };
+};
+
 module.exports = {
   getRootPerson,
   getPersonById,
@@ -187,5 +212,6 @@ module.exports = {
   uploadPicture,
   getChildrenWithOrder,
   updateChildrenOrder,
-  getRelationBetweenPerson
+  getRelationBetweenPerson,
+  findPersonByName
 };

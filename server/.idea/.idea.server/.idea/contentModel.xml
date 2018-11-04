@@ -40,7 +40,6 @@
     <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="node_modules" t="ExcludeRecursive">
-        <e p="@types" t="IncludeRecursive" />
         <e p="eslint" t="IncludeRecursive" />
         <e p="jsonschema" t="IncludeRecursive" />
         <e p="koa" t="IncludeRecursive" />
@@ -48,7 +47,6 @@
         <e p="koa-busboy" t="IncludeRecursive" />
         <e p="koa-mount" t="IncludeRecursive" />
         <e p="koa-router" t="IncludeRecursive" />
-        <e p="koa-send" t="IncludeRecursive" />
         <e p="koa-static" t="IncludeRecursive" />
         <e p="lodash" t="IncludeRecursive" />
         <e p="moment-timezone" t="IncludeRecursive" />

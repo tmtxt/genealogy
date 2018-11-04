@@ -77,3 +77,11 @@ GET http://:host:30001/api/relationship/0/24
 
 #
 GET http://:host:30001/api/relationship/24/0
+
+# Search by name
+POST http://:host:30001/api/search-persons
+Content-Type: application/json
+
+{
+  "searchKey": "Root"
+}

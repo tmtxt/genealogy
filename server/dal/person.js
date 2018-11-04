@@ -463,6 +463,25 @@ const getRelationBetweenPerson = async (sourcePersonId, destPersonId, logTrail) 
   return relations;
 };
 
+/**
+ * Search persons by name
+ * @param {string} searchKey
+ * @param logTrail
+ * @returns {Promise<Person[]>}
+ */
+const searchByName = async (searchKey, logTrail) => {
+  const query = `
+  MATCH (p:Person)
+  WHERE p.name CONTAINS $searchKey
+  RETURN p AS data, id(p) AS id`;
+
+  const session = driver.session();
+  const res = await session.run(query, { searchKey });
+
+  const persons = res.records.map(transformRecord);
+  return persons;
+};
+
 module.exports = {
   countPerson,
   insertRootPerson,
@@ -476,5 +495,6 @@ module.exports = {
   removePerson,
   getChildrenWithOrder,
   updateChildrenOrder,
-  getRelationBetweenPerson
+  getRelationBetweenPerson,
+  searchByName
 };
