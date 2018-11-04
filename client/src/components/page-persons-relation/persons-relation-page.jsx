@@ -79,7 +79,7 @@ const ComposePersonNode = ({ history, rel, isLast }) => {
 
 const PersonsRelationPage = ({ width, height, initialHeight, path, history }) => {
   return (
-    <svg width={width * linkWidth + 2 * xOffset} height={height * linkHeight * 2 * yOffset}>
+    <svg width={width * linkWidth + 2 * xOffset} height={height * linkHeight + 2 * yOffset}>
       {path.map((rel, i) => (
         <RelationLink key={i} rel={rel} />
       ))}
