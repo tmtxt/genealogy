@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchPersonsRelation } from 'store/actions/persons-relation';
+import { selectPersonsRelation } from 'store/selectors/persons-relation';
 import PersonsRelationPage from './persons-relation-page';
 
 class PersonsRelationPageWrapper extends Component {
@@ -10,11 +11,15 @@ class PersonsRelationPageWrapper extends Component {
   }
 
   render() {
+    
+
     return <PersonsRelationPage />;
   }
 }
 
 export default connect(
-  null,
+  (state, prop) => {
+    return { path: selectPersonsRelation(state, 0, 24) };
+  },
   { fetchPersonsRelation }
 )(PersonsRelationPageWrapper);
