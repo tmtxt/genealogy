@@ -4,6 +4,7 @@ import { last, words } from 'lodash';
 import { withRouter } from 'react-router-dom';
 
 import { navigateToPersonDetailPage } from 'libs/navigation';
+import PersonEditPage from '../page-person-edit/person-edit-page';
 const defaultMalePicture = require('images/male-default.png');
 const defaultFemalePicture = require('images/female-default.png');
 
@@ -40,11 +41,7 @@ const RelationLink = ({ rel }) => {
   return <path d={d} style={styles.link} />;
 };
 
-const PersonNode = ({ history, rel }) => {
-  const x = rel.get('startWidth') * linkWidth + xOffset;
-  const y = rel.get('startHeight') * linkHeight + yOffset;
-
-  const person = rel.get('startPerson');
+const PersonNode = ({ history, x, y, person }) => {
   const fullName = person.get('name');
   const name = last(words(fullName));
   const namePrefix = person.get('gender') === 'female' ? 'B.' : 'Ô.';
@@ -76,6 +73,27 @@ const PersonNode = ({ history, rel }) => {
   );
 };
 
+const ComposePersonNode = ({ history, rel, isLast }) => {
+  const startX = rel.get('startWidth') * linkWidth + xOffset;
+  const startY = rel.get('startHeight') * linkHeight + yOffset;
+  const startPerson = rel.get('startPerson');
+
+  if (!isLast) {
+    return <PersonNode x={startX} y={startY} person={startPerson} {...{ history }} />;
+  }
+
+  const endX = rel.get('endWidth') * linkWidth + xOffset;
+  const endY = rel.get('endHeight') * linkHeight + yOffset;
+  const endPerson = rel.get('endPerson');
+
+  return (
+    <g>
+      <PersonNode x={startX} y={startY} person={startPerson} {...{ history }} />
+      <PersonNode x={endX} y={endY} person={endPerson} {...{ history }} />
+    </g>
+  );
+};
+
 const PersonsRelationPage = ({ width, height, initialHeight, path, history }) => {
   return (
     <svg width={width * linkWidth + 2 * xOffset} height={height * linkHeight * 2 * yOffset}>
@@ -83,7 +101,7 @@ const PersonsRelationPage = ({ width, height, initialHeight, path, history }) =>
         <RelationLink key={i} rel={rel} />
       ))}
       {path.map((rel, i) => (
-        <PersonNode key={i} {...{ rel, history }} />
+        <ComposePersonNode key={i} {...{ rel, history }} isLast={i === path.size - 1} />
       ))}
     </svg>
   );
