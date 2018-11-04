@@ -3,6 +3,6 @@ System.config({
     'components/*': './src/components/*',
     contexts: './src/contexts',
     'libs/*': './src/libs/*',
-    'store/*': './src/store'
+    'store/*': './src/store/*'
   }
 });
