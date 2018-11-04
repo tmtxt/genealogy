@@ -40,6 +40,7 @@
     <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="node_modules" t="ExcludeRecursive">
+        <e p="@types" t="IncludeRecursive" />
         <e p="eslint" t="IncludeRecursive" />
         <e p="jsonschema" t="IncludeRecursive" />
         <e p="koa" t="IncludeRecursive" />
