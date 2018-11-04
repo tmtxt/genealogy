@@ -23,6 +23,7 @@ module.exports = {
   },
   
   app: {
-    pageTitle: process.env.PAGE_TITLE || 'Trần Văn Gia Phả'
+    pageTitle: process.env.PAGE_TITLE || 'Trần Văn Gia Phả',
+    pageHeadline: process.env.PAGE_HEADLINE || 'Gìn giữ cho muôn đời sau'
   }
 };

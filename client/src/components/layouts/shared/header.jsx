@@ -10,7 +10,9 @@ export const Header = props => (
         <div className={bannerStyles.siteName}>
           {_.get(window, ['__SERVER_DATA__', 'pageTitle'], 'Trần Văn Gia Phả')}
         </div>
-        <div className={bannerStyles.headline}>Gìn giữ cho muôn đời sau</div>
+        <div className={bannerStyles.headline}>
+          {_.get(window, ['__SERVER_DATA__', 'pageHeadline'], 'Gìn giữ cho muôn đời sau')}
+        </div>
       </div>
     </div>
   </header>
