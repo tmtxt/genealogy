@@ -29,11 +29,11 @@ WORKDIR /usr/src/app
 # copy the backend dependencies
 COPY --from=backend /usr/src/app/node_modules ./node_modules
 
-# copy the built frontend files
-COPY --from=frontend /usr/src/app/build ./static
-
 # copy backend server files
 COPY server/ ./
+
+# copy the built frontend files
+COPY --from=frontend /usr/src/app/build ./static
 
 CMD ["npm", "start"]
 EXPOSE 80
