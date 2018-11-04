@@ -21,9 +21,21 @@ module.exports = {
     port: process.env.RETHINKDB_PORT || '30005',
     db: process.env.RETHINKDB_DB || 'genealogy'
   },
-  
+
   app: {
     pageTitle: process.env.PAGE_TITLE || 'Trần Văn Gia Phả',
-    pageHeadline: process.env.PAGE_HEADLINE || 'Gìn giữ cho muôn đời sau'
+    pageHeadline: process.env.PAGE_HEADLINE || 'Gìn giữ cho muôn đời sau',
+    carousel: {
+      image1: process.env.CAROUSEL_IMAGE1,
+      header1: process.env.CAROUSEL_HEADER1,
+      image2: process.env.CAROUSEL_IMAGE2,
+      header2: process.env.CAROUSEL_HEADER2,
+      image3: process.env.CAROUSEL_IMAGE3,
+      header3: process.env.CAROUSEL_HEADER3,
+      image4: process.env.CAROUSEL_IMAGE4,
+      header4: process.env.CAROUSEL_HEADER4,
+      image5: process.env.CAROUSEL_IMAGE5,
+      header5: process.env.CAROUSEL_HEADER5
+    }
   }
 };

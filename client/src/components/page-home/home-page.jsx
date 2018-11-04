@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { Row, Col, UncontrolledCarousel, Card, CardHeader, CardBody } from 'reactstrap';
 import PrefaceText from './preface';
@@ -12,31 +13,33 @@ import img3 from './car3.jpg';
 import img4 from './car4.jpg';
 import img5 from './car5.jpg';
 
+const getImg = num => _.get(window, ['__SERVER_DATA__', 'carousel', `image${num}`]);
+const getText = num => _.get(window, ['__SERVER_DATA__', 'carousel', `header${num}`]);
 const items = [
   {
-    src: img1,
-    altText: 'Phần mộ chi trưởng',
-    header: 'Tảo mộ 2013'
+    src: getImg(1) || img1,
+    altText: getText(1) || 'Phần mộ chi trưởng',
+    header: getText(1) || 'Phần mộ chi trưởng'
   },
   {
-    src: img3,
-    altText: 'Nhà thờ tổ',
-    header: 'Nhà thờ tổ'
+    src: getImg(2) || img2,
+    altText: getText(2) || 'Thăm mộ bà Hoàng Thị Loan',
+    header: getText(2) || 'Thăm mộ bà Hoàng Thị Loan'
   },
   {
-    src: img2,
-    altText: 'Thăm mộ bà Hoàng Thị Loan',
-    header: 'Thăm mộ bà Hoàng Thị Loan'
+    src: getImg(3) || img3,
+    altText: getText(3) || 'Nhà thờ tổ',
+    header: getText(3) || 'Nhà thờ tổ'
   },
   {
-    src: img4,
-    altText: 'Con cháu bà Trần Thị Tứ',
-    header: 'Con cháu bà Trần Thị Tứ'
+    src: getImg(4) || img4,
+    altText: getText(4) || 'Con cháu bà Trần Thị Tứ',
+    header: getText(4) || 'Con cháu bà Trần Thị Tứ'
   },
   {
-    src: img5,
-    altText: 'Mừng thọ ông bà Trần Văn Phương',
-    header: 'Mừng thọ ông bà Trần Văn Phương'
+    src: getImg(5) || img5,
+    altText: getText(5) || 'Mừng thọ ông bà Trần Văn Phương',
+    header: getText(5) || 'Mừng thọ ông bà Trần Văn Phương'
   }
 ];
 
