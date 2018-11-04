@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setPersonsRelation } from 'store/actions/persons-relation';
+import { fetchPersonsRelation } from 'store/actions/persons-relation';
 import PersonsRelationPage from './persons-relation-page';
 
 class PersonsRelationPageWrapper extends Component {
   componentDidMount() {
-    this.props.setPersonsRelation();
+    this.props.fetchPersonsRelation(0, 24);
   }
 
   render() {
@@ -16,5 +16,5 @@ class PersonsRelationPageWrapper extends Component {
 
 export default connect(
   null,
-  { setPersonsRelation }
+  { fetchPersonsRelation }
 )(PersonsRelationPageWrapper);

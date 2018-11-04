@@ -44,6 +44,11 @@ export default {
     method: 'POST'
   },
 
+  'person.getRelationBetweenPerson': {
+    path: '/api/relationship/from/:fromPersonId/to/:toPersonId',
+    method: 'GET'
+  },
+
   'user.login': {
     path: '/api/login',
     method: 'POST'

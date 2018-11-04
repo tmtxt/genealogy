@@ -3,9 +3,15 @@ import { Map as ImmutableMap } from 'immutable';
 
 import actionTypes from 'store/action-types/persons-relation';
 
+const reduceSetPersonsRelation = (state, action) => {
+  const { fromPersonId, toPersonId } = action;
+  const id = `${fromPersonId}-${toPersonId}`;
+  return state.set(id, action.path);
+};
+
 export default handleActions(
   {
-    [actionTypes.setPersonsRelation]: state => state.set('a', 'b')
+    [actionTypes.setPersonsRelation]: reduceSetPersonsRelation
   },
   ImmutableMap()
 );

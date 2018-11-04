@@ -169,10 +169,10 @@ const updateChildrenOrder = async ctx => {
 };
 
 const getRelationBetweenPerson = async ctx => {
-  const sourcePersonId = ctx.params.sourcePersonId;
-  const destPersonId = ctx.params.destPersonId;
+  const fromPersonId = ctx.params.fromPersonId;
+  const toPersonId = ctx.params.toPersonId;
 
-  ctx.body = await personDal.getRelationBetweenPerson(sourcePersonId, destPersonId);
+  ctx.body = await personDal.getRelationBetweenPerson(fromPersonId, toPersonId);
 };
 
 module.exports = {
