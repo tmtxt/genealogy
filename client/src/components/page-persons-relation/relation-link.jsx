@@ -50,5 +50,9 @@ const styles = {
     fill: 'none',
     stroke: '#ccc',
     strokeWidth: '1.5px'
+  },
+
+  name: {
+    fillOpacity: 1
   }
 };
