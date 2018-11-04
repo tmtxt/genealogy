@@ -19,27 +19,32 @@ const items = [
   {
     src: getImg(1) || img1,
     altText: getText(1) || 'Phần mộ chi trưởng',
-    header: getText(1) || 'Phần mộ chi trưởng'
+    header: getText(1) || 'Phần mộ chi trưởng',
+    caption: ''
   },
   {
     src: getImg(2) || img2,
     altText: getText(2) || 'Thăm mộ bà Hoàng Thị Loan',
-    header: getText(2) || 'Thăm mộ bà Hoàng Thị Loan'
+    header: getText(2) || 'Thăm mộ bà Hoàng Thị Loan',
+    caption: ''
   },
   {
     src: getImg(3) || img3,
     altText: getText(3) || 'Nhà thờ tổ',
-    header: getText(3) || 'Nhà thờ tổ'
+    header: getText(3) || 'Nhà thờ tổ',
+    caption: ''
   },
   {
     src: getImg(4) || img4,
     altText: getText(4) || 'Con cháu bà Trần Thị Tứ',
-    header: getText(4) || 'Con cháu bà Trần Thị Tứ'
+    header: getText(4) || 'Con cháu bà Trần Thị Tứ',
+    caption: ''
   },
   {
     src: getImg(5) || img5,
     altText: getText(5) || 'Mừng thọ ông bà Trần Văn Phương',
-    header: getText(5) || 'Mừng thọ ông bà Trần Văn Phương'
+    header: getText(5) || 'Mừng thọ ông bà Trần Văn Phương',
+    caption: ''
   }
 ];
 
