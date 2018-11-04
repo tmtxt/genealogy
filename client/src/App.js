@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import { Provider as ReduxProvider } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import _ from 'lodash';
 
 import 'libs/moment';
 
@@ -70,6 +72,9 @@ const App = () => (
     offset="30px"
     transition="scale"
   >
+    <Helmet>
+      <title>{_.get(window, ['__SERVER_DATA__', 'pageTitle'], 'Trần Văn Gia Phả')}</title>
+    </Helmet>
     <ReduxProvider store={store}>
       <AppWithContextProviders />
     </ReduxProvider>

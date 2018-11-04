@@ -12,7 +12,8 @@ const apiRouter = require('./apis');
 const initApp = require('./init');
 
 const template = fs.readFileSync('./static/index.html');
-const indexTemplate = _.replace(template, '___SERVER_DATA___', JSON.stringify({ hello: 'abc' }));
+const serverData = config.app;
+const indexTemplate = _.replace(template, '___SERVER_DATA___', JSON.stringify(serverData));
 
 const startWebServer = () => {
   const app = new Koa();

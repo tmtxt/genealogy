@@ -11,8 +11,6 @@ export const ChildrenTable = ({ personId, person, isLoggedIn }) => {
     return <div />;
   }
 
-  console.log(children.size > 1);
-
   return (
     <div>
       <h3>Con cái</h3>

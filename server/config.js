@@ -20,5 +20,9 @@ module.exports = {
     host: process.env.RETHINKDB_HOST || 'localhost',
     port: process.env.RETHINKDB_PORT || '30005',
     db: process.env.RETHINKDB_DB || 'genealogy'
+  },
+  
+  app: {
+    pageTitle: process.env.PAGE_TITLE || 'Trần Văn Gia Phả'
   }
 };
