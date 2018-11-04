@@ -8,7 +8,8 @@ import { Loader } from '../shared';
 
 class PersonsRelationPageWrapper extends Component {
   componentDidMount() {
-    this.props.fetchPersonsRelation(0, 24);
+    const { fromPersonId, toPersonId } = this.props.match.params;
+    this.props.fetchPersonsRelation(fromPersonId, toPersonId);
   }
 
   computeGraphWidth() {
@@ -82,8 +83,10 @@ class PersonsRelationPageWrapper extends Component {
 }
 
 export default connect(
-  (state, prop) => {
-    return { path: selectPersonsRelation(state, 0, 24) };
+  (state, props) => {
+    const { fromPersonId, toPersonId } = props.match.params;
+
+    return { path: selectPersonsRelation(state, fromPersonId, toPersonId) };
   },
   { fetchPersonsRelation }
 )(PersonsRelationPageWrapper);
