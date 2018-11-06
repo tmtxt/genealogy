@@ -28,6 +28,8 @@ import EditPrefacePage from 'components/page-edit-preface';
 import EditGeneralInfoPage from 'components/page-edit-general-info';
 import EditHistoryPage from 'components/page-edit-history';
 import PersonsRelationPage from 'components/page-persons-relation';
+import SearchPersonPage from 'components/page-search-person';
+import SearchPersonPage from "./components/page-search-person/search-person-page";
 
 const AppWithRouter = () => (
   <Router>
@@ -54,6 +56,7 @@ const AppWithRouter = () => (
         component={PersonsRelationPage}
       />
 
+      <AdminLayoutRoute exact path="/search-person" component={SearchPersonPage} />
       <AdminLayoutRoute exact path="/admin" component={AdminIndexPage} />
       <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
       <AdminLayoutRoute exact path="/admin/general-info" component={EditGeneralInfoPage} />

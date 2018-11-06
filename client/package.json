@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "4",
     "d3": "3.5.6",
+    "flow-bin": "^0.85.0",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
@@ -35,7 +36,8 @@
     "start": "NODE_PATH=src react-scripts start",
     "build": "NODE_PATH=src react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "flow": "flow"
   },
   "browserslist": [
     ">0.2%",
