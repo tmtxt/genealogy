@@ -49,6 +49,11 @@ export default {
     method: 'GET'
   },
 
+  'person.findPersonByName': {
+    path: '/api/search-persons',
+    method: 'POST'
+  },
+
   'user.login': {
     path: '/api/login',
     method: 'POST'

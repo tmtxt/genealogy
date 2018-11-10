@@ -1,8 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { connect } from 'react-redux';
 
-type Props = {};
+import { findPersonByName } from 'store/actions/person';
+
+type Props = {
+  findPersonByName: typeof findPersonByName
+};
+
 class SearchPersonPage extends Component<Props> {
   render() {
     return (
@@ -17,4 +23,9 @@ class SearchPersonPage extends Component<Props> {
   }
 }
 
-export default SearchPersonPage;
+
+
+export default connect(
+  null,
+  { findPersonByName }
+)(SearchPersonPage);

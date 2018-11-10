@@ -4,6 +4,7 @@ System.config({
     contexts: './src/contexts',
     'libs/*': './src/libs/*',
     'store/*': './src/store/*',
-    'images/*': './src/images/*'
+    'images/*': './src/images/*',
+    'config/*': './src/config/*'
   }
 });

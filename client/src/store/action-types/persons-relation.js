@@ -1,3 +1,7 @@
 export default {
-  setPersonsRelation: 'personsRelation/setPersonRelation'
+  setPersonsRelation: 'personsRelation/setPersonRelation',
+
+  person: {
+    findPersonByName: 'person/findPersonByName'
+  }
 };
