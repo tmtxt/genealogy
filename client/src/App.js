@@ -55,7 +55,7 @@ const AppWithRouter = () => (
         component={PersonsRelationPage}
       />
 
-      <AdminLayoutRoute exact path="/search-person" component={SearchPersonPage} />
+      <AdminLayoutRoute exact path="/admin/search-person" component={SearchPersonPage} />
       <AdminLayoutRoute exact path="/admin" component={AdminIndexPage} />
       <AdminLayoutRoute exact path="/admin/preface" component={EditPrefacePage} />
       <AdminLayoutRoute exact path="/admin/general-info" component={EditGeneralInfoPage} />

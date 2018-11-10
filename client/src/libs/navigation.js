@@ -38,3 +38,5 @@ export const navigateToEditGeneralInfoPage = history => history.push('/admin/gen
 export const navigateToEditHistoryPage = history => history.push('/admin/history');
 
 export const navigateToHistoryPage = history => history.push('/history');
+
+export const navigateToSearchPersonPage = history => history.push('/admin/search-person');

@@ -6,7 +6,8 @@ import {
   navigateToEditGeneralInfoPage,
   navigateToChangePasswordPage,
   navigateToEditPrefacePage,
-  navigateToEditHistoryPage
+  navigateToEditHistoryPage,
+  navigateToSearchPersonPage
 } from 'libs/navigation';
 
 export class AdminLayout extends Component {
@@ -48,6 +49,13 @@ export class AdminLayout extends Component {
                 onClick={e => this.navigate(e, navigateToEditHistoryPage)}
               >
                 Sửa Văn tế tổ
+              </ListGroupItem>
+              <ListGroupItem
+                tag="a"
+                href="/"
+                onClick={e => this.navigate(e, navigateToSearchPersonPage)}
+              >
+                Tìm kiếm
               </ListGroupItem>
             </ListGroup>
           </Col>
