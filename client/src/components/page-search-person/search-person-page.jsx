@@ -1,44 +1,54 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Map as ImmutableMap } from 'immutable';
 
 import { findPersonByName } from 'store/actions/person';
+import { selectPersonSearchResults } from 'store/selectors/person-search-results';
+import Loader from 'components/shared/loader';
 
 type Props = {
-  findPersonByName: typeof findPersonByName
+  searchKey: string,
+  onSearchKeyChange: string => void,
+  findPersonByName: typeof findPersonByName,
+  searchResults: ImmutableMap<string, any>
 };
-type State = {
-  searchKey: string
+
+const SearchPersonPage = (props: Props) => {
+  const { searchKey, onSearchKeyChange, findPersonByName, searchResults } = props;
+
+  const isLoaded = searchResults.get('isLoaded');
+  const isLoading = searchResults.get('isLoading');
+  const results = searchResults.get('results');
+
+  return (
+    <Form>
+      <FormGroup>
+        <Label>Tên</Label>
+        <Input
+          type="text"
+          placeholder="Tên"
+          value={searchKey}
+          onChange={(e: Object) => onSearchKeyChange(e.target.value)}
+        />
+      </FormGroup>
+      <Button onClick={() => findPersonByName(searchKey)} color="primary">
+        Tìm kiếm
+      </Button>
+      {isLoading && <Loader />}
+    </Form>
+  );
 };
 
-class SearchPersonPage extends Component<Props, State> {
-  state = { searchKey: '' };
+const mapStateToProps = (state: ImmutableMap<string, any>, { searchKey }: Props) => {
+  const searchResults = selectPersonSearchResults(state, searchKey);
 
-  handleSearchKeyChange = e => this.setState({ searchKey: e.target.value });
-  handleSubmit = () => this.props.findPersonByName(this.state.searchKey);
-
-  render() {
-    return (
-      <Form>
-        <FormGroup>
-          <Label>Tên</Label>
-          <Input
-            type="text"
-            placeholder="Tên"
-            value={this.state.searchKey}
-            onChange={this.handleSearchKeyChange}
-          />
-        </FormGroup>
-        <Button onClick={this.handleSubmit} color="primary">
-          Tìm kiếm
-        </Button>
-      </Form>
-    );
-  }
-}
+  return { searchResults };
+};
+const mapDispatchToProps = { findPersonByName };
 
 export default connect(
-  null,
-  { findPersonByName }
+  mapStateToProps,
+  mapDispatchToProps
 )(SearchPersonPage);

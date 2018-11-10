@@ -8,7 +8,7 @@ import sendApiRequest from './api';
 
 export const setSearchPersonResults = (
   searchKey: string,
-  results: Array<any>
+  results: Object
 ): SetSearchPersonResultsActionType => ({
   type: actionTypes.person.findPersonByName,
   searchKey,
@@ -16,8 +16,9 @@ export const setSearchPersonResults = (
 });
 
 export const findPersonByName = (searchKey: string) => async (dispatch: Function) => {
+  dispatch(setSearchPersonResults(searchKey, { isLoading: true, isLoaded: false }));
+
   const res = await sendApiRequest('person.findPersonByName', null, null, { searchKey });
   const results: Array<any> = res.results;
-
-  dispatch(setSearchPersonResults(searchKey, results));
+  dispatch(setSearchPersonResults(searchKey, { isLoading: false, isLoaded: true, results }));
 };
