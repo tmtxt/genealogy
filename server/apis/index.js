@@ -47,7 +47,7 @@ router.get(
   middlewares.requireLoggedIn,
   person.getRelationBetweenPerson
 );
-router.post('/search-persons', person.findPersonByName);
+router.post('/search-persons', middlewares.requireLoggedIn, person.findPersonByName);
 
 router.get('/root-person/tree', tree.getTreeFromRoot);
 router.get('/persons/:personId/tree', tree.getTreeFromPerson);
