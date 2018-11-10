@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-import actionTypes from 'store/action-types/persons-relation';
+import actionTypes from 'store/action-types';
 
 import sendApiRequest from './api';
 

@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { Map as ImmutableMap } from 'immutable';
 
-import actionTypes from 'store/action-types/persons-relation';
+import actionTypes from 'store/action-types';
 
 const reduceSetPersonsRelation = (state, action) => {
   const { fromPersonId, toPersonId } = action;

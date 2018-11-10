@@ -1,9 +1,15 @@
 // @flow
-import actionTypes from 'store/action-types/persons-relation';
-import sendApiRequest from './api';
 import { fromJS } from 'immutable';
 
-export const setSearchPersonResults = (searchKey: string, results: Array<any>) => ({
+import actionTypes from 'store/action-types';
+import type { SetSearchPersonResultsActionType } from 'store/types/person';
+
+import sendApiRequest from './api';
+
+export const setSearchPersonResults = (
+  searchKey: string,
+  results: Array<any>
+): SetSearchPersonResultsActionType => ({
   type: actionTypes.person.findPersonByName,
   searchKey,
   results: fromJS(results)
