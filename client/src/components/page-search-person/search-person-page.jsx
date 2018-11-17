@@ -22,9 +22,14 @@ import Loader from 'components/shared/loader';
 import { personDetailUrl, navigateToPersonDetailPage } from 'libs/navigation';
 import { withRouter } from 'react-router-dom';
 
-type Props = {
+import PersonSearchResults from './search-results';
+
+type ExportedProps = {
   searchKey: string,
   onSearchKeyChange: string => void,
+  fromPersonId?: string
+};
+type Props = ExportedProps & {
   findPersonByName: typeof findPersonByName,
   searchResults: ImmutableMap<string, any>,
   history: Object
@@ -36,6 +41,8 @@ const SearchPersonPage = (props: Props) => {
   const isLoaded = searchResults.get('isLoaded');
   const isLoading = searchResults.get('isLoading');
   const results = searchResults.get('results');
+  const isNotFound = isLoaded && !results.size;
+  const isFound = isLoaded && !!results.size;
 
   return (
     <div>
@@ -60,36 +67,19 @@ const SearchPersonPage = (props: Props) => {
       <Row style={{ marginTop: 10 }}>
         <Col>
           {isLoading && <Loader />}
-          {isLoaded &&
-            !results.size && (
-              <Card body outline color="danger">
-                <CardText>Không tìm thấy</CardText>
-              </Card>
-            )}
-          {isLoaded &&
-            !!results.size && (
-              <ListGroup flush>
-                {results.map(person => (
-                  <ListGroupItem
-                    tag="a"
-                    href={personDetailUrl.stringify({ personId: person.get('id') })}
-                    onClick={(e: Object) => {
-                      e.preventDefault();
-                      navigateToPersonDetailPage(history, person.get('id'));
-                    }}
-                  >
-                    {person.get('name') || 'Không rõ'}
-                  </ListGroupItem>
-                ))}
-              </ListGroup>
-            )}
+          {isNotFound && (
+            <Card body outline color="danger">
+              <CardText>Không tìm thấy</CardText>
+            </Card>
+          )}
+          {isFound && <PersonSearchResults {...{ results }} />}
         </Col>
       </Row>
     </div>
   );
 };
 
-const mapStateToProps = (state: ImmutableMap<string, any>, { searchKey }: Props) => {
+const mapStateToProps = (state: ImmutableMap<string, any>, { searchKey }: ExportedProps) => {
   const searchResults = selectPersonSearchResults(state, searchKey);
 
   return { searchResults };
