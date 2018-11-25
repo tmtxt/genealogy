@@ -19,8 +19,9 @@ class PersonSearchResults extends Component<Props> {
 
     return (
       <ListGroup flush>
-        {results.map(person => (
+        {results.map((person, idx) => (
           <ListGroupItem
+            key={idx}
             tag="a"
             href={personDetailUrl.stringify({ personId: person.get('id') })}
             onClick={(e: Object) => {

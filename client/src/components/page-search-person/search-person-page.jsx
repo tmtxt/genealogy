@@ -9,8 +9,6 @@ import {
   FormGroup,
   Input,
   Label,
-  ListGroup,
-  ListGroupItem,
   Row
 } from 'reactstrap';
 import { connect } from 'react-redux';
@@ -19,7 +17,6 @@ import { Map as ImmutableMap } from 'immutable';
 import { findPersonByName } from 'store/actions/person';
 import { selectPersonSearchResults } from 'store/selectors/person-search-results';
 import Loader from 'components/shared/loader';
-import { personDetailUrl, navigateToPersonDetailPage } from 'libs/navigation';
 import { withRouter } from 'react-router-dom';
 
 import PersonSearchResults from './search-results';
@@ -36,7 +33,7 @@ type Props = ExportedProps & {
 };
 
 const SearchPersonPage = (props: Props) => {
-  const { searchKey, onSearchKeyChange, findPersonByName, searchResults, history } = props;
+  const { searchKey, onSearchKeyChange, findPersonByName, searchResults } = props;
 
   const isLoaded = searchResults.get('isLoaded');
   const isLoading = searchResults.get('isLoading');
