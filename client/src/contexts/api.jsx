@@ -52,7 +52,7 @@ class ApiProviderWrapper extends Component {
     );
   }
 }
-const ApiProviderWrapperWithAlert = withAlert(ApiProviderWrapper);
+export const ApiProviderWrapperWithAlert = withAlert(ApiProviderWrapper);
 
 export const wrapApiProvider = WrappedComponent => props => (
   <ApiProviderWrapperWithAlert>

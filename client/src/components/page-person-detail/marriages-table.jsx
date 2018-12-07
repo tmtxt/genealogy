@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 
 import RelatedPersonRow from './related-person-row';

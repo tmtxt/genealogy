@@ -1,7 +1,8 @@
 import _ from 'lodash';
+import React from 'react';
 
 // provider
-import { wrapApiProvider } from './api';
+import { wrapApiProvider, ApiProviderWrapperWithAlert } from './api';
 import { wrapPersonProvider } from './person';
 import { wrapTreeProvider } from './tree';
 import { wrapUserProvider } from './user';
@@ -23,3 +24,7 @@ export { wrapTreeConsumer } from './tree';
 export { wrapUserConsumer } from './user';
 export { wrapChildrenOrderConsumer } from './children-order';
 export { wrapContentConsumer } from './content';
+
+export const ContextProviderWrapper = ({ children }) => (
+  <ApiProviderWrapperWithAlert>{children}</ApiProviderWrapperWithAlert>
+);
