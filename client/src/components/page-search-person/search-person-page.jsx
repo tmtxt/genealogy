@@ -1,16 +1,6 @@
 // @flow
 import React from 'react';
-import {
-  Button,
-  Card,
-  CardText,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Row
-} from 'reactstrap';
+import { Button, Card, CardText, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Map as ImmutableMap } from 'immutable';
 
@@ -43,6 +33,11 @@ const SearchPersonPage = (props: Props) => {
 
   return (
     <div>
+      {fromPersonId && (
+        <Row>
+          <Col>Tìm kiếm và so sánh với người có id {fromPersonId}</Col>
+        </Row>
+      )}
       <Row>
         <Col>
           <Form>

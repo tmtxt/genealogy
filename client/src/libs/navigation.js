@@ -45,3 +45,7 @@ export const searchPersonFromOtherUrl = new UrlPattern(
 );
 export const navigateToSearchPersonFromOtherPage = (history, fromPersonId) =>
   history.push(searchPersonFromOtherUrl.stringify({ fromPersonId }));
+
+export const personRelationUrl = new UrlPattern('/relationship/from/:fromPersonId/to/:toPersonId');
+export const navigateToPersonRelationPage = (history, fromPersonId, toPersonId) =>
+  history.push(personRelationUrl.stringify({ fromPersonId, toPersonId }));

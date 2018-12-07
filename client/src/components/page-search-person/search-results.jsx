@@ -7,8 +7,10 @@ import { Map as ImmutableMap } from 'immutable';
 import {
   navigateToPersonDetailPage,
   navigateToSearchPersonFromOtherPage,
+  navigateToPersonRelationPage,
   personDetailUrl,
-  searchPersonFromOtherUrl
+  searchPersonFromOtherUrl,
+  personRelationUrl
 } from 'libs/navigation';
 
 type ExportedProps = {
@@ -21,7 +23,7 @@ type Props = ExportedProps & {
 
 class PersonSearchResults extends Component<Props> {
   render() {
-    const { results, history } = this.props;
+    const { results, history, fromPersonId } = this.props;
 
     return (
       <ListGroup flush>
@@ -40,15 +42,32 @@ class PersonSearchResults extends Component<Props> {
                 </a>
               </Col>
               <Col md="6">
-                <a
-                  href={searchPersonFromOtherUrl.stringify({ fromPersonId: person.get('id') })}
-                  onClick={(e: Object) => {
-                    e.preventDefault();
-                    navigateToSearchPersonFromOtherPage(history, person.get('id'));
-                  }}
-                >
-                  So sánh với người khác
-                </a>
+                {!fromPersonId && (
+                  <a
+                    href={searchPersonFromOtherUrl.stringify({ fromPersonId: person.get('id') })}
+                    onClick={(e: Object) => {
+                      e.preventDefault();
+                      navigateToSearchPersonFromOtherPage(history, person.get('id'));
+                    }}
+                  >
+                    So sánh với người khác
+                  </a>
+                )}
+                {fromPersonId &&
+                  fromPersonId !== person.get('id').toString() && (
+                    <a
+                      href={personRelationUrl.stringify({
+                        fromPersonId,
+                        toPersonId: person.get('id')
+                      })}
+                      onClick={(e: Object) => {
+                        e.preventDefault();
+                        navigateToPersonRelationPage(history, fromPersonId, person.get('id'));
+                      }}
+                    >
+                      So sánh
+                    </a>
+                  )}
               </Col>
             </Row>
           </ListGroupItem>
