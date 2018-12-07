@@ -33,7 +33,7 @@ type Props = ExportedProps & {
 };
 
 const SearchPersonPage = (props: Props) => {
-  const { searchKey, onSearchKeyChange, findPersonByName, searchResults } = props;
+  const { searchKey, onSearchKeyChange, findPersonByName, searchResults, fromPersonId } = props;
 
   const isLoaded = searchResults.get('isLoaded');
   const isLoading = searchResults.get('isLoading');
@@ -69,7 +69,7 @@ const SearchPersonPage = (props: Props) => {
               <CardText>Không tìm thấy</CardText>
             </Card>
           )}
-          {isFound && <PersonSearchResults {...{ results }} />}
+          {isFound && <PersonSearchResults {...{ results, fromPersonId }} />}
         </Col>
       </Row>
     </div>

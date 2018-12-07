@@ -40,3 +40,8 @@ export const navigateToEditHistoryPage = history => history.push('/admin/history
 export const navigateToHistoryPage = history => history.push('/history');
 
 export const navigateToSearchPersonPage = history => history.push('/admin/search-person');
+export const searchPersonFromOtherUrl = new UrlPattern(
+  '/admin/search-person/from-person/:fromPersonId'
+);
+export const navigateToSearchPersonFromOtherPage = (history, fromPersonId) =>
+  history.push(searchPersonFromOtherUrl.stringify({ fromPersonId }));
