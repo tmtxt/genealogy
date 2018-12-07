@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import SearchPersonPage from './search-person-page';
+import { requireLoggedInUser } from 'components/user';
 
 type Props = {
   match: {
@@ -34,4 +35,4 @@ class SearchPersonPageWrapper extends Component<Props, State> {
   }
 }
 
-export default SearchPersonPageWrapper;
+export default requireLoggedInUser(SearchPersonPageWrapper);
